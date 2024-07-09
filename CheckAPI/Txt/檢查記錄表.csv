@@ -1,0 +1,8 @@
+項目ID,項目名稱,項目說明,項目類別（1.是否 2.數字 3.文字）,最小值,最大值
+WarehousePAD_01,溫度 ( C ),溫溼度點檢,2,10,24
+WarehousePAD_02,溼度 ( % ),溫溼度點檢,2,0,50
+WarehousePAD_03,門窗運否正常,門禁安全點檢,1,0,0
+WarehousePAD_04,料件距灑水頭>45cm且m,防火設施點檢,1,0,0
+WarehousePAD_05,庫房清潔,6S點檢,1,0,0
+WarehousePAD_06,料件是否正確,6S點檢,1,0,0
+WarehousePAD_07,是否液體,6S點檢,1,0,0

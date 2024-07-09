@@ -1,0 +1,142 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\2024\\icheck\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A772FD7A-E3B9-47AD-A0BF-09EBD0EE689C}|CheckAPI\\CheckAPI.csproj|e:\\2024\\icheck\\checkapi\\settingall\\textcsv.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A772FD7A-E3B9-47AD-A0BF-09EBD0EE689C}|CheckAPI\\CheckAPI.csproj|solutionrelative:checkapi\\settingall\\textcsv.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A772FD7A-E3B9-47AD-A0BF-09EBD0EE689C}|CheckAPI\\CheckAPI.csproj|E:\\2024\\icheck\\checkapi\\controllers\\taskcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A772FD7A-E3B9-47AD-A0BF-09EBD0EE689C}|CheckAPI\\CheckAPI.csproj|solutionrelative:checkapi\\controllers\\taskcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A772FD7A-E3B9-47AD-A0BF-09EBD0EE689C}|CheckAPI\\CheckAPI.csproj|E:\\2024\\icheck\\checkapi\\controllers\\infocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A772FD7A-E3B9-47AD-A0BF-09EBD0EE689C}|CheckAPI\\CheckAPI.csproj|solutionrelative:checkapi\\controllers\\infocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A772FD7A-E3B9-47AD-A0BF-09EBD0EE689C}|CheckAPI\\CheckAPI.csproj|E:\\2024\\icheck\\checkapi\\controllers\\testpagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A772FD7A-E3B9-47AD-A0BF-09EBD0EE689C}|CheckAPI\\CheckAPI.csproj|solutionrelative:checkapi\\controllers\\testpagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A772FD7A-E3B9-47AD-A0BF-09EBD0EE689C}|CheckAPI\\CheckAPI.csproj|E:\\2024\\icheck\\checkapi\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{A772FD7A-E3B9-47AD-A0BF-09EBD0EE689C}|CheckAPI\\CheckAPI.csproj|solutionrelative:checkapi\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A772FD7A-E3B9-47AD-A0BF-09EBD0EE689C}|CheckAPI\\CheckAPI.csproj|E:\\2024\\icheck\\checkapi\\views\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{A772FD7A-E3B9-47AD-A0BF-09EBD0EE689C}|CheckAPI\\CheckAPI.csproj|solutionrelative:checkapi\\views\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A772FD7A-E3B9-47AD-A0BF-09EBD0EE689C}|CheckAPI\\CheckAPI.csproj|E:\\2024\\icheck\\checkapi\\views\\testpage\\testpage.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A772FD7A-E3B9-47AD-A0BF-09EBD0EE689C}|CheckAPI\\CheckAPI.csproj|solutionrelative:checkapi\\views\\testpage\\testpage.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{e8b06f52-6d01-11d2-aa7d-00c04f990343}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TextCsv.cs",
+              "DocumentMoniker": "E:\\2024\\icheck\\CheckAPI\\SettingAll\\TextCsv.cs",
+              "RelativeDocumentMoniker": "CheckAPI\\SettingAll\\TextCsv.cs",
+              "ToolTip": "E:\\2024\\icheck\\CheckAPI\\SettingAll\\TextCsv.cs",
+              "RelativeToolTip": "CheckAPI\\SettingAll\\TextCsv.cs",
+              "ViewState": "AQIAAJMCAAAAAAAAAAAAAJMCAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-28T16:38:47.3Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TaskController.cs",
+              "DocumentMoniker": "E:\\2024\\icheck\\CheckAPI\\Controllers\\TaskController.cs",
+              "RelativeDocumentMoniker": "CheckAPI\\Controllers\\TaskController.cs",
+              "ToolTip": "E:\\2024\\icheck\\CheckAPI\\Controllers\\TaskController.cs",
+              "RelativeToolTip": "CheckAPI\\Controllers\\TaskController.cs",
+              "ViewState": "AQIAAGYDAAAAAAAAAADwv3cDAAA0AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-28T15:45:52.027Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Web.config",
+              "DocumentMoniker": "E:\\2024\\icheck\\CheckAPI\\Web.config",
+              "RelativeDocumentMoniker": "CheckAPI\\Web.config",
+              "ToolTip": "E:\\2024\\icheck\\CheckAPI\\Web.config",
+              "RelativeToolTip": "CheckAPI\\Web.config",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2024-05-30T03:39:38.061Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "web.config",
+              "DocumentMoniker": "E:\\2024\\icheck\\CheckAPI\\Views\\web.config",
+              "RelativeDocumentMoniker": "CheckAPI\\Views\\web.config",
+              "ToolTip": "E:\\2024\\icheck\\CheckAPI\\Views\\web.config",
+              "RelativeToolTip": "CheckAPI\\Views\\web.config",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2024-05-30T03:39:32.679Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "InfoController.cs",
+              "DocumentMoniker": "E:\\2024\\icheck\\CheckAPI\\Controllers\\InfoController.cs",
+              "RelativeDocumentMoniker": "CheckAPI\\Controllers\\InfoController.cs",
+              "ToolTip": "E:\\2024\\icheck\\CheckAPI\\Controllers\\InfoController.cs",
+              "RelativeToolTip": "CheckAPI\\Controllers\\InfoController.cs",
+              "ViewState": "AQIAABoBAAAAAAAAAAAIwDsBAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-29T06:51:50.903Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "TestPage.cshtml",
+              "DocumentMoniker": "E:\\2024\\icheck\\CheckAPI\\Views\\TestPage\\TestPage.cshtml",
+              "RelativeDocumentMoniker": "CheckAPI\\Views\\TestPage\\TestPage.cshtml",
+              "ToolTip": "E:\\2024\\icheck\\CheckAPI\\Views\\TestPage\\TestPage.cshtml",
+              "RelativeToolTip": "CheckAPI\\Views\\TestPage\\TestPage.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAABfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-05-28T10:52:45.598Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "TestPageController.cs",
+              "DocumentMoniker": "E:\\2024\\icheck\\CheckAPI\\Controllers\\TestPageController.cs",
+              "RelativeDocumentMoniker": "CheckAPI\\Controllers\\TestPageController.cs",
+              "ToolTip": "E:\\2024\\icheck\\CheckAPI\\Controllers\\TestPageController.cs",
+              "RelativeToolTip": "CheckAPI\\Controllers\\TestPageController.cs",
+              "ViewState": "AQIAAFwAAAAAAAAAAAASwGcAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-28T10:17:16.248Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

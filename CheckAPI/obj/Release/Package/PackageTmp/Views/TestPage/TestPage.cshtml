@@ -1,0 +1,192 @@
+﻿
+@{
+    ViewBag.Title = "巡檢系統 點檢表單";
+    Layout = "~/Views/Shared/Bootstrap_Layout.cshtml";
+}
+
+<!--新增項目-->
+@section CustomScript {
+    <script>
+        $(document).ready(function () {
+            $("#submenu-check").addClass('active');
+            GetFABbs();
+            $('#txtdateM').datebox({
+                onSelect: function (date) {
+
+                    //$('#dtxtdateMd').datebox('setValue', date.getDate()+'/' + (date.getMonth() + 1) +'/' + date.getFullYear());
+                    GetDocbs(date.getFullYear() +"-" +(date.getMonth() + 1) +"-"+date.getDate());
+                    // alert(date.getFullYear() + ":" + (date.getMonth() + 1) + ":" + date.getDate());
+                }
+            });
+        });
+        //取得資料//2
+        function GetFABbs() {
+            $.post("@Url.Action("GetFABbs", "TestPage")", function (xx) {
+                console.log("aaa");
+
+                $("#selectFAB").html(xx);
+            }, "text").done(function () {
+                GetDocbs("");
+            }).fail(function () {
+                msg("網路沒有回應");
+            });
+        }
+        //GetDocbs
+        function GetDocbs(TxtDateValue) {
+            var TxtDate = "";
+            if (TxtDateValue != "") {
+                TxtDate = TxtDateValue;
+            } else {
+                TxtDate = $("#txtdateM").datebox('getValue');
+            }
+           //var FAB = $("#selectFAB").val();
+            var pp = $.param({
+                "TxtDate": TxtDate, 
+                "FAB": $("#selectFAB").val()
+            });
+            $.post("@Url.Action("GetDocbs", "TestPage")", pp, function (xx) {
+                $("#selectDoc").html(xx);
+            }, "text").done(function () {
+                //GetUserbs();
+                //GetUserbs_e();
+            }).fail(function () {
+                msg("網路沒有回應");
+            });
+            @*$.post("@Url.Action("GetDocbs", "TestPage")?FAB=" + FAB, function (xx) {
+                $("#selectDoc").html(xx);
+            }, "text").done(function () {
+                //GetUserbs();
+                //GetUserbs_e();
+            }).fail(function () {
+                msg("網路沒有回應");
+            });*@
+        }
+        function GetTestData() {
+            var FAB = $("#selectFAB").val();
+            var Value = $("#selectDoc").val();
+            if (Value == "") {
+                msg("請選擇單號");
+                return;
+            }
+            var ValueList = Value.split(',');
+            var Doc = ValueList[0];
+            var TableID = ValueList[1];
+            var pp = $.param({
+                "FAB": FAB,
+                "Doc": Doc,
+                "TableID": TableID,
+                "TxtDate": $("#txtdateM").datebox('getValue')
+            })
+            console.log("aa");
+            $.post("@Url.Action("GetTestData", "TestPage")" , pp, function (xx) {
+                $("#TableDiv").html(xx);
+                console.log(xx);
+            }, "text").done(function () {
+                $("#selectFAB").prop('disabled', true);
+                $("#selectDoc").prop('disabled', true);
+                $("#btn_go").prop('disabled', true);
+            }).fail(function () {
+                msg("網路沒有回應");
+            });
+        }
+        function ChangeOK(key, value,keyValue) {
+            console.log(key);
+            console.log(value);
+            var currentdate = new Date();
+            var dtime = currentdate.getFullYear() + "-"
+                + (currentdate.getMonth() + 1) + "-"
+                + currentdate.getDate() + " "
+                + currentdate.getHours() + ":"
+                + currentdate.getMinutes() + ":"
+                + currentdate.getSeconds();
+            $("#" + key).val(keyValue);
+            $("#" + key + "_time").val(dtime);
+            $("#" + key).focus();
+            if (value == "OK") {
+                $("#" + key).prop('disabled', true);
+            } else if (value == "Error") {
+
+                $("#" + key).prop('disabled', false);
+
+            }
+            //alert($("#" + key + "_time").val());
+        }
+        function UpdateTable() {
+            var ItemList = $("#ItemList").val().split(',');
+            for (var i = 0; i < ItemList.length; i++) {
+                var ItemValue = $("#" + ItemList[i]).val().trim();
+                if (ItemValue == "") {
+                    alert("請輸入資料");
+                    return;
+                }
+            }
+            //組Json
+            var json = [];
+            for (var i = 0; i < ItemList.length; i++) {
+                var ValueList = $("#selectDoc").val().split(',');
+                var Doc = ValueList[0];
+                var ItemID = ItemList[i];
+                var ItemValue = $("#" + ItemID).val().trim();
+                var jsonitem = {
+                    "Doc": Doc,
+                    "ItemID": ItemID,
+                    "ItemValue": ItemValue
+                };
+                json.push(jsonitem);
+            }
+            var pp = $.param({
+                "json": JSON.stringify(json),
+                "TxtDate": $("#txtdateM").datebox('getValue')
+            });
+            $.post("@Url.Action("UpdateDatas", "TestPage")" , pp, function (xx) {
+                msg(xx);
+            }, "text").done(function () {
+                CloseTable();
+                GetFABbs();
+            }).fail(function () {
+                msg("網路沒有回應");
+            });
+        }
+        function CloseTable() {
+            $("#selectFAB").prop('disabled', false);
+            $("#selectDoc").prop('disabled', false);
+            $("#btn_go").prop('disabled', false);
+            $("#TableDiv").html('');
+        }
+    </script>
+}
+
+<div class="container-fluid">
+    <div class="form-inline">
+        <div class="input-group col-12 col-sm-12 col-md-6 col-lg-6" style="margin-top:20px;">
+           
+            <div class="input-group-prepend">
+                日期 <input id="txtdateM" type="text" class="easyui-datebox" required="required" >
+            </div>
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="selectFAB" style="width:150px;">選擇廠別</label>
+            </div>
+            <select class="custom-select" id="selectFAB" onchange="GetDocbs('')">
+                <option value="" selected>讀取中</option>
+            </select>
+        </div>
+        <div class="input-group col-12 col-sm-12 col-md-6 col-lg-6" style="margin-top:20px;">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="selectDoc" style="width:150px;">選擇單號</label>
+            </div>
+            <select class="custom-select" id="selectDoc">
+                <option value="" selected>讀取中</option>
+            </select>
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" onclick="GetTestData()" id="btn_go">GO</button>
+            </div>
+        </div>
+    </div>
+    <!--Test-->
+    <div class="form-inline" id="TableDiv">
+
+    </div>
+    <!---->
+</div>
+
+

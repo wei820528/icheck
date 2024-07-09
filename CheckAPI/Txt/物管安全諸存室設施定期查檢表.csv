@@ -1,0 +1,29 @@
+﻿項目ID,項目名稱,項目說明,項目類別（1.是否 2.數字 3.文字）
+Layer1_01,門機構檢查—門（含配件）,報廢庫房雙門（Layer 1）,1
+Layer1_02,門警報檢查—Local Alarm,報廢庫房雙門（Layer 1）,1
+Layer1_03,刷卡－進入,報廢庫房雙門（Layer 1）,1
+Layer1_04,刷卡－出去,報廢庫房雙門（Layer 1）,1
+Layer1_05,CCTV檢查—即時畫面,報廢庫房雙門（Layer 1）,1
+Layer1_06,備註說明,報廢庫房雙門（Layer 1）,3
+Layer2_01,門機構檢查—門（含配件）,安全儲存室（Layer 2）,1
+Layer2_02,門警報檢查—Local Alarm,安全儲存室（Layer 2）,1
+Layer2_03,門警報檢查—中控 Alarm,安全儲存室（Layer 2）,1
+Layer2_04,門警報檢查—Local 記錄,安全儲存室（Layer 2）,1
+Layer2_05,門警報檢查—連動跳圖,安全儲存室（Layer 2）,1
+Layer2_06,刷卡－進入密碼,安全儲存室（Layer 2）,1
+Layer2_07,刷卡－出去,安全儲存室（Layer 2）,1
+Layer2_08,刷卡－門未關 Local Alarm,安全儲存室（Layer 2）,1
+Layer2_09,刷卡－門闖入 Local Alarm,安全儲存室（Layer 2）,1
+Layer2_10,刷卡－門闖入警衛提醒,安全儲存室（Layer 2）,1
+Layer2_11,CCTV檢查—即時畫面,安全儲存室（Layer 2）,1
+Layer2_12,CCTV檢查—1個月前畫面,安全儲存室（Layer 2）,1
+Layer2_13,CCTV檢查—3個月前畫面,安全儲存室（Layer 2）,1
+Layer2_14,解除機制—進刷卡,安全儲存室（Layer 2）,1
+Layer2_15,解除機制—出刷卡,安全儲存室（Layer 2）,1
+Layer2_16,解除機制—啟動指示,安全儲存室（Layer 2）,1
+Layer2_17,提醒機制—無人5分鐘,安全儲存室（Layer 2）,1
+Layer2_18,警報檢查—Local Alarm,安全儲存室（Layer 2）,1
+Layer2_19,警報檢查—中控 Alarm,安全儲存室（Layer 2）,1
+Layer2_20,警報檢查—中控記錄,安全儲存室（Layer 2）,1
+Layer2_21,警報檢查—連動跳圖,安全儲存室（Layer 2）,1
+Layer2_22,備註說明,安全儲存室（Layer 2）,3

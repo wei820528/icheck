@@ -1,0 +1,229 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.title</title>
+    <link href="~/Bootstrap/CSS/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Font/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/jQueryUi/themes/metro/easyui.css" rel="stylesheet" />
+    <link href="~/jQueryUi/themes/icon.css" rel="stylesheet" />
+    <script src="~/jQueryUI/jquery.min.js"></script>
+    <script src="~/Bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/jQueryUi/jquery.easyui.min.js"></script>
+    <script src="~/jQueryUI/locale/easyui-lang-zh_TW.js"></script>
+    <style>
+        #TableDiv {
+            box-sizing: content-box;
+        }
+
+        .form-inline {
+            margin-top: 1px;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+    </style>
+    @RenderSection("CustomStyle", false)
+    <script>
+    $(document).ready(function () {
+        ReSize();
+        $(window).resize(function () {
+            ReSize();
+        });
+        setTimeout("SessionCheck(1);", 1000);
+    });
+    function ReSize() {
+        var ww = $(window).width();
+        if (ww > 768) {
+            $("#UserName1").css("display", "block");
+        } else {
+            $("#UserName1").css("display", "none");
+        }
+    }
+    function SessionCheck(repeat) {
+        $.post("@Url.Action("LoginTest", "Login")", function (xx) {
+            if (xx != "ok") {
+                self.location.reload();
+            }
+        }, "text").fail(function () {
+            //self.location.reload();
+            document.location.href = "@Url.Action("Logout", "Login")";
+        }).always(function () {
+            if (repeat == 1)
+                setTimeout("SessionCheck(1);", 60000);
+        });
+    }
+    function msg(msgtxt) {
+        var s = msgtxt.search("成功");
+        var f = msgtxt.search("失敗");
+        if (s > 0)
+            $.messager.show({
+                title: '成功',
+                msg: msgtxt,
+                showType: 'slide',
+                timeout: 2000,
+            });
+        else if (f > 0)
+            $.messager.alert('錯誤', msgtxt, 'error');
+        else
+            $.messager.alert('訊息', msgtxt, 'question');
+    }
+    //Table寬高變化
+    function ChangeTableSize() {
+        var hh = innerHeight;
+        var ww = innerWidth;
+        var k = 60;
+        if (ww < 768) k = 60;
+        $("#TableDiv").css("height", (hh - k) + "px");
+        $("#SearchResult").datagrid('resize');
+    }
+    </script>
+    @RenderSection("CustomScript", false)
+</head>
+<body id="BackImage" style="background-color:white;">
+    <header>
+        <!--navbar-->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+            <a class="navbar-brand" href="~/Admin/AdminIndex">
+                <i class="fa fa-diamond" aria-hidden="true"></i>巡檢系統
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav text-center">
+                    @if (Session["CommonAccount"] == null)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="submenu-tablemanage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-database" aria-hidden="true"></i>表單設定
+                            </a>
+                            <div class="dropdown-menu text-md-left" aria-labelledby="submenu-tablemanage">
+                                <a class="dropdown-item" href="~/Admin/TableManage">
+                                    <i class="fa fa-database" aria-hidden="true"></i>表單管理
+                                </a>
+                                <a class="dropdown-item" href="~/Admin/ItemManage">
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i>表單項目管理
+                                </a>
+                                <a class="dropdown-item" href="~/Admin/ImportManage">
+                                    <i class="fa fa-simplybuilt" aria-hidden="true"></i>匯入表單項目
+                                </a>
+                                <a class="dropdown-item" href="~/Admin/TagCodeManage">
+                                    <i class="fa fa-podcast" aria-hidden="true"></i>TagCode管理
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="submenu-accountmanage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-user-circle-o" aria-hidden="true"></i>權限設定
+                            </a>
+                            <div class="dropdown-menu text-left" aria-labelledby="submenu-accountmanage">
+                                <a class="dropdown-item" href="~/Admin/AccountManage">
+                                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>帳號管理
+                                </a>
+                                <a class="dropdown-item" href="~/Admin/AccountUseTable">
+                                    <i class="fa fa-id-card" aria-hidden="true"></i>帳號使用表單
+                                </a>
+                                <a class="dropdown-item" href="~/Admin/AccountAgent">
+                                    <i class="fa fa-address-card-o" aria-hidden="true"></i>帳號代理人設定
+                                </a>
+                            </div>
+                        </li>
+                    }
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="submenu-check" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-book" aria-hidden="true"></i>點檢表單查詢
+                        </a>
+                        <div class="dropdown-menu text-left" aria-labelledby="submenu-check">
+                            <a class="dropdown-item" href="~/Admin/DataManage">
+                                <i class="fa fa-book" aria-hidden="true"></i>上傳資料查詢
+                            </a>
+                            <a class="dropdown-item" href="~/Admin/TestPage">
+                                <i class="fa fa-check-circle-o" aria-hidden="true"></i>點檢表單
+                            </a>
+                            @if (Session["IsInfo"] != null)
+                            {
+                                if (Session["IsInfo"].ToString() == "True")
+                                {
+                                    <a class="dropdown-item" href="~/Info/Info?IsInfo=@Session["IsInfo"]&UserID=@Session["LoginAccount"]">
+                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>看板連結
+                                    </a>
+                                }
+                            }
+                            @if (Session["IsForm"] != null)
+                            {
+                                if (Session["IsForm"].ToString() == "True")
+                                {
+                                    <a class="dropdown-item" href="~/Admin/ExpiredPage">
+                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>補簽過期表單
+                                    </a>
+
+                                }
+                            }
+                        </div>
+                    </li>
+
+                    @if (Session["CommonAccount"] == null)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="submenu-etc" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-cog" aria-hidden="true"></i>其它設定
+                            </a>
+                            <div class="dropdown-menu text-left" aria-labelledby="submenu-etc">
+                                <a class="dropdown-item" href="~/Admin/MailSetting">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>信箱設定
+                                </a>
+                                <a class="dropdown-item" href="~/Admin/HolidaySetting">
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>假日設定
+                                </a>
+                                <a class="dropdown-item" href="~/Admin/MessageSetting">
+                                    <i class="fa fa-commenting" aria-hidden="true"></i>留言設定
+                                </a>
+                            </div>
+                        </li>
+                        <!---->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="submenu-etc" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-cog" aria-hidden="true"></i>排程測試
+                            </a>
+                            <div class="dropdown-menu text-left" aria-labelledby="submenu-etc">
+                                <a class="nav-link" id="submenu-testjson" href="~/Admin/TestJson" style="color:black">
+                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>寄信、產生單子
+                                </a>
+                                <a class="nav-link" id="submenu-testjson" href="~/Admin/TestJsonM"  style="color:black">
+                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>月排
+                                </a>
+                            </div>
+                        </li>
+                        @*<li class="nav-item">
+                            <a class="nav-link" id="submenu-testjson" href="~/Admin/TestJson">
+                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>排程測試
+                            </a>
+                        </li>*@
+                    }
+                    <!---->
+                    <li class="nav-item">
+                        <a class="nav-link" id="submenu-logout" href="~/Login/Logout">
+                            <i class="fa fa-bus" aria-hidden="true"></i>登出
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div id="UserName1" style="float:right;display:none;color:white;">@Session["LoginAccount"]，您好</div>
+        </nav>
+    </header>
+    <!--container container-fluid-->
+    <div class="" style="width:100%;margin-top:55px;">
+        @RenderBody()
+    </div>
+</body>
+</html>
+
+

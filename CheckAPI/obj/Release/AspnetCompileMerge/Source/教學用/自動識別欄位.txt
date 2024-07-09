@@ -1,0 +1,10 @@
+﻿//[MSSQL] 當自動識別欄位需要Insert資料時應該怎麼辦 ?
+
+
+SET IDENTITY_INSERT [dbo].[Demo] ON;
+ 
+INSERT INTO [dbo].[Demo] ([ID], [Name]) VALUES (N'1', N'王小名');
+ 
+INSERT INTO [dbo].[Demo] ([ID], [Name]) VALUES (N'2', N'王大名');
+ 
+SET IDENTITY_INSERT [dbo].[Demo] OFF;

@@ -1,0 +1,567 @@
+﻿
+@{
+    ViewBag.Title = "巡檢系統 帳號管理";
+    Layout = "~/Views/Shared/Bootstrap_Layout.cshtml";
+}
+
+@section CustomScript {
+    <script>
+        $(document).ready(function () {
+            //console.log(Session["CommonAccount"]);
+            $("#submenu-accountmanage").addClass('active');
+            $("#dlg_new").dialog('close');
+            $("#dlg_edit").dialog('close');
+            GetFAB();
+            $('#Account').bind('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    $('#User_Name').focus();
+                }
+            });
+            $('#User_Name').bind('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    $('#User_Password').focus();
+                }
+            });
+            $('#User_Password').bind('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    $('#Check_Password').focus();
+                }
+            });
+            $('#Check_Password').bind('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    $('#SendMail').focus();
+                }
+            });
+            $('#SendMail').bind('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    submitForm();
+                }
+            });
+            $("#Account").blur(function () {
+                var v = $("#Account").val();
+                if (v.length == 0)
+                    $("#AccountCheckResult").text("");
+                else {
+                    var Account = $.param({ "Account": v });
+                    $.post("@Url.Action("CheckAccountDuplicate","Admin")", Account, function (xx) {
+                        if (xx == "t")
+                            $("#AccountCheckResult").text("帳號已被使用").css({ "font-weight": "bold", "color": "red" });
+                        else
+                            $("#AccountCheckResult").text("帳號可以使用").css({ "font-weight": "bold", "color": "green" });
+                    }, "text");
+                }
+            });
+            $("#Check_Password").blur(function () {
+                var v1 = $("#User_Password").val();
+                var v2 = $("#Check_Password").val();
+                if (v1.length == 0 && v2.length == 0 )
+                    $("#PasswordCheckResult").text("請輸入密碼").css({ "font-weight": "bold", "color": "red" });
+                else {
+                    if (v1 == v2) {
+                        $("#PasswordCheckResult").text("確認密碼正確").css({ "font-weight": "bold", "color": "green" });
+                    }
+                    else {
+                        $("#PasswordCheckResult").text("確認密碼錯誤").css({ "font-weight": "bold", "color": "red" });
+                    }
+                }
+            });
+            $("#User_Password").blur(function () {
+                var v1 = $("#User_Password").val();
+                var v2 = $("#Check_Password").val();
+                if (v1.length == 0 && v2.length == 0)
+                    $("#PasswordCheckResult").text("請輸入密碼").css({ "font-weight": "bold", "color": "red" });
+                else {
+                    if (v1 == v2) {
+                        $("#PasswordCheckResult").text("確認密碼正確").css({ "font-weight": "bold", "color": "green" });
+                    }
+                    else {
+                        $("#PasswordCheckResult").text("確認密碼錯誤").css({ "font-weight": "bold", "color": "red" });
+                    }
+                }
+            });
+            var p = $("#SearchResult").datagrid('getPager');
+            $(p).pagination({
+                onSelectPage: function (pageNumber, pageSize) {
+                    var FAB = $('#selectFAB').combobox('getValue');
+                    $("#SearchResult").datagrid({ url: "@Url.Action("UserList", "Admin")?FAB=" + FAB, method: 'post' });
+                }
+            });
+            $("#SearchResult").datagrid({ url: "@Url.Action("UserList", "Admin")?FAB=ALL", method: 'post' });
+            $('#SearchResult').datagrid({
+                onClickRow: function (index, row) {
+                    console.log(row);
+                    $("#User_Email_P").val(row["UserID"]);
+                    $("#User_Password_P").val("");
+                    $("#User_Name_P").val(row["UserName"]);
+                    $("#FAB_P").val(row["FAB"]);
+                    $("#SendMail_P").val(row["UserMail"]);
+                    $('#APPIsAdmin_P').val(row["APPIsAdmin"]);
+                    $('#IsAdmin_P').val(row["IsAdmin"]);
+                    $('#IsBoss_P').val(row["IsBoss"]);
+                    $('#IsInfo_P').val(row["IsInfo"]);
+                    $('#IsForm_P').val(row["IsForm"]);
+                    
+                    OpenDlgEdit();
+                }
+            });
+            ChangeTableSize();
+            $(window).resize(function () {
+                ChangeTableSize();
+            });
+            $('#selectFAB').combobox( {
+                onChange: function (newValue, oldValue) {
+                    ChangeFAB();
+                }
+            })
+        });
+        function GetFAB() {
+            $('#selectFAB').combobox({
+                url: "@Url.Action("GetSqlFAB_All", "Admin")",
+                valueField: 'FAB',
+                textField: 'FAB'
+            });
+            $.post("@Url.Action("GetSqlFABbs", "Admin")?a=0", function (xx) {
+                console.log(xx);
+                $('#FAB').html(xx);
+                $('#FAB_P').html(xx);
+            }, "text").done(function () {
+                //
+            }).fail(function () {
+                GetFAB();
+            });
+        }
+        function ChangeFAB() {
+            var FAB = $('#selectFAB').combobox('getValue');
+            var pp = $.param({
+                "FAB":FAB
+            });
+            $("#SearchResult").datagrid({ url: "@Url.Action("UserList", "Admin")?" + pp, method: 'post' });
+        }
+        function submitForm() {
+            var msgtxt = "";
+            var v = $("#Account").val();
+            if ($("#Account").val() == "") {
+                msgtxt += "請輸入帳號！ ";
+            }
+            if ($("#User_Name").val() == "") {
+                msgtxt += "請輸入姓名！ ";
+            }
+            if ($("#User_Password").val() == "") {
+                msgtxt += "請輸入密碼！ ";
+            }
+            if ($("#FAB").val() == "") {
+                msgtxt += "請輸入廠別！ ";
+            }
+            if ($("#SendMail").val() == "") {
+                msgtxt += "請輸入信箱！ ";
+            }
+            if ($("#SendMail").val().indexOf("@@")=="-1") {
+                msgtxt += "信箱格式不正確！ ";
+            }
+            if ($("#AccountCheckResult").text() != "帳號可以使用") {
+                msgtxt += $("#AccountCheckResult").text();
+            }
+            if ($("#PasswordCheckResult").text() != "確認密碼正確") {
+                msgtxt += $("#PasswordCheckResult").text();
+            }
+            if (msgtxt == "") {
+                var pp = $.param({
+                    "UserID": $("#Account").val(),
+                    "UserName": $("#User_Name").val(),
+                    "UserPwd": $("#User_Password").val(),
+                    "FAB": $("#FAB").val(),
+                    "UserMail": $("#SendMail").val(),
+                    "APPIsAdmin": $("#APPIsAdmin").val(),
+                    "IsAdmin": $("#IsAdmin").val(),
+                    "IsBoss": $("#IsBoss").val(),
+                    "IsInfo": $("#IsInfo").val(),
+                    "IsForm": $("#IsForm").val(),
+                    
+                });
+                $.post("@Url.Action("NewAccountProcess", "Admin")", pp, function (xx) {
+                    msg(xx);
+                }, "text").done(function () {
+                    CloseDlg();
+                    $("#SearchResult").datagrid('reload');
+                });
+            }
+            else {
+                alert(msgtxt);
+                $('#Account').focus();
+            }
+        }
+        function clearform() {
+            $("#NewAccount").form('clear');
+            $("#AccountCheckResult").text("");
+            $("#PasswordCheckResult").text("");
+            $("#SendMail").text('');
+            $('#FAB option:eq(0)').prop('selected', true);
+            $('#User_Position option:eq(0)').prop('selected', true);
+            $('#APPIsAdmin option:eq(1)').prop('selected', true);
+            $('#IsAdmin option:eq(1)').prop('selected', true);
+            $('#IsBoss option:eq(0)').prop('selected', true);
+            $('#IsInfo option:eq(0)').prop('selected', true);
+            $('#IsForm option:eq(0)').prop('selected', true);
+           
+            $("#Account").focus();
+        }
+        function UpdateEditData() {
+            var pp = $.param({
+                "UserID": $("#User_Email_P").val(),
+                "UserPwd": $("#User_Password_P").val(),
+                "UserName": $("#User_Name_P").val(),
+                "FAB": $("#FAB_P").val(),
+                "UserMail": $("#SendMail_P").val(),
+                "APPIsAdmin": $("#APPIsAdmin_P").val(),
+                "IsAdmin": $("#IsAdmin_P").val(),
+                "IsBoss": $("#IsBoss_P").val(),
+                "IsInfo": $("#IsInfo_P").val(),
+                "IsForm": $("#IsForm_P").val(),
+            });
+            $.post("@Url.Action("UpdateEditData", "Admin")", pp, function (xx) {
+                msg(xx);
+            }, "text").done(function () {
+                CloseDlg();
+                $("#SearchResult").datagrid('reload');
+                $("#User_Password_P").val('');
+            }).fail(function () {
+                msg('網路沒有回應');
+            });
+        }
+        function DeleteEditData() {
+            $.messager.confirm('確認', "確定是否要刪除工號" + $("#User_Email_P").val() + "嗎？", function (r) {
+                if (r) {
+                    var pp = $.param({ "UserID": $("#User_Email_P").val() });
+                    $.post("@Url.Action("DeleteEditData", "Admin")", pp, function (xx) {
+                        $("#User_Email_P").val('');
+                        $("#User_Password_P").val('');
+                        $("#User_Name_P").val('');
+                        $("#FAB_P").val('FAB8A');
+                        $("#SendMail_P").val('');
+                        $('#APPIsAdmin_P').val('1');
+                        $('#IsAdmin_P').val('1');
+                        $('#IsBoss_P').val('False');
+                        $('#IsInfo_P').val('False');
+                        $('#IsForm').val('False');
+                       
+                        msg(xx);
+                    }, "text").done(function () {
+                        CloseDlg();
+                        $("#SearchResult").datagrid('reload');
+                    }).fail(function () {
+                        msg('網路沒有回應');
+                    });
+                }
+            });
+        }
+        //上傳檔案
+        function uploadFiles() {
+            var kk = $('#uploadfile').filebox('getValue');
+            if (kk == "") {
+                alert("請選擇檔案");
+                return;
+            } else {
+                uploadFilesAjax();
+            }
+        }
+        function uploadFilesAjax() {
+            $.messager.confirm('確認', "確定是否要匯入人員表單嗎？", function (r) {
+                if (r) {
+                    $.ajax({
+                        url: "@Url.Action("PostExcelUserData", "Admin")",
+                        type: 'POST',
+                        data: new FormData($('#ff')[0]),
+                        async: false,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (xx) {
+                            if (xx != "" && xx != "Error") {
+                                $("#UploadMsg").text(xx);
+                                $("#SearchResult").datagrid('reload');
+                            }
+                            else if (xx == "") {
+                                $("#UploadMsg").text("資料格式錯誤");
+                            }
+                            else if (xx == "Error") {
+                                $("#UploadMsg").text("Txt目錄無法存取");
+                            }
+                        },
+                        error: function (xx) {
+                            $("#UploadMsg").text("上載錯誤");
+                        }
+                    });
+                };
+            });
+        }
+        function OpenDlgNew() {
+            $("#dlg_new").dialog('open');
+            $("#dlg_edit").dialog('close');
+            $('#Account').focus();
+        }
+        function OpenDlgEdit() {
+            $("#dlg_new").dialog('close');
+            $("#dlg_edit").dialog('open');
+            $('#User_Name_P').focus();
+        }
+        function CloseDlg() {
+            $("#dlg_new").dialog('close');
+            $("#dlg_edit").dialog('close');
+            clearform();
+        }
+    </script>
+}
+    <div id="TableDiv" style="width:100%;height:100%;">
+        @if (Session["AdminAccount"] != null)
+        {
+            <div id="tb" style="text-align:right;">
+                <form action="@Url.Action("PostExcelUserData", "Admin")" id="ff" enctype="multipart/form-data" method="post" style="float:left;">
+                    <span>匯入表單</span>
+                    <input id="uploadfile" class="easyui-filebox" name="file" style="width:280px;height:30px;">
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-redo'" onclick="uploadFiles()" style="width:150px;height:30px;">上傳</a>
+                    <span id="UploadMsg"></span>
+                </form>
+                <span>廠別</span>
+                <select id="selectFAB" class="easyui-combobox" panelHeight="auto" editable="false" style="width:130px;height:30px;">
+                    <option value="ALL" selected>ALL</option>
+                </select>
+                <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" style="width:130px;height:30px;" onclick="OpenDlgNew()">新增</a>
+            </div>
+
+        }
+
+        <table id="SearchResult" class="easyui-datagrid" title="帳號管理" style="width:100%;height:100%;margin-left:auto;margin-right:auto;"
+               data-options="singleSelect:true,collapsible:false,fitColumns:true,remoteSort:false
+                        ,toolbar:'#tb',pagination:true,pageSize:20,pageList:[10,15,20,25,30]" multiSort="true">
+            <thead>
+                <tr>
+                    <th data-options="field:'UserID'" width="80" sortable="true">工號</th>
+                    <th data-options="field:'UserName'" width="80" sortable="true">姓名</th>
+                    <th data-options="field:'FAB'" width="50" sortable="true">廠區</th>
+                    <th data-options="field:'UserMail'" width="100" sortable="true">信箱</th>
+                    <th data-options="field:'APPIsAdmin2'" width="50" sortable="true">APP權限</th>
+                    <th data-options="field:'IsForm2'" width="50" sortable="true">過期表單權限</th>
+                    <th data-options="field:'IsAdmin2'" width="50" sortable="true">後台權限</th>
+                    <th data-options="field:'IsInfo2'" width="50" sortable="true">看板權限</th>
+                    <th data-options="field:'IsBoss2'" width="50" sortable="true">職位</th>
+                </tr>
+            </thead>
+        </table>
+
+    </div>
+<!--新增使用者-->
+<div id="dlg_new" class="easyui-dialog" title="新增帳號" style="width:100%;max-width:600px;height:auto;"
+     data-options="iconCls:'icon-add',resizable:true,modal:true">
+    <div class="container-fluid">
+        <form id="NewAccount" action="@Url.Action("NewAccountProcess", "Admin")" class="easyui-form" method="post" data-options="novalidate:true">
+            <div class="form-inline">
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="Account" style="width:150px;">工號</label>
+                    </div>
+                    <input type="text" class="form-control" id="Account" />
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:0px;margin-bottom:0px;height:20px;">
+                    <span id="AccountCheckResult"></span>
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:0px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="User_Name" style="width:150px;">姓名</label>
+                    </div>
+                    <input type="text" class="form-control" id="User_Name" />
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="User_Password" style="width:150px;">密碼</label>
+                    </div>
+                    <input type="password" class="form-control" id="User_Password" />
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="Check_Password" style="width:150px;">確認密碼</label>
+                    </div>
+                    <input type="password" class="form-control" id="Check_Password" />
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:0px;margin-bottom:0px;height:20px;">
+                    <span id="PasswordCheckResult"></span>
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:0px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="SendMail" style="width:150px;">信箱</label>
+                    </div>
+                    <input type="email" class="form-control" id="SendMail" />
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="FAB" style="width:150px;">廠別</label>
+                    </div>
+                    <select class="custom-select" id="FAB">
+                        <!--class=custom-select-->
+                        <option value="FAB8A" selected>FAB8A</option>
+                        <option value="FAB8C">FAB8C</option>
+                        <option value="FAB8D">FAB8D</option>
+                        <option value="FAB8S">FAB8S</option>
+                    </select>
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="APPIsAdmin" style="width:150px;">APP權限</label>
+                    </div>
+                    <select class="custom-select" id="APPIsAdmin">
+                        <option value="0" selected>無</option>
+                        <option value="1">一般使用者</option>
+                        <option value="2">管理者</option>
+                        <option value="3">主管</option>
+                    </select>
+                </div>
+
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="IsAdmin" style="width:150px;">後台權限</label>
+                    </div>
+                    <select class="custom-select" id="IsAdmin">
+                        <option value="0" selected>無</option>
+                        <option value="1">一般使用者</option>
+                        <option value="2">管理者</option>
+                    </select>
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="IsInfo" style="width:150px;">看板權限</label>
+                    </div>
+                    <select class="custom-select" id="IsInfo">
+                        <option value="False" selected>否</option>
+                        <option value="True">是</option>
+                    </select>
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="IsForm" style="width:150px;">過期表單權限</label>
+                    </div>
+                    <select class="custom-select" id="IsForm">
+                        <option value="False" selected>否</option>
+                        <option value="True">是</option>
+                    </select>
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="IsBoss" style="width:150px;">職位</label>
+                    </div>
+                    <select class="custom-select" id="IsBoss">
+                        <option value="False" selected>一般職員</option>
+                        <option value="True">主管</option>
+                    </select>
+                </div>
+
+                <div class="form-row col-12 col-sm-12 col-md-12 col-lg-12 text-center" style="margin-top:20px;margin-bottom:10px;">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-info col-5 col-sm-5 col-md-5 col-lg-5" onclick="submitForm()">送出</button>
+                        <button type="button" class="btn btn-danger col-5 col-sm-5 col-md-5 col-lg-5" onclick="CloseDlg()">取消</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div id="APmsg"></div>
+    </div>
+</div>
+<!--修改帳號-->
+<div id="dlg_edit" class="easyui-dialog" title="修改帳號" style="width:100%;max-width:600px;height:auto;"
+     data-options="iconCls:'icon-edit',resizable:true,modal:true">
+    <div class="container-fluid">
+        <div class="form-inline">
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="User_Email_P" style="width:150px;">工號</label>
+                </div>
+                <input type="text" class="form-control" id="User_Email_P" readonly />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="User_Name_P" style="width:150px;">姓名</label>
+                </div>
+                <input type="text" class="form-control" id="User_Name_P" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="User_Password_P" style="width:150px;">密碼</label>
+                </div>
+                <input type="password" class="form-control" id="User_Password_P" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="SendMail_P" style="width:150px;">信箱</label>
+                </div>
+                <input type="text" class="form-control" id="SendMail_P" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="FAB_P" style="width:150px;">廠別</label>
+                </div>
+                <select class="custom-select" id="FAB_P">
+                    <!--class="custom-select"-->
+                    <option value="FAB8A" selected>FAB8A</option>
+                    <option value="FAB8C">FAB8C</option>
+                    <option value="FAB8D">FAB8D</option>
+                    <option value="FAB8S">FAB8S</option>
+                </select>
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="APPIsAdmin_P" style="width:150px;">APP權限</label>
+                </div>
+                <select class="custom-select" id="APPIsAdmin_P">
+                    <option value="0" selected>無</option>
+                    <option value="1">一般使用者</option>
+                    <option value="2">管理者</option>
+                    <option value="3">主管</option>
+                </select>
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="IsAdmin_P" style="width:150px;">後台權限</label>
+                </div>
+                <select class="custom-select" id="IsAdmin_P">
+                    <option value="0" selected>無</option>
+                    <option value="1">一般使用者</option>
+                    <option value="2">管理者</option>
+                </select>
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="IsInfo_P" style="width:150px;">看板權限</label>
+                </div>
+                <select class="custom-select" id="IsInfo_P">
+                    <option value="False" selected>否</option>
+                    <option value="True">是</option>
+
+                </select>
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="IsForm_P" style="width:150px;">過期表單權限</label>
+                </div>
+                <select class="custom-select" id="IsForm_P">
+                    <option value="False" selected>否</option>
+                    <option value="True">是</option>
+                </select>
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="IsBoss_P" style="width:150px;">職位</label>
+                </div>
+                <select class="custom-select" id="IsBoss_P">
+                    <option value="False" selected>一般職員</option>
+                    <option value="True">主管</option>
+                </select>
+            </div>
+            <div class="form-row col-12 col-sm-12 col-md-12 col-lg-12 text-center" style="margin-top:20px;margin-bottom:10px;">
+                <div class="col-12">
+                    <button type="button" class="btn btn-info col-3 col-sm-3 col-md-3 col-lg-3" onclick="UpdateEditData()">修改</button>
+                    <button type="button" class="btn btn-success col-3 col-sm-3 col-md-3 col-lg-3" onclick="DeleteEditData()">刪除</button>
+                    <button type="button" class="btn btn-danger col-3 col-sm-3 col-md-3 col-lg-3" onclick="CloseDlg()">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

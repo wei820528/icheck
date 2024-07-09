@@ -1,0 +1,192 @@
+﻿
+@{
+    ViewBag.Title = "巡檢系統 假日設定";
+    Layout = "~/Views/Shared/Bootstrap_Layout.cshtml";
+}
+@section CustomScript {
+    <script>
+        $(document).ready(function () {
+            $("#submenu-etc").addClass('active');
+            CloseDlg();
+            ChangeTableSize();
+            $(window).resize(function () {
+                ChangeTableSize();
+            });
+            var p = $("#SearchResult").datagrid('getPager');
+            $(p).pagination({
+                onSelectPage: function (pageNumber, pageSize) {
+                    //var FAB = $('#selectFAB').combobox('getValue');
+                    $("#SearchResult").datagrid({ url: "@Url.Action("HolidayList", "Admin")", method: 'post' });
+                }
+            });
+            $("#SearchResult").datagrid({ url: "@Url.Action("HolidayList", "Admin")", method: 'post' });
+            $('#SearchResult').datagrid({
+                onClickRow: function (index, row) {
+                    $("#SN_e").val(row["SN"]);
+                    $("#Holiday_e").datebox("setValue", row["Holiday"]);
+                    $("#Comment_e").val(row["Comment"]);
+                    OpenDlgEdit();
+                }
+            });
+        });
+        //新增假日
+        function submitForm() {
+            var msgtxt = "";
+            if ($("#Holiday").datebox('getValue') == "") {
+                msgtxt += "請選擇日期！ ";
+            }
+            if (msgtxt == "") {
+                var pp = $.param({
+                    "Holiday": $("#Holiday").datebox('getValue'),
+                    "Comment": $("#Comment").val()
+                });
+                $.post("@Url.Action("NewHolidayProcess", "Admin")", pp, function (xx) {
+                    msg(xx);
+                    $("#Holiday").datebox('setValue', '');
+                    $("#Comment").val('');
+                }, "text").done(function () {
+                    $("#SearchResult").datagrid('reload');
+                });;
+            }
+            else {
+                alert(msgtxt);
+            }
+        }
+        function UpdateEditData() {
+            var pp = $.param({
+                "SN": $("#SN_e").val(),
+                "Holiday": $("#Holiday_e").datebox('getValue'),
+                "Comment": $("#Comment_e").val()
+            });
+            $.post("@Url.Action("UpdateHoliday", "Admin")", pp, function (xx) {
+                msg(xx);
+            }, "text").done(function () {
+                CloseDlg();
+                $("#SearchResult").datagrid('reload');
+            }).fail(function () {
+                msg('網路沒有回應');
+            });
+        }
+        function DeleteEditData() {
+            $.messager.confirm('確認', "確定是否要刪除假日" + $("#Holiday_e").datebox('getValue') + "嗎？", function (r) {
+                if (r) {
+                    var pp = $.param({ "SN": $("#SN_e").val() });
+                    $.post("@Url.Action("DeleteHoliday", "Admin")", pp, function (xx) {
+                        msg(xx);
+                    }, "text").done(function () {
+                        CloseDlg();
+                        $("#SearchResult").datagrid('reload');
+                    }).fail(function () {
+                        msg('網路沒有回應');
+                    });
+                }
+            });
+        }
+        //Dlg
+        function OpenDlgNew() {
+            $("#dlg_new").dialog('open');
+            $("#dlg_edit").dialog('close');
+        }
+        function OpenDlgEdit() {
+            $("#dlg_new").dialog('close');
+            $("#dlg_edit").dialog('open');
+        }
+        function CloseDlg() {
+            $("#dlg_new").dialog('close');
+            $("#dlg_edit").dialog('close');
+        }
+    </script>
+}
+<div id="TableDiv" style="width:100%;height:100%;">
+    <div id="tb" style="text-align:right;">
+        <!--
+            <span>年份</span>
+            <select id="selectFAB" class="easyui-combobox" panelHeight="auto" editable="false" style="width:130px;height:30px;">
+                <option value="ALL" selected>ALL</option>
+            </select>
+        -->
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" style="width:130px;height:30px;" onclick="OpenDlgNew()">新增假日</a>
+    </div>
+    <table id="SearchResult" class="easyui-datagrid" title="假日設定" style="width:100%;height:100%;margin-left:auto;margin-right:auto;"
+           data-options="singleSelect:true,collapsible:false,fitColumns:true,remoteSort:false
+                            ,toolbar:'#tb',pagination:true,pageSize:20,pageList:[10,15,20,25,30]" multiSort="true">
+        <thead>
+            <tr>
+                <th data-options="field:'SN'" width="80">自動序號</th>
+                <th data-options="field:'Holiday'" width="150">假日</th>
+                <th data-options="field:'Comment'" width="150">說明</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<!--新增假日-->
+<div id="dlg_new" class="easyui-dialog" title="新增假日" style="width:100%;max-width:600px;height:auto;"
+     data-options="iconCls:'icon-add',resizable:true,modal:true">
+    <div class="container-fluid">
+        <form id="NewAccount" action="@Url.Action("NewAccountProcess", "Admin")" class="easyui-form" method="post" data-options="novalidate:true">
+            <div class="form-inline">
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="Holiday" style="width:150px;">假日</label>
+                    </div>
+                    <input id="Holiday" type="text" class="easyui-datebox" editable='false' required="required" style="width:350px;">
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:0px;margin-bottom:0px;height:20px;">
+                    <span id="AccountCheckResult"></span>
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:0px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="Comment" style="width:150px;">說明(可不填)</label>
+                    </div>
+                    <input type="text" class="form-control" id="Comment" style="width:350px;"/>
+                </div>
+                <div class="form-row col-12 col-sm-12 col-md-12 col-lg-12 text-center" style="margin-top:20px;margin-bottom:10px;">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-info col-5 col-sm-5 col-md-5 col-lg-5" onclick="submitForm()">送出</button>
+                        <button type="button" class="btn btn-danger col-5 col-sm-5 col-md-5 col-lg-5" onclick="CloseDlg()">取消</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div id="APmsg"></div>
+    </div>
+</div>
+<!--修改假日-->
+<div id="dlg_edit" class="easyui-dialog" title="修改假日" style="width:100%;max-width:600px;height:auto;"
+     data-options="iconCls:'icon-add',resizable:true,modal:true">
+    <div class="container-fluid">
+        <form id="NewAccount" action="@Url.Action("NewAccountProcess", "Admin")" class="easyui-form" method="post" data-options="novalidate:true">
+            <div class="form-inline">
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="SN_e" style="width:150px;">自動序號</label>
+                    </div>
+                    <input type="text" class="form-control" id="SN_e" disabled/>
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="Holiday_e" style="width:150px;">假日</label>
+                    </div>
+                    <input id="Holiday_e" type="text" class="easyui-datebox" editable='false' required="required" style="width:350px;">
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:0px;margin-bottom:0px;height:20px;">
+                    <span id="AccountCheckResult"></span>
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:0px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="Comment_e" style="width:150px;">說明(可不填)</label>
+                    </div>
+                    <input type="text" class="form-control" id="Comment_e" style="width:350px;" />
+                </div>
+                <div class="form-row col-12 col-sm-12 col-md-12 col-lg-12 text-center" style="margin-top:20px;margin-bottom:10px;">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-info col-3 col-sm-3 col-md-3 col-lg-3" onclick="UpdateEditData()">修改</button>
+                        <button type="button" class="btn btn-success col-3 col-sm-3 col-md-3 col-lg-3" onclick="DeleteEditData()">刪除</button>
+                        <button type="button" class="btn btn-danger col-3 col-sm-3 col-md-3 col-lg-3" onclick="CloseDlg()">取消</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div id="APmsg"></div>
+    </div>
+</div>

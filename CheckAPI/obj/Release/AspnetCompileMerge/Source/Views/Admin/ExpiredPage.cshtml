@@ -1,0 +1,202 @@
+﻿
+@{
+    ViewBag.Title = "巡檢系統 過期補簽單";
+    Layout = "~/Views/Shared/Bootstrap_Layout.cshtml";
+}
+
+<!--新增項目-->
+@section CustomScript {
+    <script>
+        $(document).ready(function () {
+            $("#submenu-check").addClass('active');
+            GetFABbs();
+
+            $('#selectDateStart').datebox({
+                onSelect: function (date) {
+                    $('#selectDateStart').datebox('setValue', date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
+                    GetDocbs();
+                }
+            });
+            $('#selectDateEnd').datebox({
+                onSelect: function (date) {
+                    $('#selectDateEnd').datebox('setValue', date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
+                    GetDocbs();
+                }
+            });
+        });
+        //取得資料//2
+        function GetFABbs() {
+            $.post("@Url.Action("GetFABbs", "Admin")", function (xx) {
+                $("#selectFAB").html(xx);
+            }, "text").done(function () {
+                onDateStart();
+                onDateEnd();
+                GetDocbs();
+            }).fail(function () {
+                msg("網路沒有回應");
+            });
+        }
+        function GetTestData() {
+            var FAB = $("#selectFAB").val();
+            var Value = $("#selectDoc").val();
+            if (Value == "") {
+                msg("請選擇單號");
+                return;
+            }
+            var ValueList = Value.split(',');
+            var Doc = ValueList[0];
+            var TableID = ValueList[1];
+            var pp = $.param({
+                "FAB": FAB,
+                "Doc": Doc,
+                "TableID": TableID
+            })
+            $.post("@Url.Action("GetExpiredData", "Admin")" , pp, function (xx) {
+                $("#TableDiv").html(xx);
+                console.log(xx);
+            }, "text").done(function () {
+                $("#selectFAB").prop('disabled', true);
+                $("#selectDoc").prop('disabled', true);
+                $("#btn_go").prop('disabled', true);
+            }).fail(function () {
+                msg("網路沒有回應");
+            });
+        }
+        function ChangeOK(key, value) {
+            var currentdate = new Date();
+            var dtime = currentdate.getFullYear() + "-"
+                + (currentdate.getMonth() + 1) + "-"
+                + currentdate.getDate() + " "
+                + currentdate.getHours() + ":"
+                + currentdate.getMinutes() + ":"
+                + currentdate.getSeconds();
+            if (value == "OK") {
+                $("#" + key).val(value);
+                $("#" + key).prop('disabled', true);
+                $("#" + key + "_time").val(dtime);
+            } else if (value == "Error") {
+                $("#" + key).val('');
+                $("#" + key).prop('disabled', false);
+                $("#" + key + "_time").val(dtime);
+                $("#" + key).focus();
+            }
+            //alert($("#" + key + "_time").val());
+        }
+        function UpdateTable() {
+            var ItemList = $("#ItemList").val().split(',');
+            for (var i = 0; i < ItemList.length; i++) {
+                var ItemValue = $("#" + ItemList[i]).val().trim();
+                if (ItemValue == "") {
+                    alert("請輸入資料");
+                    return;
+                }
+            }
+            //組Json
+            var json = [];
+            for (var i = 0; i < ItemList.length; i++) {
+                var ValueList = $("#selectDoc").val().split(',');
+                var Doc = ValueList[0];
+                var ItemID = ItemList[i];
+                var ItemValue = $("#" + ItemID).val().trim();
+                var jsonitem = {
+                    "Doc": Doc,
+                    "ItemID": ItemID,
+                    "ItemValue": ItemValue
+                };
+                json.push(jsonitem);
+            }
+            var pp = $.param({
+                "json": JSON.stringify(json)
+            });
+            $.post("@Url.Action("UpdateExpiredDatas", "Admin")" , pp, function (xx) {
+                msg(xx);
+            }, "text").done(function () {
+                CloseTable();
+                GetFABbs();
+            }).fail(function () {
+                msg("網路沒有回應");
+            });
+        }
+        function CloseTable() {
+            $("#selectFAB").prop('disabled', false);
+            $("#selectDoc").prop('disabled', false);
+            $("#btn_go").prop('disabled', false);
+            $("#TableDiv").html('');
+        }
+        function onDateStart() {           
+            var someday = new Date();
+            var Month = someday.getMonth() + 1;
+            var FullYear = someday.getFullYear();
+            var DateD = someday.getDate();
+            $('#selectDateStart').datebox('setValue', FullYear + "-" + Month + "-" + DateD);
+        }
+        function onDateEnd() {
+            var someday = new Date();
+            var Month = someday.getMonth() + 1;
+            var FullYear = someday.getFullYear();
+            var DateD = someday.getDate();
+            $('#selectDateEnd').datebox('setValue', FullYear + "-" + Month + "-" + DateD);
+        }
+        function GetDocbs() {
+            var FAB = $("#selectFAB").val();
+            var DateStart = $('#selectDateStart').datebox('getValue');
+            var DateEnd = $('#selectDateEnd').datebox('getValue');
+            if (DateStart == "")   DateStart = "ALL";
+            if (DateEnd == "") DateEnd = "ALL";
+            console.log(DateStart);
+            console.log(DateEnd);
+            var pp = $.param({
+                "FAB": FAB,
+                "DateStart": DateStart,
+                "DateEnd": DateEnd
+            })
+            $.post("@Url.Action("GetExpiredDocbs", "Admin")", pp, function (xx) {
+                $("#selectDoc").html(xx);
+            }, "text").done(function () {
+                //GetUserbs();
+                //GetUserbs_e();
+            }).fail(function () {
+                msg("網路沒有回應");
+            });
+        }
+    </script>
+}
+
+<div class="container-fluid">
+    <div class="form-inline">
+        <div class="input-group col-12 col-sm-12 col-md-6 col-lg-6" style="margin-top:20px;">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="selectFAB" style="width:150px;">選擇日期</label>
+            </div>
+            <input id="selectDateStart" class="easyui-datebox" panelMaxHeight="200px" data-options="required:true,editable:false,panelHeight:'auto'" style="width:200px;height:30px;" />
+            <span>~</span>
+            <input id="selectDateEnd" class="easyui-datebox" panelMaxHeight="200px" data-options="required:true,editable:false,panelHeight:'auto'" style="width:200px;height:30px;" />
+        </div>
+        <div class="input-group col-12 col-sm-12 col-md-6 col-lg-6" style="margin-top:20px;">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="selectFAB" style="width:150px;">選擇廠別</label>
+            </div>
+            <select class="custom-select" id="selectFAB" onchange="GetDocbs()">
+                <option value="" selected>讀取中</option>
+            </select>
+        </div>
+        <div class="input-group col-12 col-sm-12 col-md-6 col-lg-6" style="margin-top:20px;">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="selectDoc" style="width:150px;">選擇單號</label>
+            </div>
+            <select class="custom-select" id="selectDoc">
+                <option value="" selected>讀取中</option>
+            </select>
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" onclick="GetTestData()" id="btn_go">GO</button>
+            </div>
+        </div>
+    </div>
+    <!--Test-->
+    <div class="form-inline" id="TableDiv">
+
+    </div>
+    <!---->
+</div>
+
+

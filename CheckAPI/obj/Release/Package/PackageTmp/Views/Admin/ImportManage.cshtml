@@ -1,0 +1,426 @@
+﻿
+@{
+    ViewBag.Title = "巡檢系統 匯入表單項目和類別管理";
+    Layout = "~/Views/Shared/Bootstrap_Layout.cshtml";
+}
+@section CustomScript {
+    <script>
+        $(document).ready(function () {
+            $("#submenu-tablemanage").addClass('active');
+            CloseDlg();
+            GetType();
+            ChangeTableSize();
+            $(window).resize(function () {
+                ChangeTableSize();
+            });
+            $("#SearchResult").datagrid({ url: "@Url.Action("GetTypeList", "Admin")", method: 'post' });
+            $('#SearchResult').datagrid({
+                onClickRow: function (index, row) {
+                    $("#SN_e").val(row["SN"]);
+                    $("#TableType_e").val(row["TableType"]);
+                    $("#SerialNumber_e").val(row["SerialNumber"]);
+
+                    OpenDlgEdit();
+                }
+            });
+        });
+        function GetType() {
+            $('#selectType').combobox({
+                url: "@Url.Action("GetTableType", "Admin")",
+                valueField: 'Value',
+                textField: 'Text',
+            });
+        }
+        function uploadFiles() {
+            var Type = $("#selectType").combobox('getValue');
+            var kk = $('#uploadfile').filebox('getValue');
+            if (kk == "") {
+                alert("請選擇檔案");
+                return;
+            } else if (Type == ""){
+                alert("請選擇類別");
+                return;
+            }
+            var pp = $.param({
+                "Type": Type,
+               // "SerialNumber": $("#SerialNumber").val(),
+            });
+            $.post("@Url.Action("ChangeItemType", "Admin")", pp, function (xx) {
+                uploadFilesAjax(Type);
+            }, "text");
+        }
+        function uploadFilesAjax(Type) {
+            $.messager.confirm('確認', "確定是否要匯入表單到<span style='color:blue'>“" + Type + "”</span>類別嗎？", function (r) {
+                if (r) {
+                    $.ajax({
+                        url: "@Url.Action("PostExcelData", "Admin")",
+                        type: 'POST',
+                        data: new FormData($('#ff')[0]),
+                        async: false,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (xx) {
+                            if (xx != "" && xx != "Error") {
+                                $("#UploadMsg").text(xx);
+                            }
+                            else if (xx == "") {
+                                $("#UploadMsg").text("資料已上傳過");
+                            }
+                            else if (xx == "Error") {
+                                $("#UploadMsg").text("Txt目錄無法存取");
+                            }
+                        },
+                        error: function (xx) {
+                            $("#UploadMsg").text("上載錯誤");
+                        }
+                    });
+                };
+            });
+        }
+        //新增類別
+        function AddTableType() {
+            var msgtxt = "";
+            if ($("#TableType").val() == "") {
+                msgtxt += "請輸入類別！ ";
+            }
+            if ($("#SerialNumber").val() == "") {
+                msgtxt += "請輸入編號！ ";
+            }
+
+            if (msgtxt == "") {
+                var pp = $.param({
+                    "TableType": $("#TableType").val(),
+                    "SerialNumber": $("#SerialNumber").val(),
+                });
+                $.post("@Url.Action("AddTableType", "Admin")", pp, function (xx) {
+                    msg(xx);
+                    $("#TableType").val('');
+                    $("#SerialNumber").val('');
+                    CloseDlg();
+                }, "text").fail(function () {
+                    msg("網路沒有回應");
+                }).always(function () {
+                    $("#SearchResult").datagrid('reload');
+                    GetType();
+                });
+            }
+            else {
+                alert(msgtxt);
+                $('#Account').focus();
+            }
+        }
+        //更新資料
+        function UpdateTableType() {
+            var pp = $.param({
+                "SN": $("#SN_e").val(),
+                "TableType": $("#TableType_e").val(),
+                "SerialNumber": $("#SerialNumber_e").val(),
+
+            })
+            $.post("@Url.Action("UpdateTableType", "Admin")", pp, function (xx) {
+                msg(xx);
+            }, "text").done(function () {
+                CloseDlg();
+            }).fail(function () {
+                msg('網路沒有回應');
+            }).always(function () {
+                $("#SearchResult").datagrid('reload');
+                GetType();
+            });
+        }
+        //刪除資料
+        function DeleteTableType() {
+            var SN = $("#SN_e").val();
+            var TableType = $("#TableType_e").val();
+            var SerialNumber = $("#SerialNumber_e").val();
+
+
+            $.messager.confirm('確認', "確定是否要刪除序號" + SN + ",類別" + TableType + "嗎？", function (r) {
+                if (r) {
+                    var pp = $.param({
+                        "SN": $("#SN_e").val(),
+                        "TableType": $("#TableType_e").val(),
+                        "SerialNumber": $("#SerialNumber_e").val(),
+                    })
+                    $.post("@Url.Action("DeleteTableType", "Admin")", pp, function (xx) {
+                        msg(xx);
+                    }, "text").done(function () {
+                        CloseDlg();
+                    }).fail(function () {
+                        msg('網路沒有回應');
+                    }).always(function () {
+                        $("#SearchResult").datagrid('reload');
+                        GetType();
+                    });
+                };
+            });
+        }
+        //Dlg相關
+        function OpenDlgNew() {
+            $("#dlg_new").dialog('open');
+            $("#dlg_edit").dialog('close');
+            $('#TableType').focus();
+            $('#SerialNumber').focus();
+
+        }
+        function OpenDlgEdit() {
+            $("#dlg_new").dialog('close');
+            $("#dlg_edit").dialog('open');
+            $('#TableType_e').focus();
+            $('#SerialNumber_e').focus();
+        }
+        function CloseDlg() {
+            $("#dlg_new").dialog('close');
+            $("#dlg_edit").dialog('close');
+            $("#TableType").val('');
+            $("#SerialNumber").val('');
+        }
+
+
+        function uploadFilesType() {
+            var kk = $('#uploadfileType').filebox('getValue');
+            if (kk == "") {
+                alert("請選擇檔案");
+                return;
+            }
+
+            var file = $("#fType").val();
+            var strFileName = file.replace(/^.+?\\([^\\]+?)(\.[^\.\\]*?)?$/gi, "$1");  //正則表示式獲取檔名，不帶字尾
+            var FileExt = file.replace(/.+\./, "");   //正則表示式獲取字尾
+            $.messager.confirm('確認', "確定是否要匯入此" + strFileName+"類別表單到嗎？", function (r) {
+                if (r) {
+                    $.ajax({
+                        url: "@Url.Action("PostExcelType", "Admin")",
+                        type: 'POST',
+                        data: new FormData($('#fType')[0]),
+                        async: false,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (xx) {
+                            if (xx != "" && xx != "Error") {
+                                $("#UploadMsg").text(xx);
+                            }
+                            else if (xx == "") {
+                                $("#UploadMsg").text("資料已上傳過");
+                            }
+                            else if (xx == "Error") {
+                                $("#UploadMsg").text("Txt目錄無法存取");
+                            }
+                            $("#SearchResult").datagrid('reload');
+                            alert(xx);
+                        },
+                        error: function (xx) {
+                            $("#UploadMsg").text("上載錯誤");
+                        }
+                    });
+                };
+            });
+        }
+
+
+        function DownloadFilesCSV() {
+            var From = $("#SelectDownload").combobox('getValue');
+            var FromName = $("#SelectDownload").combobox('getText');
+            if (From == "") {
+                alert("請選擇匯出資料表名稱");
+                return;
+            }
+            $.messager.confirm('確認', "確定是否要匯出 [ <spen style='color:#0096FF'>  " + FromName+ "  </span>  ] 資料表單嗎？", function (r) {
+                if (r) {
+                    var pp = $.param({
+                        "From": From,
+                        "FromName": FromName,
+                       // "SerialNumber": $("#SerialNumber").val(),
+                    });
+                    $.post("@Url.Action("PostExcelDataExport", "Admin")", pp, function (xx) {
+                        alert(xx);
+                    }, "text");
+                };
+            });
+        }
+        function UploadFilesCSV() {
+            var From = $("#SelectUpload").combobox('getValue');
+            var FromName = $("#SelectDownload").combobox('getText');
+            var kk = $('#UploadFilesCSVFile').filebox('getValue');
+            if (kk == "") {
+                alert("請選擇檔案");
+                return;
+            } else if (From == "") {
+                alert("請選擇匯入資料表名稱");
+                return;
+            }
+
+            var file = $("#PEDS").val();
+            var strFileName = file.replace(/^.+?\\([^\\]+?)(\.[^\.\\]*?)?$/gi, "$1");  //正則表示式獲取檔名，不帶字尾
+            var FileExt = file.replace(/.+\./, "");   //正則表示式獲取字尾
+            var Data = new FormData($('#PEDS')[0]);
+            Data.append('From', From);
+            Data.append('FromName', FromName);
+            $.messager.confirm('確認', "確定是否要匯入此" + strFileName+"類別表單到嗎？", function (r) {
+                if (r) {
+                    $.ajax({
+                        url: "@Url.Action("PostExcelDataSave", "Admin")",
+                        type: 'POST',
+                        data: Data,
+                        async: false,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (xx) {
+                            if (xx != "" && xx != "Error") {
+                                $("#UploadMsg").text(xx);
+                            }
+                            else if (xx == "") {
+                                $("#UploadMsg").text("資料已上傳過");
+                            }
+                            else if (xx == "Error") {
+                                $("#UploadMsg").text("Txt目錄無法存取");
+                            }
+                            $("#SearchResult").datagrid('reload');
+                            alert(xx);
+                        },
+                        error: function (xx) {
+                            $("#UploadMsg").text("上載錯誤");
+                        }
+                    });
+                };
+            });
+        }
+
+
+
+    </script>
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6" style="margin-bottom:50px;">
+            <h2>匯入表單項目和類別管理</h2>
+            <p>
+                上傳CSV UTF-8(逗號分隔)(*.csv)，會寫入到該類別的表單。
+            </p>
+            <div>
+                <a>匯入表單項目管理</a><a>操作方式 1.要先類別管理、表單管理新增  2.在選取類別、CSV上傳</a>
+                <form action="@Url.Action("PostExcelData", "Admin")" id="ff" enctype="multipart/form-data" method="post">
+                    <input id="uploadfile" class="easyui-filebox" name="file" style="width:250px;height:30px;">
+                    <select id="selectType" class="easyui-combobox" panelHeight="auto" editable="false" style="width:250px;height:30px;">
+                        <option value="" selected>請選擇類別</option>
+                    </select>
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-redo'" onclick="uploadFiles()" style="width:100px;height:30px;">上傳</a>
+                    <p id="UploadMsg"></p>
+                </form>
+            </div>
+            <div>
+                <a>匯入類別管理</a><a>操作方式 1.CSV上傳</a>
+                <form action="@Url.Action("PostExcelType", "Admin")" id="fType" enctype="multipart/form-data" method="post">
+                    <input id="uploadfileType" class="easyui-filebox" name="file" style="width:250px;height:30px;">
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-redo'" onclick="uploadFilesType()" style="width:100px;height:30px;">上傳</a>
+                    <p id="UploadMsg"></p>
+                </form>
+            </div>
+            <div style="display:none">
+                <a>匯出CSV</a><a>操作方式 1.選擇要匯出的資料表 2.擺在ExportCSV資料夾</a>
+                <form action="@Url.Action("PostExcelDataExport", "Admin")" id="PEDE" enctype="multipart/form-data" method="post">
+                    <select id="SelectDownload" class="easyui-combobox" panelHeight="auto" editable="false" style="width:250px;height:30px;">
+                        <option value="" selected>請選擇資料表</option>
+                        <option value="TablesType" selected>表單類別</option>
+                        <option value="TablesItem" selected>表單項目管理</option>
+                        <option value="Tables" selected>表單管理</option>
+                    </select>
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-redo'" onclick="DownloadFilesCSV()" style="width:100px;height:30px;">下載</a>
+                    <p id="UploadMsg"></p>
+                </form>
+            </div>
+            <div style="display:none">
+                <a>匯入CSV</a><a>操作方式 1.選擇要匯入的CSV 2.會清空資料庫資料表內容 3.在匯入</a>
+                <form action="@Url.Action("PostExcelDataSave", "Admin")" id="PEDS" enctype="multipart/form-data" method="post">
+                    <input id="UploadFilesCSVFile" class="easyui-filebox" name="file" style="width:250px;height:30px;">
+                    <select id="SelectUpload" class="easyui-combobox" panelHeight="auto" editable="false" style="width:250px;height:30px;">
+                        <option value="" selected>請選擇資料表</option>
+                        <option value="TablesType" selected>表單類別</option>
+                        <option value="TablesItem" selected>表單項目管理</option>
+                        <option value="Tables" selected>表單管理</option>
+                    </select>
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-redo'" onclick="UploadFilesCSV()" style="width:100px;height:30px;">上傳</a>
+                    <p id="UploadMsg"></p>
+                </form>
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+            <div id="tb" style="text-align:right;">
+                <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" style="width:130px;height:30px;" onclick="OpenDlgNew()">新增類別</a>
+            </div>
+            <table id="SearchResult" class="easyui-datagrid" title="類別管理" style="width:100%;height:500px;margin-left:auto;margin-right:auto;"
+                   data-options="singleSelect:true,collapsible:false,fitColumns:true,remoteSort:false
+                            ,toolbar:'#tb'" multiSort="false">
+                <thead>
+                    <tr>
+                        <th data-options="field:'SN'" width="120" sortable="true">自動序號</th>
+                        <th data-options="field:'TableType'" width="200" sortable="true">類別</th>
+                        <th data-options="field:'SerialNumber'" width="200" sortable="true">規格表單編號</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<!--新增表單-->
+<div id="dlg_new" class="easyui-dialog" title="新增表單" style="width:100%;max-width:600px;height:auto;"
+     data-options="iconCls:'icon-add',resizable:true,modal:true">
+    <div class="container-fluid">
+        <div class="form-inline">
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="TableType" style="width:150px;">類別名稱</label>
+                </div>
+                <input type="text" class="form-control" id="TableType" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="SerialNumber" style="width:150px;">SOP表單編號</label>
+                </div>
+                <input type="text" class="form-control" id="SerialNumber" />
+            </div>
+            <div class="form-row col-12 col-sm-12 col-md-12 col-lg-12 text-center" style="margin-top:20px;margin-bottom:20px;">
+                <div class="col-12">
+                    <button type="button" class="btn btn-info col-5 col-sm-5 col-md-5 col-lg-5" onclick="AddTableType()">送出</button>
+                    <button type="button" class="btn btn-danger col-5 col-sm-5 col-md-5 col-lg-5" onclick="CloseDlg()">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--修改表單-->
+<div id="dlg_edit" class="easyui-dialog" title="修改表單" style="width:100%;max-width:600px;height:auto;"
+     data-options="iconCls:'icon-add',resizable:true,modal:true">
+    <div class="container-fluid">
+        <div class="form-inline">
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="SN_e" style="width:150px;">自動序號</label>
+                </div>
+                <input type="text" class="form-control" id="SN_e" disabled />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="TableType_e" style="width:150px;">類別名稱</label>
+                </div>
+                <input type="text" class="form-control" id="TableType_e" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="SerialNumber_e" style="width:150px;">規格表單編號</label>
+                </div>
+                <input type="text" class="form-control" id="SerialNumber_e" />
+            </div>
+            <div class="form-row col-12 col-sm-12 col-md-12 col-lg-12 text-center" style="margin-top:20px;margin-bottom:20px;">
+                <div class="col-12">
+                    <button type="button" class="btn btn-info col-3 col-sm-3 col-md-3 col-lg-3" onclick="UpdateTableType()">修改</button>
+                    <button type="button" class="btn btn-warning col-3 col-sm-3 col-md-3 col-lg-3" onclick="DeleteTableType()">刪除</button>
+                    <button type="button" class="btn btn-danger col-3 col-sm-3 col-md-3 col-lg-3" onclick="CloseDlg()">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

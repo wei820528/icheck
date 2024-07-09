@@ -1,0 +1,586 @@
+﻿@{
+    ViewBag.Title = "巡檢系統 點檢表單查詢";
+    Layout = "~/Views/Shared/Bootstrap_Layout.cshtml";
+}
+@section CustomScript {
+    <link href="~/Bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script src="~/Bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <style>
+        .allDataClass {
+            color:blue;
+        }
+
+        .errorA {
+            background-color: red;
+            color: white;
+            border-color: white;
+            border-width: 3px;
+            border-style: dashed;
+            padding: 1px;
+            white-space: pre;
+        }
+        .trueA {
+            white-space: pre;
+            text-decoration: blue dotted underline;
+        }
+        .noteA {
+            background-color: blue;
+            color: white;
+            white-space: pre;
+           
+        }
+        .AllA {
+            text-decoration: blue dotted underline;
+        }
+    </style>
+    <script>
+        var flag = 0;
+        $(document).ready(function () {
+            GetStatDate();
+            StartExecution();
+           
+            $('#selectError').combobox({ disabled: true });//select禁止填寫
+            $("#submenu-check").addClass('active');
+            //
+            //$('#selectDateStart').combobox({
+            //    onChange: function (newValue, oldValue) {
+            //        GetData();
+            //    }
+            //});
+            //$('#selectDateEnd').combobox({
+            //    onChange: function (newValue, oldValue) {
+            //        GetData();
+            //    }
+            //});
+            $('#selectFAB').combobox({
+                onChange: function (newValue, oldValue) {
+                    GetData();
+                }
+            });
+            $('#selectIsFinished').combobox({
+                onChange: function (newValue, oldValue) {
+                    if ($('#selectIsFinished').combobox('getValue') == "1") {
+                        $('#selectError').combobox({ disabled: false });//select開啟
+                    } else {
+                        $('#selectError').combobox({ disabled: true });//select開啟
+                    }
+                    GetData();
+
+                }
+            });
+            $('#selectError').combobox({
+                onChange: function (newValue, oldValue) {
+                    GetData();
+
+                }
+            });
+            ChangeTableSize();
+            $(window).resize(function () {
+                ChangeTableSize();
+            });
+            $('#SearchResult').datagrid({
+                onClickRow: function (index, row) {
+                    var Doc = row["Doc"];
+                    var FAB = row["FAB"];
+                    var Error = $('#selectError').combobox('getValue');
+                    var IsFinished = row["IsFinished"];
+                     //alert(IsFinished);
+                    if (IsFinished != "True") return;
+                    var pp = $.param({
+                        "FAB": FAB,
+                        "Doc": Doc,
+                        "Error": Error,
+                    });
+                    $("#SearchResult2").datagrid({
+                        url: "@Url.Action("GetDatasItem", "Admin")?" + pp, method: 'post',
+                        loadFilter: function (data) {
+                            return data;
+
+                        }
+                    });
+                    $("#SearchDoc").text(Doc);
+                    $("#SearchFAB").text(FAB);
+                    OpenDlgEdit();
+                }
+            });
+            //新增Doc測試
+            $("#Doc").blur(function () {
+                var Doc = $("#Doc").val();
+                if (Doc.length == 0)
+                    $("#DocCheckResult").text("");
+                else {
+                    var pp = $.param({ "Doc": Doc });
+                    $.post("@Url.Action("CheckDocDuplicate", "Admin")", pp, function (xx) {
+                        if (xx == "t")
+                            $("#DocCheckResult").text("單號已被使用").css({ "font-weight": "bold", "color": "red" });
+                        else
+                            $("#DocCheckResult").text("單號可以使用").css({ "font-weight": "bold", "color": "green" });
+                    }, "text");
+                }
+            });
+            var resizeTimer = null;
+           
+            resizeTimer = setInterval(start, 5000);
+            
+        });
+        function StartExecution(){
+            CloseDlg();
+            clearform();
+            GetData();
+           // GetDate();
+            GetFAB();
+            GetFABbs();
+            
+        }
+        function GetStatDate() {
+            var dateTime = new Date();
+            $("#selectDateStart").datebox(); //先初始化
+            $("#selectDateStart").datebox("setValue", dateTime.getFullYear() + '-' + parseInt(dateTime.getMonth()+1) + '-' + dateTime.getDate());
+            $("#selectDateEnd").datebox("setValue", dateTime.getFullYear() + '-' + parseInt(dateTime.getMonth() + 1) + '-' + dateTime.getDate());
+            //$('#selectDateStart').datebox('getValue') = dateTime;
+        }
+        function GetData() {
+            var FAB = $('#selectFAB').combobox('getValue');
+            var IsFinished = $('#selectIsFinished').combobox('getValue');
+          //  var DateStart = $('#selectDateStart').combobox('getValue');
+          //  var DateEnd = $('#selectDateEnd').combobox('getValue');
+            var DateStart = $('#selectDateStart').datebox('getValue');
+            var DateEnd = $('#selectDateEnd').datebox('getValue');
+            var Error = $('#selectError').combobox('getValue');
+            if (DateStart == "") {
+
+                DateStart = "ALL";
+            }
+            if (DateEnd == "") {
+
+                DateEnd = "ALL";
+            }
+            var pp = $.param({
+                "FAB": FAB,
+                "IsFinished": IsFinished,
+                "DateStart": DateStart,
+                "DateEnd": DateEnd,
+                "Error": Error,
+            });
+            GetAllData();
+            $("#SearchResult").datagrid({ url: "@Url.Action("GetDataList", "Admin")?" + pp, method: 'post' });
+        }
+        //取得時間
+        function GetDate() {
+            $('#selectDateStart').combobox({
+                url: "@Url.Action("GetDate", "Admin")",
+                valueField: 'Value',
+                textField: 'Text'
+            });
+            $('#selectDateEnd').combobox({
+                url: "@Url.Action("GetDate", "Admin")",
+                valueField: 'Value',
+                textField: 'Text'
+            });
+        }
+
+
+        //取得資料//1
+        function GetFAB() {
+            $('#selectFAB').combobox({
+                url: "@Url.Action("GetFAB", "Admin")",
+                valueField: 'Value',
+                textField: 'Text'
+            });
+
+        }
+        //取得總數量/已檢/未檢
+        function GetAllData() {
+            var FAB = $('#selectFAB').combobox('getValue');
+
+            var DateStart = $('#selectDateStart').datebox('getValue');
+            var DateEnd = $('#selectDateEnd').datebox('getValue');
+            if (DateStart == "") {
+               
+                DateStart = "ALL";
+            }
+            if (DateEnd == "") {
+                
+                DateEnd = "ALL";
+            }
+            var pp = $.param({
+                "FAB": FAB,
+                "DateStart": DateStart,
+                "DateEnd": DateEnd,
+            });
+            $.getJSON("@Url.Action("AllUserData", "Admin")", pp, function (xx) {
+                if (xx) {
+                    document.getElementById('allData').innerHTML = "<span class='AllA'>應檢: " + xx['ALL'][2] + "</span>     <span class='errorA'>未檢: " + xx['ALL'][0] + "</span>     <span class='trueA'>已檢: " + xx['ALL'][1] + "</span>      <span class='noteA'>已檢率: " + Math.round(parseInt(xx['ALL'][1]) / parseInt(xx['ALL'][2]) * 100).toString() + "%</span><br><br>";
+                    document.getElementById('allData').style.fontSize = "30px";
+                   // document.getElementById('allData').style.textDecoration = "underline";
+                    document.getElementById('allData2').innerHTML = "<span class='AllA'>完單: " + xx['ALL'][3] + "</span>     <span class='errorA'>異常: " + xx['ALL'][5] + "</span>     <span class='trueA'>正確: " + xx['ALL'][4] +  "</span>      <span class='noteA'>準確率: " + Math.round(parseInt(xx['ALL'][4]) / parseInt(xx['ALL'][3]) * 100).toString() + "%</span><br><br>";
+                    document.getElementById('allData2').style.fontSize = "30px";
+                    //document.getElementById('allData2').style.textDecoration = "underline";
+                 	//#FFD306   
+                    lengthOK();
+                }
+                else {
+                    document.getElementById('allData').innerHTML = "無資料";
+                }
+               
+            }, "text");
+        }
+        //判斷字是否符合
+        function lengthOK() {
+            var classall = ["AllA","errorA","trueA","noteA"];
+           // var obj = document.getElementsByClassName("errorA");
+            for (var i = 0; i < classall.length;i++) {
+                var obj = document.getElementsByClassName(classall[i]);
+                var z = 0;
+                for (var j = 0; j < obj.length; j++) {
+                    if (j+1 != obj.length) {
+                        
+                        if (obj[j].innerHTML.length != obj[j + 1].innerHTML.length) {
+                           
+                            if (obj[j].innerHTML.length > obj[j + 1].innerHTML.length) {
+                                var sp = "";
+                                var array = obj[j + 1].innerHTML.split(':');
+                               
+                                z = obj[j].innerHTML.length - obj[j + 1].innerHTML.length;
+                                for (z; z > 0; z--) {
+                                    sp += '0';
+                                    
+                                }
+                                obj[j + 1].innerHTML = array[0].trim() + ": " + sp + array[1].trim();
+                                break;
+                            }
+                            if (obj[j].innerHTML.length < obj[j + 1].innerHTML.length) {
+                                z = obj[j + 1].innerHTML.length - obj[j].innerHTML.length;
+                                var sp = "";
+                                var array = obj[j].innerHTML.split(':');
+                                for (z; z > 0; z--) {
+                                    sp +=  '0';
+                                }
+                                obj[j].innerHTML = array[0].trim() + ": " + sp + array[1].trim();
+                                break;
+                            }
+
+                        }
+                    } 
+                }
+            }
+        }
+        //閃爍
+        function start() {
+
+           
+            var obj = document.getElementsByClassName("errorA");
+            for (var i = 0; i < obj.length; i++) {
+
+                if (obj[i].style.borderColor == "white") {
+                    obj[i].style.borderColor = "#930000";
+         //           obj[i].style.color = "#930000";
+                } else {
+                    obj[i].style.borderColor = "white";
+         //           obj[i].style.color = "red";
+                }
+
+            }
+           
+        }
+
+        //取得資料//2
+        function GetFABbs() {
+            $.post("@Url.Action("GetFABbs", "Admin")", function (xx) {
+                $("#FAB").html(xx);
+            }, "text").done(function () {
+                GetTableIDbs();
+            }).fail(function () {
+                msg("網路沒有回應");
+            });
+        }
+        function GetTableIDbs() {
+            var FAB = $("#FAB").val();
+            $.post("@Url.Action("GetTableIDbs", "Admin")?FAB=" + FAB, function (xx) {
+                $("#TableID").html(xx);
+            }, "text").done(function () {
+                ChangeDoc();
+            }).fail(function () {
+                msg("網路沒有回應");
+            });
+        }
+        //Doc
+        function ChangeDoc() {
+            if ($("#TableID").val() == "") {
+                $("#Doc").val("");
+                return;
+            }
+            var rnd = Math.floor(Math.random() * 900) + 100;
+            var date = new Date();
+            var yyyy = "" + date.getFullYear();
+            var Month = "" + (date.getMonth() + 1);
+            if (Month.length == 1) Month = "0" + Month;
+            var dd = "" + date.getDate();
+            if (dd.length == 1) dd = "0" + dd;
+            var HH = "" + date.getHours();
+            if (HH.length == 1) HH = "0" + HH;
+            var mm = "" + date.getMinutes();
+            if (mm.length == 1) mm = "0" + mm;
+            var ss = "" + date.getSeconds();
+            if (ss.length == 1) ss = "0" + ss;
+            var DateStr = "" + yyyy + Month + dd + HH + mm + ss;
+            var Doc = $("#FAB").val() + "_" + $("#TableID").val() + "_" + DateStr + "_" + rnd;
+            $("#Doc").val(Doc);
+        }
+        //新增資料表
+        function AddTable() {
+            var msgtxt = "";
+            if ($("#Doc").val() == "") {
+                msgtxt += "請輸入單號！ ";
+            }
+            if ($("#FAB").val() == "") {
+                msgtxt += "請輸入廠別！ ";
+            }
+            if ($("#TableID").val() == "") {
+                msgtxt += "請輸入表單！ ";
+            }
+            if ($("#AliveTime").val() == "") {
+                msgtxt += "請輸入期限時間！ ";
+            }
+            if ($("#DocCheckResult").text() != "單號可以使用") {
+                msgtxt += $("#DocCheckResult").text();
+            }
+            if (msgtxt == "") {
+                var Doc = $("#Doc").val();
+                var FAB = $("#FAB").val();
+                var TableID = $("#TableID").val();
+                var AliveTime = $("#AliveTime").val();
+                var pp = $.param({
+                    "Doc": Doc,
+                    "FAB": FAB,
+                    "TableID": TableID,
+                    "AliveTime": AliveTime
+                });
+                $.post("@Url.Action("AddData", "Admin")", pp, function (xx) {
+                    msg(xx);
+                }, "text").done(function () {
+                    CloseDlg();
+                    clearform();
+                    $("#SearchResult").datagrid('reload');
+                }).fail(function () {
+                    msg("網路沒有回應");
+                });
+            }
+            else {
+                alert(msgtxt);
+                $('#Account').focus();
+            }
+        }
+        //Dlg相關
+        function OpenDlgNew() {
+            ChangeDoc();
+            $("#dlg_new").dialog('open');
+            $("#dlg_edit").dialog('close');
+            $('#Doc').focus();
+        }
+        function OpenDlgEdit() {
+            $("#dlg_new").dialog('close');
+            $("#dlg_edit").dialog('open');
+        }
+        function CloseDlg() {
+            $("#dlg_new").dialog('close');
+            $("#dlg_edit").dialog('close');
+        }
+        function clearform() {
+            $("#Doc").val('');
+            $("#DocCheckResult").text('');
+            $('#FAB option:eq(0)').prop('selected', true);
+            var currentdate = new Date();
+            var dtime = currentdate.getFullYear() + "-"
+                + (currentdate.getMonth() + 1) + "-"
+                + currentdate.getDate() + " 23:59:59";
+            $('#AliveTime').val(dtime);
+            $("#Doc").focus();
+        }
+        function newForm(name) {
+            var formId = document.getElementById("save");
+            var text = document.createElement("input");
+            text.id = name;
+            text.name = name;
+            text.value = $('#select' + name).combobox('getValue');
+            if (text.value == "") {
+
+                text.value = "ALL";
+            }
+
+            formId.appendChild(text);
+        }
+        function ExcelClick() {
+            var div = document.getElementById("tb");
+            var formText = document.createElement("form");
+
+            formText.setAttribute('id', 'save');
+            formText.setAttribute('action', '@Url.Action("ExcelDataManageDownload", "Admin")');
+            formText.setAttribute('enctype', 'multipart/form-data');
+            formText.setAttribute('method', 'post');
+            formText.style.display = "none";
+            if (document.getElementById("save")) {
+                div.removeChild(document.getElementById("save"));
+            }
+           
+            div.appendChild(formText);
+            var arrayform = ["FAB", "IsFinished", "DateStart", "DateEnd", "Error"];
+            for (var i = 0; i < arrayform.length; i++) {
+                newForm(arrayform[i]);
+                
+            }
+
+            $("#save").submit();
+        }
+        function onDateStart(date){
+            var someday = new Date(date);
+            var Month = someday.getMonth() + 1;
+            var FullYear = someday.getFullYear();
+            var DateD = someday.getDate();
+            $('#selectDateStart').datebox('setValue', FullYear + "-" + Month + "-" + DateD);
+            GetData(); 
+        }
+        function onDateEnd(date) {
+            var someday = new Date(date);
+            var Month = someday.getMonth() + 1;
+            var FullYear = someday.getFullYear();
+            var DateD = someday.getDate();
+            $('#selectDateEnd').datebox('setValue', FullYear + "-" + Month + "-" + DateD);
+            GetData(); 
+        }
+
+    </script>
+}
+<!--Main-->
+<div id="TableDiv" style="width:100%;height:100%;">
+    <div id="tb">
+       
+        <div style="text-align:center">
+            <span id="allData" class="allDataClass" style="white-space:pre;font-size:100%"></span>
+            <span id="allData2" class="allDataClass" style="white-space:pre;font-size:100%"></span>
+        </div>
+        <div style="text-align:right;">
+            <span>日期</span>
+            @*<select id="selectDateStart" class="easyui-combobox" panelMaxHeight="200px" data-options="editable:true,panelHeight:'auto'" style="width:130px;height:30px;">
+            <option value="ALL" selected>讀取中</option>
+        </select>*@
+
+            <input id="selectDateStart" class="easyui-datebox" panelMaxHeight="200px" data-options="onSelect:onDateStart,editable:true,panelHeight:'auto'" style="width:200px;height:30px;" />
+            <span>~</span>
+            <input id="selectDateEnd" class="easyui-datebox" panelMaxHeight="200px" data-options="onSelect:onDateEnd,editable:true,panelHeight:'auto'" style="width:200px;height:30px;"  />
+            @*<select id="selectDateEnd" class="easyui-combobox" panelMaxHeight="200px" data-options="editable:true,panelHeight:'auto'" editable="true" style="width:130px;height:30px;">
+                <option value="ALL" selected>讀取中</option>
+            </select>*@
+
+            <span>廠別</span>
+            <select id="selectFAB" class="easyui-combobox" panelHeight="auto" editable="false" style="width:130px;height:30px;">
+                <option value="ALL" selected>讀取中</option>
+            </select>
+            <span>完單</span>
+            <select id="selectIsFinished" class="easyui-combobox" panelHeight="auto" editable="false" style="width:130px;height:30px;">
+                <option value="ALL" selected>ALL</option>
+                <option value="1">是</option>
+                <option value="0">否</option>
+            </select>
+            <span>異常</span>
+            <select id="selectError" class="easyui-combobox" panelHeight="auto" editable="false" style="width:130px;height:30px;">
+                <option value="ALL" selected>ALL</option>
+                <option value="1">異常</option>
+                <option value="0">不是異常</option>
+            </select>
+
+
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="ExcelClick()">excel下載</a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" style="width:130px;height:30px;display:none;" onclick="OpenDlgNew()">新增單號</a>
+
+        </div>
+    </div>
+    <table id="SearchResult" class="easyui-datagrid" title="點檢表單查詢" style="width:100%;height:100%;margin-left:auto;margin-right:auto;"
+           data-options="singleSelect:true,collapsible:false,fitColumns:true,remoteSort:false
+                            ,toolbar:'#tb',pagination:true,pageSize:20,pageList:[10,15,20,25,30]" multiSort="false">
+        <thead>
+            <tr>
+                <th data-options="field:'FAB'" width="60" sortable="false">廠別</th>
+                <th data-options="field:'Doc'" width="180" sortable="false">單號</th>
+                <th data-options="field:'TableID'" width="120" sortable="false">表單ID</th>
+                <th data-options="field:'TableName'" width="180" sortable="false">表單名稱</th>
+                <th data-options="field:'SerialNumber'" width="150" sortable="false">規格表單編號</th>
+                <th data-options="field:'AliveTime'" width="150" sortable="false">期限時間</th>
+                <th data-options="field:'IsFinishedTime'" width="150" sortable="false">完單時間</th>
+                <th data-options="field:'UserID'" width="80" sortable="false">完單人員</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<!--新增表單-->
+<div id="dlg_new" class="easyui-dialog" title="新增表單" style="width:100%;max-width:600px;height:auto;"
+     data-options="iconCls:'icon-add',resizable:true,modal:true">
+    <div class="container-fluid">
+        <div class="form-inline">
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="Doc" style="width:150px;">單號</label>
+                </div>
+                <input type="text" class="form-control" id="Doc" disabled />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:0px;margin-bottom:0px;height:20px;">
+                <span id="DocCheckResult"></span>
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:0px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="FAB" style="width:150px;">廠別</label>
+                </div>
+                <select class="custom-select" id="FAB" onchange="GetTableIDbs()">
+                    <option value="" selected>讀取中</option>
+                </select>
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="TableID" style="width:150px;">使用表單</label>
+                </div>
+                <select class="custom-select" id="TableID" onchange="ChangeDoc()">
+                    <option value="" selected>讀取中</option>
+                </select>
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="AliveTime" style="width:150px;">期限時間</label>
+                </div>
+                <input type="text" class="form-control" id="AliveTime" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:0px;">
+                <span>2018-09-12 23:00:00</span>
+            </div>
+            <div class="form-row col-12 col-sm-12 col-md-12 col-lg-12 text-center" style="margin-top:20px;margin-bottom:20px;">
+                <div class="col-12">
+                    <button type="button" class="btn btn-info col-5 col-sm-5 col-md-5 col-lg-5" onclick="AddTable()">送出</button>
+                    <button type="button" class="btn btn-danger col-5 col-sm-5 col-md-5 col-lg-5" onclick="CloseDlg()">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--查詢單號資料-->
+<div id="dlg_edit" class="easyui-dialog" title="查詢單號資料" style="width:600px;height:450px;"
+     data-options="iconCls:'icon-search',resizable:true,modal:true">
+    <div class="container-fluid" style="width:100%;height:100%;">
+        <div id="tb2" style="width:100%;height:33px;">
+            <span>查詢單號：</span>
+            <strong><span id="SearchDoc" style="color:blue;"></span></strong>&nbsp;
+            <span>廠別：</span>
+            <strong><span id="SearchFAB" style="color:blue;"></span></strong>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-redo'" style="width:80px;height:30px;float:right;" onclick="CloseDlg()">返回</a>
+        </div>
+        <table id="SearchResult2" class="easyui-datagrid" style="width:550px;height:380px;margin-left:auto;margin-right:auto;"
+               data-options="singleSelect:true,collapsible:false,fitColumns:false,remoteSort:false
+               ,showFooter:true,toolbar:'#tb2',buttons:'#toolbar'" multiSort="false">
+            <thead>
+                <tr>
+                    <th data-options="field:'ItemID'" width="180" sortable="false">ItemID</th>
+                    <th data-options="field:'ItemName'" width="180" sortable="false">ItemName</th>
+                    <th data-options="field:'ItemValue'" width="180" sortable="false">ItemValue</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>

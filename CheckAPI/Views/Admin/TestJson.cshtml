@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewBag.Title = "巡檢系統 排程測試";
+    Layout = "~/Views/Shared/Bootstrap_Layout.cshtml";
+}
+@section CustomScript {
+    <script>
+        $(document).ready(function () {
+            $("#submenu-testjson").addClass('active');
+        });
+        function Ajax() {
+            var text = $("#Text1").val();
+            $.post("@Url.Action("QueryDataItemByTag", "Api")", text, function (res) {
+                alert(JSON.stringify(res));
+                $("#Result").html(JSON.stringify(res));
+            }, "json");
+        }
+        function TaskTest() {
+            var text = $("#Text1").val();
+            $.post("@Url.Action("Task", "Task")", text, function (xx) {
+                //alert(xx);
+                $("#Result").html(xx);
+            }, "text");
+        }
+        function SendMailTask() {
+            if ($("#btn_sendtask").hasClass('disabled')) return;
+            $("#btn_sendtask").addClass('disabled');
+            var text = $("#Text1").val();
+            $.post("@Url.Action("SendMailTask", "Task")", text, function (xx) {
+                //alert(xx);
+                $("#Result").html(xx);
+            }, "text").always(function () {
+                $("#btn_sendtask").removeClass('disabled');
+            });
+        }
+        function SendTxt() {
+            if ($("#btn_sendtxt").hasClass('disabled')) return;
+            $("#btn_sendtxt").addClass('disabled');
+            var pp = $.param({
+                "txtdate": $("#txtdate").datebox('getValue')
+            });
+            $.post("@Url.Action("SendTxt", "Task")", pp, function (xx) {
+                $("#Result").html(xx);
+                console.log(xx);
+            }, "text").always(function () {
+                $("#btn_sendtxt").removeClass('disabled');
+            });
+        }
+        function NewSendMail() {
+            var text = $("#Text1").val();
+            $.post("@Url.Action("NewSendMail", "Task")", text, function (xx) {
+                //alert(xx);
+                $("#Result").html(xx);
+            }, "text");
+        }
+        function SendSystem() {
+            var text = $("#Text1").val();
+            $.post("@Url.Action("SendSystem", "Task")", text, function (xx) {
+                //alert(xx);
+                $("#Result").html(xx);
+            }, "text");
+        }
+
+
+        function SendTxtM() {
+        }
+
+    </script>
+}
+<div class="container-fluid">
+    <div style="text-align:right;">
+        @ViewData["RenewDate"]
+    </div>
+    <h3>信箱測試</h3>
+    <br />
+    <button type="button" class="btn btn-danger" onclick="NewSendMail()">信箱測試</button>
+    <br />
+
+    <h3>排程測試</h3>
+    <br />
+    <button type="button" class="btn btn-danger" onclick="TaskTest()">排程出單</button>
+    <br />
+    <br />
+    <button id="btn_sendtask" type="button" class="btn btn-info" onclick="SendSystem()">未完成表單資訊</button>
+    @*<button id="btn_sendtask" type="button" class="btn btn-info" onclick="SendMailTask()">排程寄信通知</button>*@
+    <br />
+    <br />
+    <input id="txtdate" type="text" class="easyui-datebox" required="required">
+    <button id="btn_sendtxt" type="button" class="btn btn-warning" onclick="SendTxt()">簽核用文件</button>
+    <br />
+    <br />
+    <div id="Result" class="ResultText"></div>
+    <br />
+    <button type="button" class="btn btn-primary" onclick="Ajax()" style="display:none;">QueryDocSort</button>
+    <div class="form-group" style="display:none;">
+        <textarea class="form-control" rows="40" id="Text1">
+                {"UserID":"Robert","cmd":"QueryDataItemByTag","token":"zNqapHRdKUupem07UKHdg","tid":"E20034120131FB00082D6317"}         
+            </textarea>
+    </div>
+</div>
+
+

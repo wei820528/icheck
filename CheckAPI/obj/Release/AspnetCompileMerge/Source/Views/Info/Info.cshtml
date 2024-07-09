@@ -1,0 +1,645 @@
+﻿
+@{
+    Layout = null;
+
+}
+@using Newtonsoft.Json;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>巡檢資訊看版</title>
+    <link href="~/Bootstrap/CSS/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/jQueryUi/themes/black/easyui.css" rel="stylesheet" />
+    <!--  <link href="~/jQueryUi/themes/black/icon.css" rel="stylesheet" /> -->
+    <link href="~/Font/css/font-awesome.css" rel="stylesheet" />
+    <script src="~/jQueryUI/jquery.min.js"></script>
+    <script src="~/Bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/jQueryUi/jquery.easyui.min.js"></script>
+    <script src="~/jQueryUI/locale/easyui-lang-zh_TW.js"></script>
+    <script src="~/jQueryUI/flot/jquery.flot.js"></script>
+    <script src="~/jQueryUI/flot/jquery.flot.pie.js"></script>
+    <link href="~/css_wei/style.css" rel="stylesheet" />
+    <style>
+        /*.row {
+         .container > .row.no-gutters > .col*3
+
+        }*/
+        .tickLabel {
+            font-size: 20px;
+        }
+
+        @@keyframes fade {
+            from {
+                opacity: 1.0;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+
+            to {
+                opacity: 1.0;
+            }
+        }
+
+        @@-webkit-keyframes fade {
+            from {
+                opacity: 1.0;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+
+            to {
+                opacity: 1.0;
+            }
+        }
+
+        .datagrid-row-over td {
+            background: #D0E5F5;
+        }
+
+        .datagrid-row-selected td {
+            background: #FBEC88;
+        }
+    </style>
+
+    <script>
+        var move = "0";
+        var vData =@Html.Raw(JsonConvert.SerializeObject(ViewData));
+        var error = vData["error"];
+        var ok = vData["ok"];
+        var interval;
+        var m = 3, h = 1, s = 60;
+        $(document).ready(function () {
+            
+            $(document).on('mousemove keyup keypress', function () {
+                clearTimeout(interval);
+                settimeout();
+            })
+            ChangeAccount();
+            const div = document.querySelector('.mydiv');
+
+        });
+        function loginCloseMessager(){
+            $.messager.show({
+                title: 'error',
+                msg: error,
+                timeout: 2000,
+                showType: 'slide'
+            });
+            LoginClose();
+        }
+        function settimeout() {
+            interval = setTimeout(function () {
+                if (ok =="ok") {
+                    var pp = $.param({
+                        "UserID": vData["UserID"],
+                        "IsInfoToken": vData["IsInfoToken"]
+                    });
+                    $.post("@Url.Action("GetIsInfoToken", "Info")", pp, function (xx) {
+                        if (xx == "error") { LoginClose() };
+                    });
+                } else {
+                    loginCloseMessager();
+                }
+            }, 1000 * s * m * h)
+        }
+        function ChangeAccount() {
+            if (ok == "ok") {
+                LoginOpen();
+                ChangeTableSize();
+                $(window).resize(function () {
+                    ChangeTableSize();
+                });
+                $('#SearchResult').datagrid({
+
+                    rowStyler: function (index, row) {
+                        if (row["ok_flag"] == "0") {
+                            return 'background-color:#990000;animation: fade 10000ms infinite;-webkit-animation: fade 1000ms infinite';
+                        }
+                    }
+                });
+                StartGrid();
+            }
+            else {
+                loginCloseMessager();
+            }
+        }
+        function LoginOpen() {
+            $('#win').window('close');
+            document.getElementById("TopDiv").style.display = "block";
+            document.getElementById("TableDiv").style.display = "block";
+        }
+        function LoginClose() {
+            $('#win').window('open');
+            document.getElementById("TopDiv").style.display = "none";
+            document.getElementById("TableDiv").style.display = "none";
+        }
+        function ReSize() {
+            var ww = $(window).width();
+            if (ww < 850) {
+                document.location.href = "@Url.Action("LoginIndex", "Login", new { t = "error" })";
+                return;
+            }
+            var hh = (window.innerHeight - 340) / 2;
+            if (hh < 0) hh = 0;
+            $("#MainPanel").css("margin-top", hh + "px");
+        }
+  
+        function Round(sources) {
+            var ww = $(window).width();
+            console.log(sources.pixe.width1);
+            $(sources.div1).css("height", sources.style.height + "px");
+            $(sources.div1).css("width", sources.style.width - sources.pixe.width1 + "px");
+            $(sources.imagediv).css("top", sources.style.top + "px");
+            $(sources.imagediv).css("left", sources.style.left + "px");
+            $(sources.imagediv).css("height", sources.style.imageHeight - sources.pixe.height2 + "px");
+            $(sources.imagediv).css("width", sources.style.imageWidth + sources.pixe.width2 + "px");
+            $(sources.div2).css("height", sources.style.height + "px");
+            $(sources.div2).panel("resize");
+        }
+        function ChangeTableSize() {
+            var windowpixe = $(window).width();
+            var pixebig, pixesmall;
+            var stylebig, stylesmall;
+            var hh = innerHeight * 0.5;
+            var ww = innerWidth * 0.2;
+            var pixel = 850, pixe2 = 1024, pixe3 = 1280, pixe4 = 1920;
+            $("#TopDiv").css("height", hh + "px");
+            $("#TableDiv").css("height", hh + "px");
+            console.log(windowpixe);
+            if (windowpixe >= pixel && windowpixe < pixe2) {
+                pixebig = { width1: 6, height2: 150, width2: 50 };
+                stylebig = { height: hh, imageHeight: hh, width: ww, imageWidth: ww, top: 50, left: 50 };
+                pixesmall = { width1: 6, height2: 70, width2: 50 };
+                stylesmall = { height: hh, imageHeight: hh * 0.7, width: ww, imageWidth: ww * 0.6, top: -10, left: 0 };
+                console.log("850");
+            }
+            else if (windowpixe >= pixe2 && windowpixe < pixe3) {
+                pixebig = { width1: 6, height2: 100, width2: 50 };
+                stylebig = { height: hh, imageHeight: hh, width: ww, imageWidth: ww, top: 20, left: 40 };
+                pixesmall = { width1: 6, height2: 100, width2: 50 };
+                stylesmall = { height: hh, imageHeight: hh * 0.7, width: ww, imageWidth: ww * 0.6, top: -10, left: 0 };
+                console.log("1024");
+            }
+            else if (windowpixe >= pixe3 && windowpixe < pixe4) {
+                pixebig = { width1: 6, height2: 50, width2: 50 };
+                stylebig = { height: hh, imageHeight: hh, width: ww, imageWidth: ww, top: -10, left: 50 };
+                pixesmall = { width1: 6, height2: 100, width2: 50 };
+                stylesmall = { height: hh, imageHeight: hh * 0.7, width: ww, imageWidth: ww * 0.6, top: -10, left: 0 };
+                console.log("1280");
+            }
+            else if (windowpixe >= pixe4) {
+                pixebig = { width1: 6, height2: 50, width2: 50 };
+                stylebig = { height: hh, imageHeight: hh, width: ww, imageWidth: ww, top: -10, left: 80 };
+                pixesmall = { width1: 6, height2: 100, width2: 50 };
+                stylesmall = { height: hh, imageHeight: hh * 0.7, width: ww, imageWidth: ww * 0.6, top: -30, left: 20 };
+                console.log("1920");
+            }
+            else {
+                pixebig = { width1: 6, height2: 50, width2: 50 };
+                stylebig = { height: hh, imageHeight: hh, width: ww, imageWidth: ww, top: 0, left: 20 };
+                pixesmall = { width1: 6, height2: 100, width2: 50 };
+                stylesmall = { height: hh, imageHeight: hh * 0.7, width: ww, imageWidth: ww * 0.6, top: -20, left: -10 };
+                console.log("低於850");
+            }
+            
+            var sourcesBig = {
+                style: stylebig,
+                pixe: pixebig,
+                div1: "#CircleDiv", div2: "#CircleDiv2", imagediv: "#flotcontainer"
+            };
+            Round(sourcesBig);
+            var sourcesSmall = {
+                style: stylesmall,
+                pixe: pixesmall,
+                div1: "#mCircleDiv", div2: ".mCircleDiv", imagediv: ".flotcontainer-small"
+            };
+            Round(sourcesSmall);
+        }
+        function GetItemListSelect() {
+            GetItemListImg();
+            $.ajax({
+                url: '@Url.Action("GetItemList", "Info")',
+                type: "POST",
+                data: {
+                    "selectFAB": $("#selectFAB").combobox('getValue')
+                },
+                dataType: "JSON",
+                timeout: 20000,
+                success: function (data)
+                {
+                    $("#spToday").text("日期：" + data["today"]);
+                    $('#spCount2').text("已檢筆數：" + data["normal_count"]);
+                    $('#spCount3').text("未檢筆數：" + data["error_count"]);
+                    $("#spCount").text("應檢筆數：" + data["total"]);
+                    $("#SearchResult").datagrid('loadData', data);
+                    //畫圖
+                    var data = [
+                        { label: "已檢", data: data["normal_count"], color: '#00CC33' },
+                        { label: "未檢", data: data["error_count"], color: '#990000' },
+                       // { label: "沒有", data: data["null_count"], color: '#FFFFFF' }
+                        { label: "沒有", data: data["null_count"], color: '#000000' }
+                    ];
+                    var options = {
+                        series: {
+                            pie: {
+                                show: true,
+                                radius: 1,
+                                label: {
+                                    formatter: function (label, series) {
+                                        var div = "";
+                                        var windowpixe = $(window).width();
+                                        var pixel = 850, pixe2 = 1024, pixe3 = 1280;
+                                        var fontSize = "", padding = "", height="";
+                                        if (windowpixe >= pixel && windowpixe < pixe2) {
+                                            fontSize = "13pt";
+                                            padding = "2px";
+                                            height = "10px";
+                                        } else if (windowpixe >= pixe2 && windowpixe < pixe3) {
+                                            fontSize = "16pt";
+                                            padding = "2px";
+                                            height = "10px";
+                                        } else if (windowpixe >= pixe3) {
+                                            fontSize = "16pt";
+                                            padding = "2px";
+                                            height = "10px";
+                                        } else {
+                                            fontSize = "16pt";
+                                            padding = "2px";
+                                            height = "10px";
+                                        }
+                                        if (label != "沒有") {
+                                            label = label + Math.round(series.percent) + '%';
+                                        } 
+                                        div = '<div style=" font-size:' + fontSize + '; text-lign: center; padding:' + padding + '; color:white;height:' + height + ';">' + label + '</div>';
+                                        return div;
+                                        
+                                     
+                                    },
+                                    threshold: 1
+                                   
+                                },
+                                innerRadius: 0.5,
+                                
+                                background: { opacity: 0.5 },
+                            }
+                        },
+                        legend: {
+                            show: false
+                        }
+                    };
+                    loadImagesImg('flotcontainer',"");
+                    $.plot($("#flotcontainer"), data, options);
+                    GetItemListImg();
+                },
+                error: function (data)
+                {
+                }
+            });
+
+        }
+        function loadImagesImg(id, number) {
+            var div = document.getElementById(id + number);
+            var srcUrl = "../Pic/character.png";
+            var className = "image-small";
+            if (number == "") {
+                className = "image-big";
+                div = document.getElementById(id);
+            } 
+            var image_data = { darthVarder: { src: srcUrl, class: className }, };
+            loadImages(image_data, function (images) {
+                for (var key in images) {
+                    div.appendChild(images[key]);
+                }
+            });
+        } 
+        function loadImages(sources, callback) {
+            var images = {};
+            var loadedImages = 0;
+            var numImages = 0;
+            for (var src in sources) {
+                numImages++;
+            }
+            for (var src in sources) {
+                images[src] = new Image();
+                images[src].onload = function () {
+                    if (++loadedImages >= numImages) {
+                        callback(images);
+                    }
+                };
+                images[src].src = sources[src].src;
+                images[src].className = sources[src].class;
+            }
+        }
+        var dataAll = [];
+        function GetItemListImg() {
+
+            $.getJSON("@Url.Action("AllFactories", "Info")", function (xx) {
+                dataAll = xx['FAB'];
+            });
+            for (i = 0; i < dataAll.length; i++) {
+                GetItemListAll(dataAll[i],i+1);
+            }
+
+        }
+        function GetItemListAll(all, number) {
+            var id = document.getElementById("text" + number);
+            var a = document.createElement("a");
+            $.ajax({
+                url: '@Url.Action("GetItemList", "Info")',
+                type: "POST",
+                data: {
+                    "selectFAB": all,
+                },
+                dataType: "JSON",
+                timeout: 20000,
+                success: function (data)
+                {
+                    //畫圖
+                    var data = [
+                        { label: "已檢", data: data["normal_count"], color: '#00CC33' },
+                        { label: "未檢", data: data["error_count"], color: '#990000' },
+                        { label: "沒有", data: data["null_count"], color: '#000000' }
+                    ];
+                    var options = {
+                        series: {
+                            pie: {
+                                show: true,
+                                innerRadius: 0.2,
+                                label: {
+                                    show: true,
+                                    radius: 3 / 4,
+                                    formatter: function (label, series) {
+                                       /* return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">' + label + '<br/>' + Math.round(series.percent) + '%</div>';*/
+                                        var div = "";
+                                        var windowpixe = $(window).width();
+                                        var pixel = 850, pixe2 = 1024, pixe3 = 1280;
+                                        var fontSize = "", padding = "", height = "";
+                                        if (windowpixe >= pixel && windowpixe < pixe2) {
+                                            fontSize = "8pt";
+                                            padding = "2px";
+                                            height = "10px";
+                                        } else if (windowpixe >= pixe2 && windowpixe < pixe3) {
+                                            fontSize = "8pt";
+                                            padding = "2px";
+                                            height = "10px";
+                                        } else if (windowpixe >= pixe3) {
+                                            fontSize = "8pt";
+                                            padding = "2px";
+                                            height = "10px";
+                                        } else {
+                                            fontSize = "8pt";
+                                            padding = "2px";
+                                            height = "10px";
+                                        }
+                                        if (label != "沒有") {
+                                            label = label + Math.round(series.percent) + '%';
+                                        }
+                                        div = '<div style=" font-size:' + fontSize + '; text-lign: center; padding:' + padding + '; color:white;height:' + height + ';">' + label + '</div>';
+                                        return div;
+                                    },
+                                   /* background: { opacity: 0.5 },*/
+                                    screenTop:10
+                                },
+
+                            }
+                        },
+                        legend: {
+                            show: false,
+                            position:
+                                "nw" //这里设置label在表格中的位置。”nw“,"ne", "sw" ,"se" 分别表示左上，右上，左下，右下
+                        }
+                    };
+                    loadImagesImg('flotcontainer' , number);
+                    /////////////////////////////////////////////////////////
+                    $.plot($("#flotcontainer" + number), data, options);
+
+                   // id.innerHTML = "已檢:" + data[0]["data"] + "未檢:" + data[1]["data"] + "沒有:" + data[2]["data"];
+                  
+
+                },
+                error: function (data)
+                {
+                    console.log(data);
+                }
+            });
+
+        }
+        //每3秒測試是否不同session
+        function StartGrid() {
+
+            GetItemListSelect();
+            var myVar2 = setInterval(function () {
+                GetItemListSelect();
+
+                $("#SearchResult").datagrid('resize');
+            }, 10000);
+            //素度
+            $('#selectFAB').combobox({
+                onChange: function (newValue, oldValue) {
+                    GetItemListSelect();
+                }
+            });
+        }
+        function ChangeFlag(Tag_Code,ok_flag) {
+            var pp = $.param({
+                "Tag_Code": Tag_Code,
+                "ok_flag": ok_flag
+            });
+            $.post("@Url.Action("ChangeFlag", "Info")", pp, function (xx) {
+                
+            }, "text").done(function (xx) {
+                if (xx == "ok") {
+                    alert("修改資料成功");
+                    GetItemListSelect();
+                }
+                else
+                    alert("資料失敗");
+            }).fail(function () {
+                alert("連線失敗");
+            });
+            
+        }
+
+        function formsubmit() {
+            var msg = "";
+            if ($("#uid").val() == "") {
+                msg = "請輸入帳號";
+            }
+            else if ($("#pwd").val() == "") {
+                msg = "請輸入密碼";
+            }
+            if (msg == "") {
+                $("#UserLogin").submit();
+            }
+        }
+    </script>
+</head>
+<body id="okopen" style="background-color:black">
+    
+    <div class="mydiv">
+        
+        <div id="TopDiv" style="width:100%;height:50%;">
+            <div class="row no-gutters">
+                <div id="CircleDiv" class="col-4">
+                    <div id="CircleDiv2" class="easyui-panel" title="竹南/科" style="width:100%;height:100%;">
+                        <div id="legendPlaceholder"></div>
+                        <div id="flotcontainer" style="font-size:24px;"></div>
+                        @*<div id="text"></div>*@
+                    </div>
+                </div>
+               
+                <div id="mCircleDiv" class="col-8">
+                    <div id="m_CircleDiv1" style="float:left;width:25%;height:50%;">
+                        <div id="mCircleDiv1" class="easyui-panel mCircleDiv" title="UPL1" style="width:100%;height:100%;">
+                            <div id="text1"></div>
+                            <div id="legendPlaceholder1"> </div>
+                            <div id="flotcontainer1" class="flotcontainer-small" style="font-size:24px;">  </div>
+                            
+                        </div>
+
+                    </div>
+                    <div id="m_CircleDiv2" style="float:left;width:25%;height:50%;">
+                        <div id="mCircleDiv2" class="easyui-panel mCircleDiv" title="08C1" style="width:100%;height:100%;">
+                            <div id="text2"></div>
+                            <div id="legendPlaceholder2"></div>
+                            <div id="flotcontainer2" class="flotcontainer-small" style="font-size:24px;"></div>
+                        </div>
+                    </div>
+                    <div id="m_CircleDiv3" style="float:left;width:25%;height:50%;">
+                        <div id="mCircleDiv3" class="easyui-panel mCircleDiv" title="08A1" style="width:100%;height:100%;">
+                            <div id="text3"></div>
+                            <div id="legendPlaceholder3"></div>
+                            <div id="flotcontainer3" class="flotcontainer-small" style="font-size:24px;"></div>
+                            
+                        </div>
+                    </div>
+                    <div id="m_CircleDiv4" style="float:left;width:25%;height:50%;">
+                        <div id="mCircleDiv4" class="easyui-panel mCircleDiv" title="08E1" style="width:100%;height:100%;">
+                            <div id="text4"></div>
+                            <div id="legendPlaceholder4"></div>
+                            <div id="flotcontainer4" class="flotcontainer-small" style="font-size:24px;"></div>
+                            
+                        </div>
+                    </div>
+                    <div id="m_CircleDiv5" style="float:left;width:25%;height:50%;">
+                        <div id="mCircleDiv5" class="easyui-panel mCircleDiv" title="08F1" style="width:100%;height:100%;">
+                            <div id="text5"></div>
+                            <div id="legendPlaceholder5"></div>
+                            <div id="flotcontainer5" class="flotcontainer-small" style="font-size:24px;"></div>
+                            
+                        </div>
+                    </div>
+                    <div id="m_CircleDiv6" style="float:left;width:25%;height:50%;">
+                        <div id="mCircleDiv6" class="easyui-panel mCircleDiv" title="08S1" style="width:100%;height:100%;">
+                            <div id="text6"></div>
+                            <div id="legendPlaceholder6"></div>
+                            <div id="flotcontainer6" class="flotcontainer-small" style="font-size:24px;"></div>
+                            
+                        </div>
+                    </div>
+                    <div id="m_CircleDiv7" style="float:left;width:25%;height:50%;">
+                        <div id="mCircleDiv7" class="easyui-panel mCircleDiv" title="12A1" style="width:100%;height:100%;">
+                            <div id="text7"></div>
+                            <div id="legendPlaceholder7"></div>
+                            <div id="flotcontainer7" class="flotcontainer-small" style="font-size:24px;"></div>
+                            
+                        </div>
+                    </div>
+                    <div id="m_CircleDiv8" style="float:left;width:25%;height:50%;">
+                        <div id="mCircleDiv8" class="easyui-panel mCircleDiv" title="12A3" style="width: 100%; height: 100%; ">
+                            <div id="text8"></div>
+                            <div id="legendPlaceholder8"></div>
+                            <div id="flotcontainer8" class="flotcontainer-small"  style="font-size:24px;"></div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div id="TableDiv" style="width:100%;height:50%;">
+            <div id="tb" class="row justify-content-center align-items-center">
+                <div class="col-2">
+                    <span>廠別：</span>
+                    <select id="selectFAB" class="easyui-combobox" panelHeight="auto" editable="false" style="width:130px;height:30px;">
+                        @Html.Raw(ViewData["FAB"])
+                    </select>
+                </div>
+                <div class="col-2">
+                    <span id="spToday">日期：</span>
+                </div>
+                <div class="col-2">
+                    <span id="spCount">應檢筆數：</span>
+                </div>
+                <div class="col-2">
+                    <span id="spCount2">已檢筆數：</span>
+                </div>
+                <div class="col-2">
+                    <span id="spCount3">未檢筆數：</span>
+                </div>
+                <div class="col-2">
+                    <a id="btn_renew" href="#" class="easyui-linkbutton" data-options="" style="width:130px;height:30px;" onclick="GetItemListSelect()">重新整理</a>
+                </div>
+            </div>
+            <table id="SearchResult" class="easyui-datagrid" title="巡檢資訊看版" style="width:100%;height:100%;margin-left:auto;margin-right:auto;"
+                   data-options="singleSelect:true,collapsible:false,fitColumns:true,remoteSort:false
+                        ,toolbar:'#tb'" multiSort="true">
+                <!--pagination:true,pageSize:20,pageList:[10,20,30]"-->
+                <thead>
+                    <tr>
+                        <th data-options="field:'FAB'" width="60" sortable="false">廠別</th>
+                        <th data-options="field:'doc'" width="80" sortable="false">巡檢單號</th>
+                        <th data-options="field:'TableName'" width="120" sortable="false">巡檢表單名稱</th>
+                        <th data-options="field:'IsFinishedTime'" width="80" sortable="false">巡檢時間</th>
+                        <th data-options="field:'UserName'" width="80" sortable="false">巡檢人員</th>
+                        <th data-options="field:'UserID'" width="100" sortable="false">人員工號</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+
+    </div>
+
+    <div id="win" class="easyui-window" title="Login" style="width:50%;text-align: center;">
+        <div style="width:100%;text-align:center;">
+            <div id="MainPanel" style="width:100%;max-width:500px;margin-left:auto;margin-right:auto;">
+                <h2 style="text-align:center;">智慧化巡檢系統 登入</h2>
+                <div class="easyui-panel" title="請輸入帳號密碼：" style="width:100%;max-width:500px;height:280px;">
+                    <form id="UserLogin" action="~/Info/Info" method="post">
+                        <div style="margin-top:50px;margin-left:10%;width:80%;height:30px">
+                            <input name="uid" id="uid" class="easyui-textbox" style="width:100%;height:30px" value=""
+                                   data-options="prompt:'User ID',iconCls:'icon-man',iconWidth:38" autofocus>
+                        </div>
+                        <div style="margin-top:20px;margin-left:10%;width:80%;height:30px">
+                            <input name="pwd" id="pwd" class="easyui-textbox" type="password" style="width:100%;height:30px" value=""
+                                   data-options="prompt:'Password',iconCls:'icon-lock',iconWidth:38">
+                        </div>
+                        <div style="margin-top:25px;margin-left:10%;width:80%;height:30px">
+                            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" style="width:100%;height:30px" onclick="formsubmit()">
+                                <span style="font-size:14px;">登入</span>
+                            </a>
+                        </div>
+                    </form>
+                    
+                </div>
+                <div style="text-align:right">@ViewData["RenewDate"]</div>
+                <p>
+                    <span style="font-weight:bold;color:red;text-align:center;">@ViewData["msg"]</span>
+                </p>
+                <p>
+                    <span style="font-weight:bold;color:red;text-align:center;">@ViewData["ErrorMsg"] </span>
+                </p>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

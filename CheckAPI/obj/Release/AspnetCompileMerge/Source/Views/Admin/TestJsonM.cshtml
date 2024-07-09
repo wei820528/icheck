@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewBag.Title = "巡檢系統 排程月測試";
+    Layout = "~/Views/Shared/Bootstrap_Layout.cshtml";
+}
+@section CustomScript {
+    <script>
+        $(document).ready(function () {
+            $("#submenu-testjson").addClass('active');
+        });
+        function SendTxt() {
+            if ($("#btn_sendtxt").hasClass('disabled')) return;
+            $("#btn_sendtxt").addClass('disabled');
+            var pp = $.param({
+                "TxtDate": $("#txtdate").datebox('getValue')
+            });
+            $.post("@Url.Action("SendTxt", "Task")", pp, function (xx) {
+                $("#Result").html(xx);
+                console.log(xx);
+            }, "text").always(function () {
+                $("#btn_sendtxt").removeClass('disabled');
+            });
+        }
+
+
+        function SendTxtM() {
+            if ($("#btn_sendtxtM").hasClass('disabled')) return;
+            $("#btn_sendtxtM").addClass('disabled');
+            var pp = $.param({
+                "TxtDate": $("#txtdateM").datebox('getValue')
+            });
+            $.post("@Url.Action("C_M_CSV_ALL_Url", "TaskYMD")", pp, function (xx) {
+                $("#Result").html(xx);
+                console.log(xx);
+            }, "text").always(function () {
+                $("#btn_sendtxtM").removeClass('disabled');
+            });
+        }
+
+        function SendSystem() {
+            if ($("#btn_sendtxtM").hasClass('disabled')) return;
+            $("#btn_sendtxtM").addClass('disabled');
+            var pp = $.param({
+                "TxtDate": $("#txtdateM").datebox('getValue')
+            });
+            $.post("@Url.Action("SendSystem", "Task")", pp, function (xx) {
+                $("#Result").html(xx);
+                console.log(xx);
+            }, "text").always(function () {
+                $("#btn_sendtxtM").removeClass('disabled');
+            });
+
+        }
+
+        function SendSystemClear() {
+            $.post("@Url.Action("Factories_Complete_Clear", "Task")", function (xx) {
+                alert(xx);
+            }, "text").always(function () {
+            });
+
+        }
+
+       
+        function SendTxD() {
+            if ($("#btn_sendtxtD").hasClass('disabled')) return;
+            $("#btn_sendtxtD").addClass('disabled');
+            var pp = $.param({
+                "TxtDate": $("#txtdateD").datebox('getValue')
+            });
+            $.post("@Url.Action("C_D_CSV_ALL", "TaskYMD")", pp, function (xx) {
+                $("#Result").html(xx);
+                console.log(xx);
+            }, "text").always(function () {
+                $("#btn_sendtxtD").removeClass('disabled');
+            });
+        }
+        function SendTxtALL() {
+            if ($("#btn_sendtxtAll").hasClass('disabled')) return;
+            $("#btn_sendtxtAll").addClass('disabled');
+            var pp = $.param({
+                "TxtDate": $("#txtdateAll").datebox('getValue')
+            });
+            $.post("@Url.Action("C_DM_CSV_ALL", "TaskYMD")", pp, function (xx) {
+                $("#Result").html(xx);
+                console.log(xx);
+            }, "text").always(function () {
+                $("#btn_sendtxtAll").removeClass('disabled');
+            });
+        }
+    </script>
+}
+<div class="container-fluid">
+    <div style="text-align:right;">
+        @ViewData["RenewDate"]
+    </div>
+    <input id="txtdate" type="text" class="easyui-datebox" required="required">
+    <button id="btn_sendtxt" type="button" class="btn btn-warning" onclick="SendTxt()">簽核用文件</button>
+    <br />
+    <br />
+    @*<input id="txtdateAll" type="text" class="easyui-datebox" required="required">
+        <button id="btn_sendtxtAll" type="button" class="btn btn-warning" onclick="SendTxtALL()">簽核用文件(月+日)</button>
+        <br />
+        <br />*@
+    
+    簽核用文件
+    <input id="txtdateM" type="text" class="easyui-datebox" required="required">
+    <button id="btn_sendtxtM" type="button" class="btn btn-warning" onclick="SendTxtM()">手動(月)</button>
+    <button id="btn_sendtxtSystem" type="button" class="btn btn-warning" onclick="SendSystem()">自動(月)</button>
+    <button id="btn_sendtxtSystem" type="button" class="btn btn-warning" onclick="SendSystemClear()">清除設定(月)</button>
+    <br />
+    <br />
+    @*<input id="txtdateD" type="text" class="easyui-datebox" required="required">
+        <button id="btn_sendtxtD" type="button" class="btn btn-warning" onclick="SendTxtD()">簽核用文件(日)</button>
+        <br />
+        <br />*@
+    <div id="Result" class="ResultText"></div>
+</div>
+
+

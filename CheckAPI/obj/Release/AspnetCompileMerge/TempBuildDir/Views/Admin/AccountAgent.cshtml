@@ -1,0 +1,276 @@
+﻿
+@{
+    ViewBag.Title = "巡檢系統 帳號代理人設定";
+    Layout = "~/Views/Shared/Bootstrap_Layout.cshtml";
+}
+@section CustomScript {
+    <script>
+        $(document).ready(function () {
+            $("#submenu-accountmanage").addClass('active');
+            CloseDlg();
+            GetFAB();
+            $('#SearchResult').datagrid({
+                onClickRow: function (index, row) {
+                    $("#SN_e").val(row["SN"]);
+                    $("#UserID_e").val(row["UserID"]);
+                    $("#FAB_e").val(row["Agent_FAB"]);
+                    GetAgentUserID_e(row["Agent_UserID"]);
+                    OpenDlgEdit();
+                }
+            });
+            ChangeTableSize();
+            $(window).resize(function () {
+                ChangeTableSize();
+            });
+            $('#selectFAB').combobox({
+                onChange: function (newValue, oldValue) {
+                    ChangeFAB();
+                }
+            });
+            $('#selectAccount').combobox({
+                onChange: function (newValue, oldValue) {
+                    ChangeAccount();
+                }
+            })
+        });
+        function GetFAB() {
+           
+            $('#selectFAB').combobox({
+                url: "@Url.Action("GetSqlFAB", "Admin")",
+                valueField: 'FAB',
+                textField: 'FAB'
+            });
+            $.post("@Url.Action("GetSqlFABbs", "Admin")?a=0", function (xx) {
+                $('#FAB').html(xx);
+                $('#FAB_e').html(xx);
+            }, "text").done(function () {
+                GetAgentUserID();
+            }).fail(function () {
+                GetFAB();
+            });
+        }
+        function ChangeFAB() {
+            var pp = $.param({
+                "FAB": $('#selectFAB').combobox('getValue')
+            });
+            $('#selectAccount').combobox({
+                url: "@Url.Action("GetAccountList", "Admin")?" + pp,
+                valueField: 'Account',
+                textField: 'AccountName'
+            });
+        }
+        function ChangeAccount() {
+            var Account = $('#selectAccount').combobox('getValue');
+            if (Account == "") return;
+            var pp = $.param({
+                "Account": Account
+            });
+            $("#SearchResult").datagrid({ url: "@Url.Action("AccountAgentList", "Admin")?" + pp, method: 'post' });
+        }
+        function GetAgentUserID() {
+            var pp = $.param({ "FAB": $('#FAB').val() });
+            $.post("@Url.Action("GetAgentUserList", "Admin")", pp, function (xx) {
+                $('#Agent_UserID').html(xx);
+            }, "text").done(function () {
+                //
+            }).fail(function () {
+                GetAgentUserID();
+            });
+        }
+        function GetAgentUserID_e(Agent_UserID) {
+            var pp = $.param({ "FAB": $('#FAB_e').val() });
+            $.post("@Url.Action("GetAgentUserList", "Admin")", pp, function (xx) {
+                $('#Agent_UserID_e').html(xx);
+            }, "text").done(function () {
+                if (Agent_UserID != null && Agent_UserID != "")
+                    $("#Agent_UserID_e").val(Agent_UserID);
+                else
+                    $('#Agent_UserID_e option:eq(0)').prop('selected', true);
+            }).fail(function () {
+                GetAgentUserID();
+            });
+        }
+        //New
+        function submitForm() {
+            var pp = $.param({
+                "UserID": $("#UserID").val(),
+                "Agent_FAB": $("#FAB").val(),
+                "Agent_UserID": $("#Agent_UserID").val()
+            });
+            $.post("@Url.Action("NewAccountAgent", "Admin")", pp, function (xx) {
+                msg(xx);
+                clearform();
+                CloseDlg();
+            }, "text").done(function () {
+                $("#SearchResult").datagrid('reload');
+            });
+        }
+        //Update
+        function UpdateEditData() {
+            var pp = $.param({
+                "SN": $("#SN_e").val(),
+                "UserID": $("#UserID_e").val(),
+                "Agent_FAB": $("#FAB_e").val(),
+                "Agent_UserID": $("#Agent_UserID_e").val()
+            });
+            $.post("@Url.Action("UpdateAccountAgent", "Admin")", pp, function (xx) {
+                msg(xx);
+            }, "text").done(function () {
+                CloseDlg();
+                $("#SearchResult").datagrid('reload');
+            }).fail(function () {
+                msg('網路沒有回應');
+            });
+        }
+        //Delete
+        function DeleteEditData() {
+            var SN = $("#SN_e").val();
+            $.messager.confirm('確認', "確定是否要刪除序號" + SN + "嗎？", function (r) {
+                if (r) {
+                    var pp = $.param({
+                        "SN": SN
+                    });
+                    $.post("@Url.Action("DeleteAccountAgent", "Admin")", pp, function (xx) {
+                        msg(xx);
+                    }, "text").done(function () {
+                        CloseDlg();
+                        $("#SearchResult").datagrid('reload');
+                    }).fail(function () {
+                        msg('網路沒有回應');
+                    });
+                }
+            });
+        }
+        //Dialog
+        function OpenDlgNew() {
+            var FAB = $("#selectFAB").combobox('getValue');
+            var UserID = $("#selectAccount").combobox('getValue');
+            if (UserID == "") {
+                alert("請選擇使用者");
+                return;
+            }
+            $("#FAB").val(FAB);
+            GetAgentUserID();
+            $("#UserID").val(UserID);
+            $("#dlg_new").dialog('open');
+            $("#dlg_edit").dialog('close');
+        }
+        function OpenDlgEdit() {
+            $("#dlg_new").dialog('close');
+            $("#dlg_edit").dialog('open');
+        }
+        function CloseDlg() {
+            $("#dlg_new").dialog('close');
+            $("#dlg_edit").dialog('close');
+            clearform();
+        }
+        function clearform() {
+            $("#UserID").val('');
+            $('#FAB option:eq(0)').prop('selected', true);
+            $('#Agent_UserID option:eq(0)').prop('selected', true);
+        }
+    </script>
+}
+<div id="TableDiv" style="width:100%;height:100%;">
+    <div id="tb" style="text-align:right;">
+        <span>廠別</span>
+        <select id="selectFAB" class="easyui-combobox" panelHeight="auto" editable="false" style="width:130px;height:30px;">
+            <option value="ALL" selected>ALL</option>
+        </select>
+        <span>使用者</span>
+        <select id="selectAccount" class="easyui-combobox" panelHeight="auto" editable="false" style="width:200px;height:30px;">
+            <option value="" selected></option>
+        </select>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" style="width:130px;height:30px;" onclick="OpenDlgNew()">新增代理人</a>
+    </div>
+    <table id="SearchResult" class="easyui-datagrid" title="帳號代理人設定" style="width:100%;height:100%;margin-left:auto;margin-right:auto;"
+           data-options="singleSelect:true,collapsible:false,fitColumns:true,remoteSort:false
+                            ,toolbar:'#tb'" multiSort="true">
+        <thead>
+            <tr>
+                <th data-options="field:'SN'" width="80" sortable="true">序號</th>
+                <th data-options="field:'UserID'" width="80" sortable="true">工號</th>
+                <th data-options="field:'Agent_FAB'" width="80" sortable="true">代理人廠別</th>
+                <th data-options="field:'Agent_UserID'" width="80" sortable="true">代理人工號</th>
+                <th data-options="field:'Agent_UserName'" width="80" sortable="true">代理人姓名</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<!--新增代理人-->
+<div id="dlg_new" class="easyui-dialog" title="新增代理人" style="width:100%;max-width:600px;height:auto;"
+     data-options="iconCls:'icon-add',resizable:true,modal:true">
+    <div class="container-fluid">
+        <form id="NewAccount" action="@Url.Action("NewAccountAgent", "Admin")" class="easyui-form" method="post" data-options="novalidate:true">
+            <div class="form-inline">
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="UserID" style="width:150px;">工號</label>
+                    </div>
+                    <input type="text" class="form-control" id="UserID" readonly />
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="FAB" style="width:150px;">代理人廠別</label>
+                    </div>
+                    <select class="custom-select" id="FAB" onchange="GetAgentUserID()">
+                        
+                    </select>
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="Agent_UserID" style="width:150px;">代理人工號</label>
+                    </div>
+                    <select class="custom-select" id="Agent_UserID"></select>
+                </div>
+                <div class="form-row col-12 col-sm-12 col-md-12 col-lg-12 text-center" style="margin-top:20px;margin-bottom:10px;">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-info col-5 col-sm-5 col-md-5 col-lg-5" onclick="submitForm()">新增</button>
+                        <button type="button" class="btn btn-danger col-5 col-sm-5 col-md-5 col-lg-5" onclick="CloseDlg()">取消</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--更新表單-->
+<div id="dlg_edit" class="easyui-dialog" title="更新代理人" style="width:100%;max-width:600px;height:auto;"
+     data-options="iconCls:'icon-add',resizable:true,modal:true">
+    <div class="container-fluid">
+        <form id="EditAccount" action="@Url.Action("UpdateAccountProcess", "Admin")" class="easyui-form" method="post" data-options="novalidate:true">
+            <div class="form-inline">
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="SN_e" style="width:150px;" disabled>自動序號</label>
+                    </div>
+                    <input type="text" class="form-control" id="SN_e" readonly />
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="UserID_e" style="width:150px;" disabled>工號</label>
+                    </div>
+                    <input type="text" class="form-control" id="UserID_e" readonly />
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="FAB_e" style="width:150px;">代理人廠別</label>
+                    </div>
+                    <select class="custom-select" id="FAB_e" onchange="GetAgentUserID_e()"></select>
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="Agent_UserID_e" style="width:150px;">代理人工號</label>
+                    </div>
+                    <select class="custom-select" id="Agent_UserID_e"></select>
+                </div>
+                <div class="form-row col-12 col-sm-12 col-md-12 col-lg-12 text-center" style="margin-top:20px;margin-bottom:10px;">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-info col-3 col-sm-3 col-md-3 col-lg-3" onclick="UpdateEditData()">修改</button>
+                        <button type="button" class="btn btn-success col-3 col-sm-3 col-md-3 col-lg-3" onclick="DeleteEditData()">刪除</button>
+                        <button type="button" class="btn btn-danger col-3 col-sm-3 col-md-3 col-lg-3" onclick="CloseDlg()">取消</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

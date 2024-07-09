@@ -1,0 +1,189 @@
+﻿
+@{
+    ViewBag.Title = "巡檢系統 信箱設定";
+    Layout = "~/Views/Shared/Bootstrap_Layout.cshtml";
+}
+
+@section CustomScript {
+    <script>
+        $(document).ready(function () {
+            $("#submenu-etc").addClass('active');
+            ChangeTableSize();
+            $(window).resize(function () {
+                ChangeTableSize();
+            });
+            $('#SendMailFrom').focus();
+            $('#SendMailFrom').bind('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    $('#MailAccount').focus();
+                }
+            });
+            $('#MailAccount').bind('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    $('#MailAccountPwd').focus();
+                }
+            });
+            $('#MailAccountPwd').bind('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    $('#SendMailTitle').focus();
+                }
+            });
+            $('#SendMailTitle').bind('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    $('#MailSmtp').focus();
+                }
+            });
+
+            $('#MailSmtp').bind('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    $('#MailSmtpPort').focus();
+                }
+            });
+            $('#MailSmtpPort').bind('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    submitForm();
+                }
+            });
+            $("#SendMailFrom").val('@ViewData["SendMailFrom"]');
+            $("#MailAccount").val('@ViewData["MailAccount"]');
+            $("#MailAccountPwd").val('@ViewData["MailAccountPwd"]');
+            $("#SendMailTitle").val('@ViewData["SendMailTitle"]');
+            $("#MailSmtp").val('@ViewData["MailSmtp"]');
+            $("#MailSmtpPort").val('@ViewData["MailSmtpPort"]');
+            $('#EnableSsl').val('@ViewData["EnableSsl"]');
+            ChangeTableSize();
+            $(window).resize(function () {
+                ChangeTableSize();
+            });
+        });
+        function submitForm() {
+            if ($("#submit_btn").hasClass("disabled")) return;
+            $("#submit_btn").addClass("disabled");
+            var msgtxt = "";
+            if ($("#MailAccount").val() == "") {
+                msgtxt += "請輸入帳號\n";
+            }
+            if ($("#MailAccountPwd").val() == "") {
+                msgtxt += "請輸入密碼\n";
+            }
+            if ($("#MailSmtp").val() == "") {
+                msgtxt += "請輸入Smtp\n";
+            }
+            var label = document.getElementById("MailSmtp");
+            var value = label.innerText.trim();
+
+            if (emailCheck($("#SendMailFrom").val()) != true) {
+                msgtxt += emailCheck($("#SendMailFrom").val()) + " email" ;
+            }
+            //if (emailCheck($("#MailSmtp").val()) != true) {
+            //    msgtxt += emailCheck($("#MailSmtp").val())+" SMTP " ;
+            //}
+            if ($("#SendMailTitle").val() == "") {
+                msgtxt += "請輸入標題\n";
+            }
+            if (msgtxt == "") {
+                var MailAccount = $("#MailAccount").val();
+                var MailAccountPwd = $("#MailAccountPwd").val();
+                var MailSmtp = $("#MailSmtp").val();
+                var MailSmtpPort = $("#MailSmtpPort").val();
+                var SendMailFrom = $("#SendMailFrom").val();
+                var SendMailTitle = $("#SendMailTitle").val();
+                var EnableSsl = $("#EnableSsl").val();
+                var pp = $.param({
+                    "MailAccount": MailAccount,
+                    "MailAccountPwd": MailAccountPwd,
+                    "MailSmtp": MailSmtp,
+                    "MailSmtpPort": MailSmtpPort,
+                    "SendMailFrom": SendMailFrom,
+                    "SendMailTitle": SendMailTitle,
+                    "EnableSsl": EnableSsl
+                });
+                $.post("@Url.Action("UpdateMailSetting", "Admin")", pp, function (xx) {
+                    msg(xx);
+                }, "text").fail(function () {
+                    msg("更新資料錯誤");
+                }).always(function () {
+                    $('#SendMailFrom').focus();
+                    $("#submit_btn").removeClass("disabled");
+                });
+            }
+            else {
+                alert(msgtxt);
+                $('#SendMailFrom').focus();
+                $("#submit_btn").removeClass("disabled");
+            }
+        }
+        function emailCheck(emailStr) {
+            var msgtxt = null;
+            if (emailStr == "") {
+                msgtxt = "請輸入\n";
+                return msgtxt;
+            } 
+            var emailRegxp = /^([a-zA-Z0-9_\.\-\+])+\@@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            if (emailRegxp.test(emailStr) != true) {
+                msgtxt = "請輸入正確\n";
+                return msgtxt;
+            }
+            return true;
+        }
+    </script>
+}
+<!--信箱設定-->
+<div id="TableDiv" style="width:100%;height:100%;">
+    <div class="easyui-panel" title="信箱設定" style="width:100%;height:100%;">
+        <!---->
+        <div class="form-inline text-center" style="width:100%;max-width:600px;margin-left:auto;margin-right:auto;">
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="SendMailFrom" style="width:150px;">電子郵件</label>
+                </div>
+                <input type="text" class="form-control" id="SendMailFrom" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:15px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="MailAccount" style="width:150px;">帳號</label>
+                </div>
+                <input type="text" class="form-control" id="MailAccount" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:15px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="MailAccountPwd" style="width:150px;">密碼</label>
+                </div>
+                <input type="password" class="form-control" id="MailAccountPwd" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:15px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="SendMailTitle" style="width:150px;">寄件人名稱</label>
+                </div>
+                <input type="text" class="form-control" id="SendMailTitle" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:15px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="MailSmtp" style="width:150px;">SMTP</label>
+                </div>
+                <input type="text" class="form-control" id="MailSmtp" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:15px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="MailSmtpPort" style="width:150px;">SMTP Port</label>
+                </div>
+                <input type="text" class="form-control" id="MailSmtpPort" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:15px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="EnableSsl" style="width:150px;">SSL</label>
+                </div>
+                <select class="custom-select" id="EnableSsl">
+                    <option value="true">true</option>
+                    <option value="false" selected>false</option>
+                </select>
+            </div>
+            <div class="form-row col-12 col-sm-12 col-md-12 col-lg-12 text-center" style="margin-top:15px;margin-bottom:20px;">
+                <div class="col-12">
+                    <button type="button" class="btn btn-info col-5 col-sm-5 col-md-5 col-lg-5" onclick="submitForm()">儲存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

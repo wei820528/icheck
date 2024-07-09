@@ -1,0 +1,113 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" charset="UTF-8" />
+    <title>巡檢系統 管理員登入</title>
+    <link rel="stylesheet" type="text/css" href="~/jQueryUi/themes/bootstrap/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="~/jQueryUi/themes/icon.css" />
+    <link rel="stylesheet" type="text/css" href="~/jQueryUi/demo/demo.css" />
+    <link href="~/CSS/Index-rwd.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/jQueryUi/jquery.min.js"></script>
+    <script type="text/javascript" src="~/jQueryUi/jquery.easyui.min.js"></script>
+    <style>
+        #BackImage {
+            background-image: url(~/Pic/bg6.png);
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: top;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            var url = location.search; //获取url中"?"符后的字串
+           
+            $('#uid').textbox('textbox').focus();
+            $('#uid').textbox('textbox').bind('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    $('#pwd').textbox('textbox').focus();
+                }
+            });
+            $('#pwd').passwordbox('textbox').bind('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    formsubmit();
+                }
+            });
+            ReSize();
+            $(window).resize(function () {
+                ReSize();
+            });
+
+        });
+        function formsubmit() {
+            var msg = "";
+            if ($("#uid").val() == "") {
+                msg = "請輸入帳號";
+            }
+            else if ($("#pwd").val() == "") {
+                msg = "請輸入密碼";
+            }
+            if (msg == "") {
+                $("#UserLogin").submit();
+            }
+        }
+        function ReSize() {
+            var ww = $(window).width();
+            if (ww < 650) {
+                $("#BackImage").css("background-image", "url(../Pic/3090.png)");
+            } else {
+                $("#BackImage").css("background-image", "url(../Pic/UMC.png)");
+            }
+            var hh = (window.innerHeight - 330) / 2;
+            if (hh < 0) hh = 0;
+            $("#MainPanel").css("margin-top", hh + "px");
+        }
+    </script>
+</head>
+<body id="BackImage">
+    <div style="width:100%;text-align:center;">
+        <div id="MainPanel" style="width:100%;max-width:500px;margin-top:100px;margin-left:auto;margin-right:auto;background-color:aliceblue">
+            <h2 style="text-align:center;">巡檢系統 管理員登入</h2>
+            <div class="easyui-panel" title="請輸入帳號密碼：" style="width:100%;max-width:500px;height:280px;">
+                <form id="UserLogin" action="~/Login/ValidLogin" method="post">
+                    <div style="margin-top:50px;margin-left:10%;width:80%;height:30px">
+                        <input name="uid" id="uid" class="easyui-textbox" style="width:100%;height:30px" value=""
+                               data-options="prompt:'User ID',iconCls:'icon-man',iconWidth:38" autofocus>
+                    </div>
+                    <div style="margin-top:20px;margin-left:10%;width:80%;height:30px">
+                        <input name="pwd" id="pwd" class="easyui-textbox" type="password" style="width:100%;height:30px" value=""
+                               data-options="prompt:'Password',iconCls:'icon-lock',iconWidth:38">
+                    </div>
+                    @*<div style="margin-top:50px;margin-left:10%;width:80%;height:30px">
+                        <input name="uid" id="uid" class="easyui-textbox" style="width:100%;height:30px" value="robert"
+                               data-options="prompt:'User ID',iconCls:'icon-man',iconWidth:38" autofocus>
+                    </div>
+                    <div style="margin-top:20px;margin-left:10%;width:80%;height:30px">
+                        <input name="pwd" id="pwd" class="easyui-textbox" type="password" style="width:100%;height:30px" value="1234"
+                               data-options="prompt:'Password',iconCls:'icon-lock',iconWidth:38">
+                    </div>*@
+                    <div style="margin-top:25px;margin-left:10%;width:80%;height:30px">
+                        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" style="width:100%;height:30px" onclick="formsubmit()">
+                            <span style="font-size:14px;">管理員登入</span>
+                        </a>
+                    </div>
+                </form>
+            </div>
+            <p>
+                <span style="font-weight:bold;color:red;text-align:center;">@ViewData["msg"]</span>
+            </p>
+            <p>
+                <span style="font-weight:bold;color:red;text-align:center;">@ViewData["ErrorMsg"] </span>
+            </p>
+            <p> 
+                <a href="@Url.Action("DownloadApk", "Login")" style="display:none;">下載APK</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

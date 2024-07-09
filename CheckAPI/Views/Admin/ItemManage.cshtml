@@ -1,0 +1,492 @@
+﻿
+@{
+    ViewBag.Title = "巡檢系統 表單項目管理";
+    Layout = "~/Views/Shared/Bootstrap_Layout.cshtml";
+}
+
+@section CustomScript {
+    <script>
+        $(document).ready(function () {
+            CloseDlg();
+            $("#submenu-tablemanage").addClass('active');
+            GetFAB();
+            $('#selectFAB').combobox({
+                onChange: function (newValue, oldValue) {
+                    GetTableID();
+                }
+            });
+            $('#selectTableID').combobox({
+                onChange: function (newValue, oldValue) {
+                    GetItemData();
+                }
+            });
+            $("#SearchResult").datagrid('getPager').pagination({
+                onSelectPage: function (pageNumber, pageSize) {
+                    var FAB = $('#selectFAB').combobox('getValue');
+                    var TableID = $('#selectTableID').combobox('getValue');
+                    var pp = $.param({
+                        "FAB": FAB,
+                        "TableID": TableID
+                    });
+                    $("#SearchResult").datagrid({ url: "@Url.Action("GetItemList", "Admin")?" + pp, method: 'post' });
+                }
+            });
+            //
+            $('#SearchResult').datagrid({
+                onClickRow: function (index, row) {
+                    $("#FAB_e").val(row["FAB"]);
+                    $("#TableID_e").val(row["TableID"]);
+                    $("#ItemID_e").val(row["ItemID"]);
+                    $("#ItemSort_e").val(row["ItemSort"]);
+                    $("#ItemName_e").val(row["ItemName"]);
+                    $("#ItemContent_e").val(row["ItemContent"]);
+                    $('#ItemType_e').val(row["ItemType"]);
+                    $("#ItemMin_e").val(row["ItemMin"]);
+                    $('#ItemMax_e').val(row["ItemMax"]);
+                    ItemMinMaxShow_e();
+                    OpenDlgEdit();
+                }
+            });
+            ChangeTableSize();
+            $(window).resize(function () {
+                ChangeTableSize();
+            });
+            //新增TableIDNumber測試
+            $("#ItemID").blur(function () {
+                var FAB = $("#FAB").val();
+                var TableID = $("#ItemID").val();
+                if (TableID.length == 0)
+                    $("#ItemIDCheckResult").text("");
+                else {
+                    var pp = $.param({ "FAB": FAB, "TableID": TableID });
+                    $.post("@Url.Action("CheckItemIDDuplicate", "Admin")", pp, function (xx) {
+                        if (xx == "t")
+                            $("#ItemIDCheckResult").text("序號已被使用").css({ "font-weight": "bold", "color": "red" });
+                        else
+                            $("#ItemIDCheckResult").text("序號可以使用").css({ "font-weight": "bold", "color": "green" });
+                    }, "text");
+                }
+            });
+        });
+        //新增項目
+        function AddItem() {
+            ItemMinMaxShow()
+            var msgtxt = "";
+            if ($("#FAB").val() == "") {
+                msgtxt += "請輸入廠別！ ";
+            }
+            if ($("#TableID").val() == "") {
+                msgtxt += "請輸入單號！ ";
+            }
+            if ($("#ItemID").val() == "") {
+                msgtxt += "請輸入ItemID！ ";
+            }
+            if ($("#ItemSort").val() == "") {
+                msgtxt += "請輸入位置順序！ ";
+            }
+            if ($("#ItemName").val() == "") {
+                msgtxt += "請輸入項目名稱！ ";
+            }
+            if ($("#ItemContent").val() == "") {
+                msgtxt += "請輸入項目說明！ ";
+            }
+            if ($("#ItemType").val() == "") {
+                msgtxt += "請輸入項目類別！ ";
+            }
+
+            if (parseInt($("#ItemMin").val()) > parseInt($("#ItemMax").val())) {
+                msgtxt += "最小值不能大於最大值";
+            }
+            if ($("#ItemIDCheckResult").text() != "序號可以使用") {
+                msgtxt += $("#ItemIDCheckResult").text();
+            }
+
+            if (msgtxt == "") {
+                var pp = $.param({
+                    "FAB": $("#FAB").val(),
+                    "TableID": $("#TableID").val(),
+                    "ItemID": $("#ItemID").val(),
+                    "ItemSort": $("#ItemSort").val(),
+                    "ItemName": $("#ItemName").val(),
+                    "ItemContent": $("#ItemContent").val(),
+                    "ItemType": $("#ItemType").val(),
+                    "ItemMin": $("#ItemMin").val(),
+                    "ItemMax": $("#ItemMax").val()
+                });
+                $.post("@Url.Action("AddTableItem", "Admin")", pp, function (xx) {
+                    msg(xx);
+                }, "text").done(function () {
+                    CloseDlg();
+                    clearform();
+                    $("#SearchResult").datagrid('reload');
+                }).fail(function () {
+                    msg("網路沒有回應");
+                }).always(function () {
+                    //
+                });
+            }
+            else {
+                alert(msgtxt);
+                $('#ItemID').focus();
+            }
+        }
+        //更新資料
+        function EditItem() {
+            var msgtxt = "";
+            if ($("#FAB_e").val() == "") {
+                msgtxt += "請輸入廠別！ ";
+            }
+            if ($("#TableID_e").val() == "") {
+                msgtxt += "請輸入單號！ ";
+            }
+            if ($("#ItemID_e").val() == "") {
+                msgtxt += "請輸入ItemID！ ";
+            }
+            if ($("#ItemSort_e").val() == "") {
+                msgtxt += "請輸入位置順序！ ";
+            }
+            if ($("#ItemName_e").val() == "") {
+                msgtxt += "請輸入項目名稱！ ";
+            }
+            if ($("#ItemContent_e").val() == "") {
+                msgtxt += "請輸入項目說明！ ";
+            }
+            if ($("#ItemType_e").val() == "") {
+                msgtxt += "請輸入項目類別！ ";
+            }
+            console.log($("#ItemMin_e").val());
+            console.log($("#TableID_e").val());
+            if (parseInt($("#ItemMin_e").val()) > parseInt($("#ItemMax_e").val())) {
+                msgtxt += "最小值不能大於最大值";
+            }
+          //  if ($("#ItemType").val())
+            if (msgtxt != "") {
+                alert(msgtxt);
+                $('#ItemSort_e').focus();
+                return;
+            }
+            var pp = $.param({
+                "FAB": $("#FAB_e").val(),
+                "TableID": $("#TableID_e").val(),
+                "ItemID": $("#ItemID_e").val(),
+                "ItemSort": $("#ItemSort_e").val(),
+                "ItemName": $("#ItemName_e").val(),
+                "ItemContent": $("#ItemContent_e").val(),
+                "ItemType": $("#ItemType_e").val(),
+                "ItemMin": $("#ItemMin_e").val(),
+                "ItemMax": $("#ItemMax_e").val()
+            });
+            $.post("@Url.Action("UpdateTableItem", "Admin")", pp, function (xx) {
+                msg(xx);
+            }, "text").done(function () {
+                CloseDlg();
+                clearform();
+                $("#SearchResult").datagrid('reload');
+            }).fail(function () {
+                msg('網路沒有回應');
+            }).always(function () {
+                //
+            });
+        }
+        //刪除資料
+        function DeleteItem() {
+            var FAB = $("#FAB_e").val();
+            var TableID = $("#TableID_e").val();
+            var ItemID = $("#ItemID_e").val();
+            $.messager.confirm('確認', "確定是否要刪除" + FAB + "單號" + TableID + "的ID:" + ItemID + "嗎？", function (r) {
+                if (r) {
+                    var pp = $.param({
+                        "FAB": FAB,
+                        "TableID": TableID,
+                        "ItemID": ItemID
+                    });
+                    $.post("@Url.Action("DeleteTableItem", "Admin")", pp, function (xx) {
+                        msg(xx);
+                    }, "text").done(function () {
+                        CloseDlg();
+                        clearform();
+                        $("#SearchResult").datagrid('reload');
+                    }).fail(function () {
+                        msg('網路沒有回應');
+                    }).always(function () {
+                        //
+                    });
+                };
+            });
+        }
+        //取得資料
+        function GetFAB() {
+            $('#selectFAB').combobox({
+                url: "@Url.Action("GetItemFAB", "Admin")",
+                valueField: 'Value',
+                textField: 'Text'
+            });
+        }
+        function GetTableID() {
+            var FAB = $('#selectFAB').combobox('getValue');
+            $('#selectTableID').combobox({
+                url: "@Url.Action("GetItemTableID", "Admin")?FAB=" + FAB,
+                valueField: 'Value',
+                textField: 'Text'
+            });
+        }
+        function GetItemData() {
+            var FAB = $('#selectFAB').combobox('getValue');
+            var TableID = $('#selectTableID').combobox('getValue');
+            var pp = $.param({
+                "FAB": FAB,
+                "TableID": TableID
+            });
+            $("#SearchResult").datagrid({ url: "@Url.Action("GetItemList", "Admin")?" + pp, method: 'post' });
+        }
+        //Dlg相關
+        function OpenDlgNew() {
+            var FAB = $('#selectFAB').combobox('getValue');
+            var TableID = $('#selectTableID').combobox('getValue');
+            $("#FAB").val(FAB);
+            $("#TableID").val(TableID);
+            $("#dlg_new").dialog('open');
+            $("#dlg_edit").dialog('close');
+            $('#ItemID').focus();
+        }
+        function OpenDlgEdit() {
+            $("#dlg_new").dialog('close');
+            $("#dlg_edit").dialog('open');
+            $('#ItemSort_e').focus();
+        }
+        function CloseDlg() {
+            $("#dlg_new").dialog('close');
+            $("#dlg_edit").dialog('close');
+            clearform();
+        }
+        function clearform() {
+            $("#FAB").val('');
+            $("#TableID").val('');
+            $('#ItemID').val('');
+            $("#ItemIDCheckResult").text('');
+            $('#ItemSort').val('');
+            $('#ItemName').val('');
+            $('#ItemContent').val('');
+            $('#ItemType option:eq(0)').prop('selected', true);
+            $("#ItemMin").val("0");
+            $("#ItemMax").val("0");
+            //
+            $("#FAB_e").val('');
+            $("#TableID_e").val('');
+            $('#ItemID_e').val('');
+            $('#ItemSort_e').val('');
+            $('#ItemName_e').val('');
+            $('#ItemContent_e').val('');
+            $('#ItemType option:eq(0)').prop('selected', true);
+            $("#ItemMin_e").val("0");
+            $("#ItemMax_e").val("0");
+        }
+        function ItemMinMaxShow_e() {
+            //alert($("#ItemType_e").val());
+            if ($("#ItemType_e").val() == "2") {
+                $("#DivMin_e").show();
+                $("#DivMax_e").show();
+            } else {
+                $("#DivMin_e").hide();
+                $("#DivMax_e").hide();
+                $("#ItemMin_e").val("0");
+                $("#ItemMax_e").val("0");
+            }
+        }
+        function ItemMinMaxShow() {
+            //alert($("#ItemType_e").val());
+            if ($("#ItemType").val() == "2") {
+                $("#DivMin").show();
+                $("#DivMax").show();
+            } else {
+                $("#DivMin").hide();
+                $("#DivMax").hide();
+                $("#ItemMin").val("0");
+                $("#ItemMax").val("0");
+            }
+        }
+    </script>
+}
+<!--Main-->
+<div id="TableDiv" style="width:100%;height:100%;display:inherit">
+    <div id="tb" style="text-align:right;">
+        <span>廠別</span>
+        <select id="selectFAB" class="easyui-combobox" panelHeight="auto" editable="false" style="width:120px;height:30px;">
+            <option value="" selected>讀取中</option>
+        </select>
+        <span>單號</span>
+        <select id="selectTableID" class="easyui-combobox" panelHeight="auto" editable="false" style="width:250px;height:30px;">
+            <option value="" selected>讀取中</option>
+        </select>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" style="width:130px;height:30px;" onclick="OpenDlgNew()">新增項目</a>
+    </div>
+    <table id="SearchResult" class="easyui-datagrid" title="表單項目管理" style="width:100%;height:100%;margin-left:auto;margin-right:auto;"
+           data-options="singleSelect:true,collapsible:false,fitColumns:true,remoteSort:false
+                            ,toolbar:'#tb',pagination:true,pageSize:20,pageList:[10,15,20,25,30]" multiSort="true">
+        <thead>
+            <tr>
+                <th data-options="field:'ItemID'" width="80" sortable="true">ItemID</th>
+                <th data-options="field:'ItemSort'" width="80" sortable="true">位置順序</th>
+                <th data-options="field:'ItemName'" width="120" sortable="true">項目名稱</th>
+                <th data-options="field:'ItemContent'" width="200" sortable="true">項目說明</th>
+                <th data-options="field:'ItemTypeWord'" width="120" sortable="true">項目類別</th>
+                <th data-options="field:'ItemMin'" width="80" sortable="true">最小值(數字類別)</th>
+                <th data-options="field:'ItemMax'" width="80" sortable="true">最大值(數字類別)</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<!--新增項目-->
+<div id="dlg_new" class="easyui-dialog" title="新增項目" style="width:100%;max-width:600px;height:auto;"
+     data-options="iconCls:'icon-add',resizable:true,modal:true">
+    <div class="container-fluid">
+        <div class="form-inline">
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="FAB" style="width:150px;">廠別</label>
+                </div>
+                <input type="text" class="form-control" id="FAB" disabled />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="TableID" style="width:150px;">單號</label>
+                </div>
+                <input type="text" class="form-control" id="TableID" disabled />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="ItemID" style="width:150px;">ItemID</label>
+                </div>
+                <input type="text" alt="" class="form-control" id="ItemID"  onkeyup="value=value.replace(/[^\A-Za-z0-9\_]/ig,'')" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:0px;margin-bottom:0px;height:20px;">
+                <span id="ItemIDCheckResult"></span>
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:0px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="ItemSort" style="width:150px;">位置順序</label>
+                </div>
+                <input type="number" alt="1到20不能重複" class="form-control" id="ItemSort" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="ItemName" style="width:150px;">項目名稱</label>
+                </div>
+                <input type="text" class="form-control" id="ItemName" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="ItemContent" style="width:150px;">項目說明</label>
+                </div>
+                <input type="text" class="form-control" id="ItemContent" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="ItemType" style="width:150px;">項目類別</label>
+                </div>
+                <select class="custom-select" id="ItemType" onchange="ItemMinMaxShow()">
+                    <option value="1" selected>正確/異常 選項</option>
+                    <option value="4">正確/異常/無此裝置 選項</option>
+                    <option value="2">數字類別</option>
+                    <option value="3">文字類別</option>
+                </select>
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px; display:none;" id="DivMin">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="ItemMin" style="width:150px;">最小值(數字類別)</label>
+                </div>
+                <input type="number" class="form-control" id="ItemMin" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px; display:none;" id="DivMax">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="ItemMax" style="width:150px;">最大值(數字類別)</label>
+                </div>
+                <input type="number" class="form-control" id="ItemMax" />
+            </div>
+            <div class="form-row col-12 col-sm-12 col-md-12 col-lg-12 text-center" style="margin-top:20px;margin-bottom:20px;">
+                <div class="col-12">
+                    <button type="button" class="btn btn-info col-5 col-sm-5 col-md-5 col-lg-5" onclick="AddItem()">送出</button>
+                    <button type="button" class="btn btn-danger col-5 col-sm-5 col-md-5 col-lg-5" onclick="CloseDlg()">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--修改項目-->
+<div id="dlg_edit" class="easyui-dialog" title="修改項目" style="width:100%;max-width:600px;height:auto;"
+     data-options="iconCls:'icon-add',resizable:true,modal:true">
+    <div class="container-fluid">
+        <div class="form-inline">
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="FAB_e" style="width:150px;">廠別</label>
+                </div>
+                <input type="text" class="form-control" id="FAB_e" disabled />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="TableID_e" style="width:150px;">單號</label>
+                </div>
+                <input type="text" class="form-control" id="TableID_e" disabled />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="ItemID_e" style="width:150px;">ItemID</label>
+                </div>
+                <input type="text" alt="" class="form-control" id="ItemID_e" disabled/>
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:0px;margin-bottom:0px;height:20px;">
+                <span id="ItemIDCheckResult"></span>
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:0px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="ItemSort_e" style="width:150px;">位置順序</label>
+                </div>
+                <input type="number" class="form-control" id="ItemSort_e" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="ItemName_e" style="width:150px;">項目名稱</label>
+                </div>
+                <input type="text" class="form-control" id="ItemName_e" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="ItemContent_e" style="width:150px;">項目說明</label>
+                </div>
+                <input type="text" class="form-control" id="ItemContent_e" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="ItemType_e" style="width:150px;">項目類別</label>
+                </div>
+                <select class="custom-select" id="ItemType_e" onchange="ItemMinMaxShow_e()">
+                    <option value="1" selected>正確/異常 選項</option>
+                    <option value="4">正確/異常/無此裝置 選項</option>
+                    <option value="2">數字類別</option>
+                    <option value="3">文字類別</option>
+                </select>
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;display:none;" id="DivMin_e">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="ItemMin_e" style="width:150px;">最小值(數字類別)</label>
+                </div>
+                <input type="number" class="form-control" id="ItemMin_e" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;display:none;" id="DivMax_e">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="ItemMax_e" style="width:150px;">最大值(數字類別)</label>
+                </div>
+                <input type="number" class="form-control" id="ItemMax_e" />
+            </div>
+            <div class="form-row col-12 col-sm-12 col-md-12 col-lg-12 text-center" style="margin-top:20px;margin-bottom:20px;">
+                <div class="col-12">
+                    <button type="button" class="btn btn-info col-3 col-sm-3 col-md-3 col-lg-3" onclick="EditItem()">送出</button>
+                    <button type="button" class="btn btn-warning col-3 col-sm-3 col-md-3 col-lg-3" onclick="DeleteItem()">刪除</button>
+                    <button type="button" class="btn btn-danger col-3 col-sm-3 col-md-3 col-lg-3" onclick="CloseDlg()">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

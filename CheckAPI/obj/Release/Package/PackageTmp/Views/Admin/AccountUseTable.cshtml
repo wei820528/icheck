@@ -1,0 +1,283 @@
+﻿
+@{
+    ViewBag.Title = "巡檢系統 帳號使用表單";
+    Layout = "~/Views/Shared/Bootstrap_Layout.cshtml";
+}
+
+@section CustomScript {
+    <script>
+        $(document).ready(function () {
+            $("#submenu-accountmanage").addClass('active');
+            CloseDlg();
+            GetFAB();
+            $('#SearchResult').datagrid({
+                onClickRow: function (index, row) {
+                    $("#UserID_e").val(row["UserID"]);
+                    $("#FAB_e").val(row["FAB"]);
+                    $("#TableID_e").val(row["TableID"]);
+                    $("#TableName_e").val(row["TableName"]);
+                    $("#TableSort_e").val(row["TableSort"]);
+                    //按新增表單才動作
+                    OpenDlgEdit();
+                }
+            });
+            ChangeTableSize();
+            $(window).resize(function () {
+                ChangeTableSize();
+            });
+            $('#selectFAB').combobox({
+                onChange: function (newValue, oldValue) {
+                    ChangeFAB();
+                }
+            });
+            $('#selectAccount').combobox({
+                onChange: function (newValue, oldValue) {
+                    ChangeAccount();
+                }
+            })
+        });
+        function GetFAB() {
+            $('#selectFAB').combobox({
+                url: "@Url.Action("GetSqlFAB", "Admin")",
+                valueField: 'FAB',
+                textField: 'FAB'
+            });
+            $.post("@Url.Action("GetSqlFABbs", "Admin")?a=0", function (xx) {
+                console.log(xx);
+                $('#FAB').html(xx);
+            }, "text").done(function () {
+                GetTableID();
+            }).fail(function () {
+                GetFAB();
+            });
+        }
+        function GetTableID() {
+            var pp = $.param({ "FAB": $('#FAB').val() });
+            $.post("@Url.Action("GetTableIDList", "Admin")", pp, function (xx) {
+                $('#TableID').html(xx);
+            }, "text").done(function () {
+                //
+            }).fail(function () {
+                GetTableID();
+            });
+        }
+        function ChangeFAB() {
+            var pp = $.param({
+                "FAB": $('#selectFAB').combobox('getValue')
+            });
+            $('#selectAccount').combobox({
+                url: "@Url.Action("GetAccountList", "Admin")?" + pp,
+                valueField: 'Account',
+                textField: 'AccountName'
+            });
+        }
+        function ChangeAccount() {
+            var Account = $('#selectAccount').combobox('getValue');
+            if (Account == "") return;
+            var pp = $.param({
+                "Account": Account
+            });
+            $("#SearchResult").datagrid({ url: "@Url.Action("AccountUseTableList", "Admin")?" + pp, method: 'post' });
+        }
+        function submitForm() {
+            var pp = $.param({
+                "UserID": $("#UserID").val(),
+                "TableID": $("#TableID").val(),
+                "TableSort":$("#TableSort").val()
+            });
+            $.post("@Url.Action("NewAccountUseTable", "Admin")", pp, function (xx) {
+                msg(xx);
+                clearform();
+                CloseDlg();
+            }, "text").done(function () {
+                $("#SearchResult").datagrid('reload');
+            });
+        }
+        function clearform() {
+            $("#UserID").val('');
+            $('#FAB option:eq(0)').prop('selected', true);
+            $('#TableID option:eq(0)').prop('selected', true);
+            $("#TableSort").val('');
+        }
+        function UpdateEditData() {
+            var pp = $.param({
+                "UserID": $("#UserID_e").val(),
+                "TableID": $("#TableID_e").val(),
+                "TableSort": $("#TableSort_e").val()
+            });
+            $.post("@Url.Action("UpdateAccountUseTable", "Admin")", pp, function (xx) {
+                msg(xx);
+            }, "text").done(function () {
+                CloseDlg();
+                $("#SearchResult").datagrid('reload');
+            }).fail(function () {
+                msg('網路沒有回應');
+            });
+        }
+        function DeleteEditData() {
+            var UserID = $("#UserID_e").val();
+            var TableID = $("#TableID_e").val();
+            var TableName = $("#TableName_e").val();
+            $.messager.confirm('確認', "確定是否要移除使用“" + TableName + "”嗎？", function (r) {
+                if (r) {
+                    var pp = $.param({ "UserID": UserID, "TableID": TableID });
+                    $.post("@Url.Action("DeleteAccountUseTable", "Admin")", pp, function (xx) {
+                        msg(xx);
+                    }, "text").done(function () {
+                        CloseDlg();
+                        $("#SearchResult").datagrid('reload');
+                    }).fail(function () {
+                        msg('網路沒有回應');
+                    });
+                }
+            });
+        }
+        //按新增表單才動作
+        function OpenDlgNew() {
+            var FAB = $("#selectFAB").combobox('getValue');
+           
+            var UserID = $("#selectAccount").combobox('getValue');
+            if (UserID == "") {
+                alert("請選擇使用者");
+                return;
+            }
+            $("#FAB").val(FAB);
+            GetTableID();
+            $("#UserID").val(UserID);
+            $("#dlg_new").dialog('open');
+            $("#dlg_edit").dialog('close');
+        }
+        function OpenDlgEdit() {
+            $("#dlg_new").dialog('close');
+            $("#dlg_edit").dialog('open');
+        }
+        function CloseDlg() {
+            $("#dlg_new").dialog('close');
+            $("#dlg_edit").dialog('close');
+            clearform();
+        }
+    </script>
+}
+
+<div id="TableDiv" style="width:100%;height:100%;">
+    <div id="tb" style="text-align:right;">
+        <span>廠別</span>
+        <select id="selectFAB" class="easyui-combobox" panelHeight="auto" editable="false" style="width:130px;height:30px;">
+            <option value="ALL" selected>ALL</option>
+        </select>
+        <span>使用者</span>
+        <select id="selectAccount" class="easyui-combobox" panelHeight="auto" editable="false" style="width:200px;height:30px;">
+            <option value="" selected></option>
+        </select>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" style="width:130px;height:30px;" onclick="OpenDlgNew()">新增使用表單</a>
+    </div>
+    <table id="SearchResult" class="easyui-datagrid" title="帳號使用表單" style="width:100%;height:100%;margin-left:auto;margin-right:auto;"
+           data-options="singleSelect:true,collapsible:false,fitColumns:true,remoteSort:false
+                            ,toolbar:'#tb'" multiSort="true">
+        <thead>
+            <tr>
+                <th data-options="field:'UserID'" width="80" sortable="true">工號</th>
+                <th data-options="field:'FAB'" width="80" sortable="true">廠別</th>
+                <th data-options="field:'TableID'" width="80" sortable="true">表單ID</th>
+                <th data-options="field:'TableName'" width="100" sortable="true">表單名稱</th>
+                <th data-options="field:'TableSort'" width="50" sortable="true">表單排序</th>
+                <th data-options="field:'EnableWord'" width="50" sortable="true">啟用/停用</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<!--新增表單-->
+<div id="dlg_new" class="easyui-dialog" title="新增表單" style="width:100%;max-width:600px;height:auto;"
+     data-options="iconCls:'icon-add',resizable:true,modal:true">
+    <div class="container-fluid">
+        <form id="NewAccount" action="@Url.Action("NewAccountProcess", "Admin")" class="easyui-form" method="post" data-options="novalidate:true">
+            <div class="form-inline">
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="UserID" style="width:150px;">工號</label>
+                    </div>
+                    <input type="text" class="form-control" id="UserID" readonly />
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="FAB" style="width:150px;">廠別</label>
+                    </div>
+                    <select class="custom-select" id="FAB" onchange="GetTableID()">
+                        <option value="FAB8A" selected>FAB8A</option>
+                        <option value="FAB8C">FAB8C</option>
+                        <option value="FAB8D">FAB8D</option>
+                        <option value="FAB8S">FAB8S</option>
+                    </select>
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="TableID" style="width:150px;">表單名稱</label>
+                    </div>
+                    <select class="custom-select" id="TableID"></select>
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="TableSort" style="width:150px;">表單排序</label>
+                    </div>
+                    <input type="text" class="form-control" id="TableSort" />
+                </div>
+                <div class="form-row col-12 col-sm-12 col-md-12 col-lg-12 text-center" style="margin-top:20px;margin-bottom:10px;">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-info col-5 col-sm-5 col-md-5 col-lg-5" onclick="submitForm()">新增</button>
+                        <button type="button" class="btn btn-danger col-5 col-sm-5 col-md-5 col-lg-5" onclick="CloseDlg()">取消</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--更新表單-->
+<div id="dlg_edit" class="easyui-dialog" title="更新表單" style="width:100%;max-width:600px;height:auto;"
+     data-options="iconCls:'icon-add',resizable:true,modal:true">
+    <div class="container-fluid">
+        <form id="EditAccount" action="@Url.Action("UpdateAccountProcess", "Admin")" class="easyui-form" method="post" data-options="novalidate:true">
+            <div class="form-inline">
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="UserID_e" style="width:150px;" disabled>工號</label>
+                    </div>
+                    <input type="text" class="form-control" id="UserID_e" readonly />
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="FAB_e" style="width:150px;">廠別</label>
+                    </div>
+                    <input type="text" class="form-control" id="FAB_e" readonly />
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="TableID_e" style="width:150px;">表單ID</label>
+                    </div>
+                    <input type="text" class="form-control" id="TableID_e" readonly />
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="TableName_e" style="width:150px;">表單名稱</label>
+                    </div>
+                    <input type="text" class="form-control" id="TableName_e" readonly />
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="TableSort_e" style="width:150px;">表單排序</label>
+                    </div>
+                    <input type="text" class="form-control" id="TableSort_e" />
+                </div>
+                <div class="form-row col-12 col-sm-12 col-md-12 col-lg-12 text-center" style="margin-top:20px;margin-bottom:10px;">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-info col-3 col-sm-3 col-md-3 col-lg-3" onclick="UpdateEditData()">修改</button>
+                        <button type="button" class="btn btn-success col-3 col-sm-3 col-md-3 col-lg-3" onclick="DeleteEditData()">刪除</button>
+                        <button type="button" class="btn btn-danger col-3 col-sm-3 col-md-3 col-lg-3" onclick="CloseDlg()">取消</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

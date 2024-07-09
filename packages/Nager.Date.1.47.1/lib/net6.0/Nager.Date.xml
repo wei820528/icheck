@@ -1,0 +1,4182 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Nager.Date</name>
+    </assembly>
+    <members>
+        <member name="T:Nager.Date.Contract.CatholicProvider">
+            <summary>
+            Catholic
+            </summary>
+        </member>
+        <member name="M:Nager.Date.Contract.CatholicProvider.EasterSunday(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.Contract.CatholicProvider.AdventSunday(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.Contract.CatholicProvider.MaundyThursday(System.String,System.Int32,Nager.Date.CountryCode)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.Contract.CatholicProvider.GoodFriday(System.String,System.Int32,Nager.Date.CountryCode)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.Contract.CatholicProvider.EasterSunday(System.String,System.Int32,Nager.Date.CountryCode)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.Contract.CatholicProvider.EasterMonday(System.String,System.Int32,Nager.Date.CountryCode)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.Contract.CatholicProvider.AscensionDay(System.String,System.Int32,Nager.Date.CountryCode)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.Contract.CatholicProvider.Pentecost(System.String,System.Int32,Nager.Date.CountryCode)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.Contract.CatholicProvider.WhitMonday(System.String,System.Int32,Nager.Date.CountryCode)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.Contract.CatholicProvider.CorpusChristi(System.String,System.Int32,Nager.Date.CountryCode)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.Contract.ICatholicProvider">
+            <summary>
+            Catholic Provider
+            </summary>
+        </member>
+        <member name="M:Nager.Date.Contract.ICatholicProvider.EasterSunday(System.Int32)">
+            <summary>
+            Get Catholic easter for requested year
+            </summary>
+            <param name="year"></param>
+            <returns>Date of Catholic Easter Sunday for given year</returns>
+        </member>
+        <member name="M:Nager.Date.Contract.ICatholicProvider.AdventSunday(System.Int32)">
+            <summary>
+            Get advent sunday for requested year
+            </summary>
+            <param name="year"></param>
+            <returns>Date of Catholic Advent Sunday for given year</returns>
+        </member>
+        <member name="M:Nager.Date.Contract.ICatholicProvider.MaundyThursday(System.String,System.Int32,Nager.Date.CountryCode)">
+            <summary>
+            Get Maundy Thursday
+            </summary>
+            <param name="localName">The local name of the holiday</param>
+            <param name="year"></param>
+            <param name="countryCode"></param>
+            <returns>Public holiday info for Catholic Maundy Thursday for given year and country</returns>
+        </member>
+        <member name="M:Nager.Date.Contract.ICatholicProvider.GoodFriday(System.String,System.Int32,Nager.Date.CountryCode)">
+            <summary>
+            Get Good Friday
+            </summary>
+            <param name="localName">The local name of the holiday</param>
+            <param name="year"></param>
+            <param name="countryCode"></param>
+            <returns>Public holiday info for Catholic Good Friday for given year and country</returns>
+        </member>
+        <member name="M:Nager.Date.Contract.ICatholicProvider.EasterSunday(System.String,System.Int32,Nager.Date.CountryCode)">
+            <summary>
+            Get Easter Sunday
+            </summary>
+            <param name="localName">The local name of the holiday</param>
+            <param name="year"></param>
+            <param name="countryCode"></param>
+            <returns>Public holiday info for Catholic Easter Sunday for given year and country</returns>
+        </member>
+        <member name="M:Nager.Date.Contract.ICatholicProvider.EasterMonday(System.String,System.Int32,Nager.Date.CountryCode)">
+            <summary>
+            Get Easter Monday
+            </summary>
+            <param name="localName">The local name of the holiday</param>
+            <param name="year"></param>
+            <param name="countryCode"></param>
+            <returns>Public holiday info for Catholic Easter Monday for given year and country</returns>
+        </member>
+        <member name="M:Nager.Date.Contract.ICatholicProvider.AscensionDay(System.String,System.Int32,Nager.Date.CountryCode)">
+            <summary>
+            Get Ascension Day
+            </summary>
+            <param name="localName">The local name of the holiday</param>
+            <param name="year"></param>
+            <param name="countryCode"></param>
+            <returns>Public holiday info for Ascension Day for given year and country</returns>
+        </member>
+        <member name="M:Nager.Date.Contract.ICatholicProvider.Pentecost(System.String,System.Int32,Nager.Date.CountryCode)">
+            <summary>
+            Get Pentecost
+            </summary>
+            <param name="localName">The local name of the holiday</param>
+            <param name="year"></param>
+            <param name="countryCode"></param>
+            <returns>Public holiday info for Pentecost for given year and country</returns>
+        </member>
+        <member name="M:Nager.Date.Contract.ICatholicProvider.WhitMonday(System.String,System.Int32,Nager.Date.CountryCode)">
+            <summary>
+            Get Whit Monday
+            </summary>
+            <param name="localName">The local name of the holiday</param>
+            <param name="year"></param>
+            <param name="countryCode"></param>
+            <returns>Public holiday info for Whit Monday for given year and country</returns>
+        </member>
+        <member name="M:Nager.Date.Contract.ICatholicProvider.CorpusChristi(System.String,System.Int32,Nager.Date.CountryCode)">
+            <summary>
+            Get Corpus Christi
+            </summary>
+            <param name="localName">The local name of the holiday</param>
+            <param name="year"></param>
+            <param name="countryCode"></param>
+            <returns>Public holiday info for Corpus Christi for given year and country</returns>
+        </member>
+        <member name="T:Nager.Date.Contract.ICountyProvider">
+            <summary>
+            ICountyProvider
+            </summary>
+        </member>
+        <member name="M:Nager.Date.Contract.ICountyProvider.GetCounties">
+            <summary>
+            Get Counties
+            </summary>
+            <returns>Set of counties</returns>
+        </member>
+        <member name="T:Nager.Date.Contract.ILongWeekendCalculator">
+            <summary>
+            ILongWeekendCalculator
+            </summary>
+        </member>
+        <member name="M:Nager.Date.Contract.ILongWeekendCalculator.Calculate(System.Collections.Generic.IEnumerable{Nager.Date.Model.PublicHoliday},System.Int32)">
+            <summary>
+            Calculate Long weekends
+            </summary>
+            <param name="publicHolidays"></param>
+            <param name="availableBridgeDays"></param>
+            <returns>Set of long weekends for given public holidays</returns>
+        </member>
+        <member name="T:Nager.Date.Contract.IOrthodoxProvider">
+            <summary>
+            Orthodox
+            </summary>
+        </member>
+        <member name="M:Nager.Date.Contract.IOrthodoxProvider.EasterSunday(System.Int32)">
+            <summary>
+            Get Orthodox easter for requested year
+            </summary>
+            <param name="year"></param>
+            <returns>Date of Orthodox Easter Sunday for given year</returns>
+        </member>
+        <member name="M:Nager.Date.Contract.IOrthodoxProvider.GoodFriday(System.String,System.Int32,Nager.Date.CountryCode)">
+            <summary>
+            Get Good Friday
+            </summary>
+            <param name="localName">The local name of the holiday</param>
+            <param name="year"></param>
+            <param name="countryCode"></param>
+            <returns>Public holiday info for Orthodox Good Friday for given year and country</returns>
+        </member>
+        <member name="M:Nager.Date.Contract.IOrthodoxProvider.HolySaturday(System.String,System.Int32,Nager.Date.CountryCode)">
+            <summary>
+            Get Holy Saturday
+            </summary>
+            <param name="localName">The local name of the holiday</param>
+            <param name="year"></param>
+            <param name="countryCode"></param>
+            <returns>Public holiday info for Orthodox Holy Saturday for given year and country</returns>
+        </member>
+        <member name="M:Nager.Date.Contract.IOrthodoxProvider.EasterSunday(System.String,System.Int32,Nager.Date.CountryCode)">
+            <summary>
+            Get Easter Sunday
+            </summary>
+            <param name="localName">The local name of the holiday</param>
+            <param name="year"></param>
+            <param name="countryCode"></param>
+            <returns>Public holiday info for Orthodox Easter Sunday for given year and country</returns>
+        </member>
+        <member name="M:Nager.Date.Contract.IOrthodoxProvider.EasterMonday(System.String,System.Int32,Nager.Date.CountryCode)">
+            <summary>
+            Get Easter Monday
+            </summary>
+            <param name="localName">The local name of the holiday</param>
+            <param name="year"></param>
+            <param name="countryCode"></param>
+            <returns>Public holiday info for Orthodox Easter Monday for given year and country</returns>
+        </member>
+        <member name="M:Nager.Date.Contract.IOrthodoxProvider.Pentecost(System.String,System.Int32,Nager.Date.CountryCode)">
+            <summary>
+            Get Pentecost
+            </summary>
+            <param name="localName">The local name of the holiday</param>
+            <param name="year"></param>
+            <param name="countryCode"></param>
+            <returns>Public holiday info for Orthodox Pentecost for given year and country</returns>
+        </member>
+        <member name="M:Nager.Date.Contract.IOrthodoxProvider.WhitMonday(System.String,System.Int32,Nager.Date.CountryCode,System.String[])">
+            <summary>
+            Get Whit Monday / Pentecost Monday
+            </summary>
+            <param name="localName">The local name of the holiday</param>
+            <param name="year"></param>
+            <param name="countryCode"></param>
+            <param name="counties"></param>
+            <returns>Public holiday info for Orthodox Whit Monday / Pentecost Monday for given year, country and counties</returns>
+        </member>
+        <member name="T:Nager.Date.Contract.IPublicHolidayProvider">
+            <summary>
+            Public Holiday Provider Interface
+            </summary>
+        </member>
+        <member name="M:Nager.Date.Contract.IPublicHolidayProvider.GetHolidays(System.Int32)">
+            <summary>
+            Get Holidays of the given year
+            </summary>
+            <param name="year"></param>
+            <returns>Set of public holidays for given year</returns>
+        </member>
+        <member name="M:Nager.Date.Contract.IPublicHolidayProvider.GetSources">
+             <summary>
+            Get the Holiday Sources
+             </summary>
+             <returns>Set of public holiday sources (links)</returns>
+        </member>
+        <member name="T:Nager.Date.Contract.IWeekendProvider">
+            <summary>
+            IWeekendProvider
+            </summary>
+        </member>
+        <member name="P:Nager.Date.Contract.IWeekendProvider.WeekendDays">
+            <summary>
+            Get weekend days
+            </summary>
+        </member>
+        <member name="M:Nager.Date.Contract.IWeekendProvider.IsWeekend(System.DateTime)">
+            <summary>
+            Is given date in the weekend
+            </summary>
+            <param name="date"></param>
+            <returns>True if given date is weekend, false otherwise</returns>
+        </member>
+        <member name="M:Nager.Date.Contract.IWeekendProvider.IsWeekend(Nager.Date.Model.PublicHoliday)">
+            <summary>
+            Is given public holiday in the weekend
+            </summary>
+            <param name="publicHoliday"></param>
+            <returns>True if given public holiday is in the weekend, false otherwise</returns>
+        </member>
+        <member name="M:Nager.Date.Contract.IWeekendProvider.IsWeekend(System.DayOfWeek)">
+            <summary>
+            Is given day in the weekend
+            </summary>
+            <param name="dayOfWeek"></param>
+            <returns>True if given day of week is in the weekend, false otherwise</returns>
+        </member>
+        <member name="P:Nager.Date.Contract.IWeekendProvider.FirstWeekendDay">
+            <summary>
+            Get first weekend day
+            </summary>
+        </member>
+        <member name="P:Nager.Date.Contract.IWeekendProvider.LastWeekendDay">
+            <summary>
+            Get last weekend day
+            </summary>
+        </member>
+        <member name="T:Nager.Date.Contract.LongWeekendCalculator">
+            <summary>
+            LongWeekendCalculator
+            </summary>
+        </member>
+        <member name="M:Nager.Date.Contract.LongWeekendCalculator.#ctor(Nager.Date.Contract.IWeekendProvider)">
+            <summary>
+            LongWeekendCalculator
+            </summary>
+            <param name="weekendProvider"></param>
+        </member>
+        <member name="M:Nager.Date.Contract.LongWeekendCalculator.Calculate(System.Collections.Generic.IEnumerable{Nager.Date.Model.PublicHoliday},System.Int32)">
+            <summary>
+            Calculate long weekends
+            </summary>
+            <param name="publicHolidays"></param>
+            <param name="availableBridgeDays"></param>
+            <returns>Set of long weekends for given set of public holidays</returns>
+        </member>
+        <member name="T:Nager.Date.Contract.OrthodoxProvider">
+            <summary>
+            Orthodox
+            </summary>
+        </member>
+        <member name="M:Nager.Date.Contract.OrthodoxProvider.EasterSunday(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.Contract.OrthodoxProvider.GoodFriday(System.String,System.Int32,Nager.Date.CountryCode)">
+            <inheritdoc />
+        </member>
+        <member name="M:Nager.Date.Contract.OrthodoxProvider.HolySaturday(System.String,System.Int32,Nager.Date.CountryCode)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.Contract.OrthodoxProvider.EasterSunday(System.String,System.Int32,Nager.Date.CountryCode)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.Contract.OrthodoxProvider.EasterMonday(System.String,System.Int32,Nager.Date.CountryCode)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.Contract.OrthodoxProvider.Pentecost(System.String,System.Int32,Nager.Date.CountryCode)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.Contract.OrthodoxProvider.WhitMonday(System.String,System.Int32,Nager.Date.CountryCode,System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.CountryCode">
+            <summary>
+            Supported Country Codes (ISO 3166-1 ALPHA-2)
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.AD">
+            <summary>
+            Andorra
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.AE">
+            <summary>
+            United Arab Emirates
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.AF">
+            <summary>
+            Afghanistan
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.AG">
+            <summary>
+            Antigua and Barbuda
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.AI">
+            <summary>
+            Anguilla
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.AL">
+            <summary>
+            Albania
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.AM">
+            <summary>
+            Armenia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.AO">
+            <summary>
+            Angola
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.AQ">
+            <summary>
+            Antarctica
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.AR">
+            <summary>
+            Argentina
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.AS">
+            <summary>
+            American Samoa
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.AT">
+            <summary>
+            Austria
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.AU">
+            <summary>
+            Australia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.AW">
+            <summary>
+            Aruba
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.AX">
+            <summary>
+            Åland Islands
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.AZ">
+            <summary>
+            Azerbaijan
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BA">
+            <summary>
+            Bosnia and Herzegovina
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BB">
+            <summary>
+            Barbados
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BD">
+            <summary>
+            Bangladesh
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BE">
+            <summary>
+            Belgium
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BF">
+            <summary>
+            Burkina Faso
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BG">
+            <summary>
+            Bulgaria
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BH">
+            <summary>
+            Bahrain
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BI">
+            <summary>
+            Burundi
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BJ">
+            <summary>
+            Benin
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BL">
+            <summary>
+            Saint Barthélemy
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BM">
+            <summary>
+            Bermuda
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BN">
+            <summary>
+            Brunei Darussalam
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BO">
+            <summary>
+            Bolivia (Plurinational State of)
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BQ">
+            <summary>
+            Bonaire, Sint Eustatius and Saba
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BR">
+            <summary>
+            Brazil
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BS">
+            <summary>
+            Bahamas
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BT">
+            <summary>
+            Bhutan
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BV">
+            <summary>
+            Bouvet Island
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BW">
+            <summary>
+            Botswana
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BY">
+            <summary>
+            Belarus
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.BZ">
+            <summary>
+            Belize
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.CA">
+            <summary>
+            Canada
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.CC">
+            <summary>
+            Cocos (Keeling) Islands
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.CD">
+            <summary>
+            Congo (Democratic Republic of the)
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.CF">
+            <summary>
+            Central African Republic
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.CG">
+            <summary>
+            Congo
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.CH">
+            <summary>
+            Switzerland
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.CI">
+            <summary>
+            Côte d'Ivoire
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.CK">
+            <summary>
+            Cook Islands
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.CL">
+            <summary>
+            Chile
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.CM">
+            <summary>
+            Cameroon
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.CN">
+            <summary>
+            China
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.CO">
+            <summary>
+            Colombia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.CR">
+            <summary>
+            Costa Rica
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.CU">
+            <summary>
+            Cuba
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.CV">
+            <summary>
+            Cabo Verde
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.CW">
+            <summary>
+            Curaçao
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.CX">
+            <summary>
+            Christmas Island
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.CY">
+            <summary>
+            Cyprus
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.CZ">
+            <summary>
+            Czech Republic
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.DE">
+            <summary>
+            Germany
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.DJ">
+            <summary>
+            Djibouti
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.DK">
+            <summary>
+            Denmark
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.DM">
+            <summary>
+            Dominica
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.DO">
+            <summary>
+            Dominican Republic
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.DZ">
+            <summary>
+            Algeria
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.EC">
+            <summary>
+            Ecuador
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.EE">
+            <summary>
+            Estonia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.EG">
+            <summary>
+            Egypt
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.EH">
+            <summary>
+            Western Sahara
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.ER">
+            <summary>
+            Eritrea
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.ES">
+            <summary>
+            Spain
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.ET">
+            <summary>
+            Ethiopia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.FI">
+            <summary>
+            Finland
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.FJ">
+            <summary>
+            Fiji
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.FK">
+            <summary>
+            Falkland Islands (Malvinas)
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.FM">
+            <summary>
+            Micronesia (Federated States of)
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.FO">
+            <summary>
+            Faroe Islands
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.FR">
+            <summary>
+            France
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.GA">
+            <summary>
+            Gabon
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.GB">
+            <summary>
+            United Kingdom of Great Britain and Northern Ireland
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.GD">
+            <summary>
+            Grenada
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.GE">
+            <summary>
+            Georgia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.GF">
+            <summary>
+            French Guiana
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.GG">
+            <summary>
+            Guernsey
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.GH">
+            <summary>
+            Ghana
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.GI">
+            <summary>
+            Gibraltar
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.GL">
+            <summary>
+            Greenland
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.GM">
+            <summary>
+            Gambia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.GN">
+            <summary>
+            Guinea
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.GP">
+            <summary>
+            Guadeloupe
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.GQ">
+            <summary>
+            Equatorial Guinea
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.GR">
+            <summary>
+            Greece
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.GS">
+            <summary>
+            South Georgia and the South Sandwich Islands
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.GT">
+            <summary>
+            Guatemala
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.GU">
+            <summary>
+            Guam
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.GW">
+            <summary>
+            Guinea-Bissau
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.GY">
+            <summary>
+            Guyana
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.HK">
+            <summary>
+            Hong Kong
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.HM">
+            <summary>
+            Heard Island and McDonald Islands
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.HN">
+            <summary>
+            Honduras
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.HR">
+            <summary>
+            Croatia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.HT">
+            <summary>
+            Haiti
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.HU">
+            <summary>
+            Hungary
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.ID">
+            <summary>
+            Indonesia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.IE">
+            <summary>
+            Ireland
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.IL">
+            <summary>
+            Israel
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.IM">
+            <summary>
+            Isle of Man
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.IN">
+            <summary>
+            India
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.IO">
+            <summary>
+            British Indian Ocean Territory
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.IQ">
+            <summary>
+            Iraq
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.IR">
+            <summary>
+            Iran (Islamic Republic of)
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.IS">
+            <summary>
+            Iceland
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.IT">
+            <summary>
+            Italy
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.JE">
+            <summary>
+            Jersey
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.JM">
+            <summary>
+            Jamaica
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.JO">
+            <summary>
+            Jordan
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.JP">
+            <summary>
+            Japan
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.KE">
+            <summary>
+            Kenya
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.KG">
+            <summary>
+            Kyrgyzstan
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.KH">
+            <summary>
+            Cambodia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.KI">
+            <summary>
+            Kiribati
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.KM">
+            <summary>
+            Comoros
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.KN">
+            <summary>
+            Saint Kitts and Nevis
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.KP">
+            <summary>
+            North Korea
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.KR">
+            <summary>
+            South Korea
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.KW">
+            <summary>
+            Kuwait
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.KY">
+            <summary>
+            Cayman Islands
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.KZ">
+            <summary>
+            Kazakhstan
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.LA">
+            <summary>
+            Laos
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.LB">
+            <summary>
+            Lebanon
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.LC">
+            <summary>
+            Saint Lucia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.LI">
+            <summary>
+            Liechtenstein
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.LK">
+            <summary>
+            Sri Lanka
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.LR">
+            <summary>
+            Liberia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.LS">
+            <summary>
+            Lesotho
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.LT">
+            <summary>
+            Lithuania
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.LU">
+            <summary>
+            Luxembourg
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.LV">
+            <summary>
+            Latvia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.LY">
+            <summary>
+            Libya
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MA">
+            <summary>
+            Morocco
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MC">
+            <summary>
+            Monaco
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MD">
+            <summary>
+            Moldova (Republic of)
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.ME">
+            <summary>
+            Montenegro
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MF">
+            <summary>
+            Saint Martin (French part)
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MG">
+            <summary>
+            Madagascar
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MH">
+            <summary>
+            Marshall Islands
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MK">
+            <summary>
+            Macedonia (the former Yugoslav Republic of)
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.ML">
+            <summary>
+            Mali
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MM">
+            <summary>
+            Myanmar
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MN">
+            <summary>
+            Mongolia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MO">
+            <summary>
+            Macao
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MP">
+            <summary>
+            Northern Mariana Islands
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MQ">
+            <summary>
+            Martinique
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MR">
+            <summary>
+            Mauritania
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MS">
+            <summary>
+            Montserrat
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MT">
+            <summary>
+            Malta
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MU">
+            <summary>
+            Mauritius
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MV">
+            <summary>
+            Maldives
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MW">
+            <summary>
+            Malawi
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MX">
+            <summary>
+            Mexico
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MY">
+            <summary>
+            Malaysia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.MZ">
+            <summary>
+            Mozambique
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.NA">
+            <summary>
+            Namibia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.NC">
+            <summary>
+            New Caledonia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.NE">
+            <summary>
+            Niger
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.NF">
+            <summary>
+            Norfolk Island
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.NG">
+            <summary>
+            Nigeria
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.NI">
+            <summary>
+            Nicaragua
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.NL">
+            <summary>
+            Netherlands
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.NO">
+            <summary>
+            Norway
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.NP">
+            <summary>
+            Nepal
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.NR">
+            <summary>
+            Nauru
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.NU">
+            <summary>
+            Niue
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.NZ">
+            <summary>
+            New Zealand
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.OM">
+            <summary>
+            Oman
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.PA">
+            <summary>
+            Panama
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.PE">
+            <summary>
+            Peru
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.PF">
+            <summary>
+            French Polynesia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.PG">
+            <summary>
+            Papua New Guinea
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.PH">
+            <summary>
+            Philippines
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.PK">
+            <summary>
+            Pakistan
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.PL">
+            <summary>
+            Poland
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.PM">
+            <summary>
+            Saint Pierre and Miquelon
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.PN">
+            <summary>
+            Pitcairn
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.PR">
+            <summary>
+            Puerto Rico
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.PS">
+            <summary>
+            Palestine, State of
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.PT">
+            <summary>
+            Portugal
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.PW">
+            <summary>
+            Palau
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.PY">
+            <summary>
+            Paraguay
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.QA">
+            <summary>
+            Qatar
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.RE">
+            <summary>
+            Réunion
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.RO">
+            <summary>
+            Romania
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.RS">
+            <summary>
+            Serbia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.RU">
+            <summary>
+            Russian Federation
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.RW">
+            <summary>
+            Rwanda
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.SA">
+            <summary>
+            Saudi Arabia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.SB">
+            <summary>
+            Solomon Islands
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.SC">
+            <summary>
+            Seychelles
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.SD">
+            <summary>
+            Sudan
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.SE">
+            <summary>
+            Sweden
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.SG">
+            <summary>
+            Singapore
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.SH">
+            <summary>
+            Saint Helena, Ascension and Tristan da Cunha
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.SI">
+            <summary>
+            Slovenia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.SJ">
+            <summary>
+            Svalbard and Jan Mayen
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.SK">
+            <summary>
+            Slovakia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.SL">
+            <summary>
+            Sierra Leone
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.SM">
+            <summary>
+            San Marino
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.SN">
+            <summary>
+            Senegal
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.SO">
+            <summary>
+            Somalia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.SR">
+            <summary>
+            Suriname
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.SS">
+            <summary>
+            South Sudan
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.ST">
+            <summary>
+            Sao Tome and Principe
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.SV">
+            <summary>
+            El Salvador
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.SX">
+            <summary>
+            Sint Maarten (Dutch part)
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.SY">
+            <summary>
+            Syrian Arab Republic
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.SZ">
+            <summary>
+            Swaziland
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.TC">
+            <summary>
+            Turks and Caicos Islands
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.TD">
+            <summary>
+            Chad
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.TF">
+            <summary>
+            French Southern Territories
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.TG">
+            <summary>
+            Togo
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.TH">
+            <summary>
+            Thailand
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.TJ">
+            <summary>
+            Tajikistan
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.TK">
+            <summary>
+            Tokelau
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.TL">
+            <summary>
+            East Timor
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.TM">
+            <summary>
+            Turkmenistan
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.TN">
+            <summary>
+            Tunisia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.TO">
+            <summary>
+            Tonga
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.TR">
+            <summary>
+            Turkey
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.TT">
+            <summary>
+            Trinidad and Tobago
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.TV">
+            <summary>
+            Tuvalu
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.TW">
+            <summary>
+            Taiwan, Province of China[a]
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.TZ">
+            <summary>
+            Tanzania, United Republic of
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.UA">
+            <summary>
+            Ukraine
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.UG">
+            <summary>
+            Uganda
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.UM">
+            <summary>
+            United States Minor Outlying Islands
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.US">
+            <summary>
+            United States of America
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.UY">
+            <summary>
+            Uruguay
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.UZ">
+            <summary>
+            Uzbekistan
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.VA">
+            <summary>
+            Vatican City Holy See
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.VC">
+            <summary>
+            Saint Vincent and the Grenadines
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.VE">
+            <summary>
+            Venezuela (Bolivarian Republic of)
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.VG">
+            <summary>
+            Virgin Islands (British)
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.VI">
+            <summary>
+            Virgin Islands (U.S.)
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.VN">
+            <summary>
+            Viet Nam
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.VU">
+            <summary>
+            Vanuatu
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.WF">
+            <summary>
+            Wallis and Futuna
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.WS">
+            <summary>
+            Samoa
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.YE">
+            <summary>
+            Yemen
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.YT">
+            <summary>
+            Mayotte
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.ZA">
+            <summary>
+            South Africa
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.ZM">
+            <summary>
+            Zambia
+            </summary>
+        </member>
+        <member name="F:Nager.Date.CountryCode.ZW">
+            <summary>
+            Zimbabwe
+            </summary>
+        </member>
+        <member name="T:Nager.Date.DateSystem">
+            <summary>
+            DateSystem
+            </summary>
+        </member>
+        <member name="F:Nager.Date.DateSystem.LicenseKey">
+            <summary>
+            License Key
+            </summary>
+            <remarks>
+            As a GitHub sponsor of this project you will receive a license key, https://github.com/sponsors/nager
+            </remarks>
+        </member>
+        <member name="M:Nager.Date.DateSystem.GetPublicHolidayProvider(System.String)">
+            <summary>
+            GetPublicHolidayProvider
+            </summary>
+            <param name="countryCode">Country Code (ISO 3166-1 ALPHA-2)</param>
+            <returns>Public holiday provider for given country</returns>
+            <exception cref="T:System.ArgumentException">Thrown when given country code is not recognized valid</exception>
+        </member>
+        <member name="M:Nager.Date.DateSystem.GetPublicHolidayProvider(Nager.Date.CountryCode)">
+            <summary>
+            GetPublicHolidayProvider
+            </summary>
+            <param name="countryCode">Country Code (ISO 3166-1 ALPHA-2)</param>
+            <returns>Public holiday provider for given country</returns>
+        </member>
+        <member name="M:Nager.Date.DateSystem.GetWeekendProvider(System.String)">
+            <summary>
+            GetWeekendProvider
+            </summary>
+            <param name="countryCode">Country Code (ISO 3166-1 ALPHA-2)</param>
+            <returns>Specialized weekend provider for country if exists, universal weekend provider otherwise</returns>
+            <exception cref="T:System.ArgumentException">Thrown when given country code is not recognized valid</exception>
+        </member>
+        <member name="M:Nager.Date.DateSystem.GetWeekendProvider(Nager.Date.CountryCode)">
+            <summary>
+            GetWeekendProvider
+            </summary>
+            <param name="countryCode">Country Code (ISO 3166-1 ALPHA-2)</param>
+            <returns>Specialized weekend provider for country if exists, universal weekend provider otherwise</returns>
+        </member>
+        <member name="M:Nager.Date.DateSystem.ParseCountryCode(System.String,Nager.Date.CountryCode@)">
+            <summary>
+            Parse given string to CountryCode
+            </summary>
+            <param name="countryCode"></param>
+            <param name="parsedCountryCode"></param>
+            <returns>
+            True for existing country code, false for non existent.
+            Parsed country code is returned in out parameter.
+            </returns>
+        </member>
+        <member name="M:Nager.Date.DateSystem.GetPublicHolidays(System.Int32,System.String)">
+            <summary>
+            Get Public Holidays of a given year
+            </summary>
+            <param name="year">The year</param>
+            <param name="countryCode">Country Code (ISO 3166-1 ALPHA-2)</param>
+            <returns>Set of public holidays for given country and year</returns>
+            <exception cref="T:System.ArgumentException">Thrown when given country code is not recognized valid</exception>
+        </member>
+        <member name="M:Nager.Date.DateSystem.GetPublicHolidays(System.Int32,Nager.Date.CountryCode)">
+            <summary>
+            Get Public Holidays of a given year
+            </summary>
+            <param name="year">The year</param>
+            <param name="countryCode">Country Code (ISO 3166-1 ALPHA-2)</param>
+            <returns>Set of public holidays for given country and year</returns>
+        </member>
+        <member name="M:Nager.Date.DateSystem.GetPublicHolidays(System.DateTime,System.DateTime,System.String)">
+            <summary>
+            Get Public Holidays of a given date range
+            </summary>
+            <param name="startDate">The start date</param>
+            <param name="endDate">The end date</param>
+            <param name="countryCode">Country Code (ISO 3166-1 ALPHA-2)</param>
+            <returns>Set of public holidays for given country and date range</returns>
+            <exception cref="T:System.ArgumentException">Thrown when given country code is not recognized valid</exception>
+        </member>
+        <member name="M:Nager.Date.DateSystem.GetPublicHolidays(System.DateTime,System.DateTime,Nager.Date.CountryCode)">
+            <summary>
+            Get Public Holidays of a given date range
+            </summary>
+            <param name="startDate">The start date</param>
+            <param name="endDate">The end date</param>
+            <param name="countryCode">Country Code (ISO 3166-1 ALPHA-2)</param>
+            <returns>Set of public holidays for given country and date range</returns>
+            <exception cref="T:System.ArgumentException">Thrown when given end date is before given start date</exception>
+        </member>
+        <member name="M:Nager.Date.DateSystem.GetPublicHolidays(System.DateTime,System.DateTime)">
+            <summary>
+            Get Worldwide Public Holidays of a given date range
+            </summary>
+            <param name="startDate">The start date</param>
+            <param name="endDate">The end date</param>
+            <returns>Set of public holidays for date range</returns>
+        </member>
+        <member name="M:Nager.Date.DateSystem.IsPublicHoliday(System.DateTime,System.String)">
+            <summary>
+            Check is a given date a Public Holiday
+            </summary>
+            <param name="date">The date</param>
+            <param name="countryCode">Country Code (ISO 3166-1 ALPHA-2)</param>
+            <returns>True if given date is public holiday in given country, false otherwise</returns>
+            <exception cref="T:System.ArgumentException">Thrown when given country code is not recognized valid</exception>
+        </member>
+        <member name="M:Nager.Date.DateSystem.IsPublicHoliday(System.DateTime,Nager.Date.CountryCode)">
+            <summary>
+            Check is a given date a Public Holiday
+            </summary>
+            <param name="date">The date</param>
+            <param name="countryCode">Country Code (ISO 3166-1 ALPHA-2)</param>
+            <returns>True if given date is public holiday in given country, false otherwise</returns>
+        </member>
+        <member name="M:Nager.Date.DateSystem.IsPublicHoliday(System.DateTime,Nager.Date.CountryCode,Nager.Date.Model.PublicHoliday[]@)">
+            <summary>
+            Check is a given date a Public Holiday
+            </summary>
+            <param name="date">The date</param>
+            <param name="countryCode">Country Code (ISO 3166-1 ALPHA-2)</param>
+            <param name="publicHolidays">if available the public holidays on this date</param>
+            <returns>
+            True if given date is public holiday in given country, false otherwise.
+            Set of public holidays for given day is returned in out parameter.
+            </returns>
+        </member>
+        <member name="M:Nager.Date.DateSystem.IsPublicHoliday(System.DateTime,Nager.Date.CountryCode,System.String)">
+            <summary>
+            Check is a given date a Public Holiday
+            </summary>
+            <param name="date">The date to check</param>
+            <param name="countryCode">Country Code (ISO 3166-1 ALPHA-2)</param>
+            <param name="countyCode">Federal state</param>
+            <returns>True if given date is public holiday in given country and county, false otherwise</returns>
+            <exception cref="T:System.ArgumentException">Thrown when given county code is not recognized valid</exception>
+        </member>
+        <member name="M:Nager.Date.DateSystem.IsWeekend(System.DateTime,System.String)">
+            <summary>
+            Check is a give date in the Weekend
+            </summary>
+            <param name="date">The date to check</param>
+            <param name="countryCode">Country Code (ISO 3166-1 ALPHA-2)</param>
+            <returns>True if given date is weekend in given country, false otherwise</returns>
+            <exception cref="T:System.ArgumentException">Thrown when given country code is not recognized valid</exception>
+        </member>
+        <member name="M:Nager.Date.DateSystem.IsWeekend(System.DateTime,Nager.Date.CountryCode)">
+            <summary>
+            Check is a give date in the Weekend
+            </summary>
+            <param name="date">The date to check</param>
+            <param name="countryCode">Country Code (ISO 3166-1 ALPHA-2)</param>
+            <returns>True if given date is weekend in given country, false otherwise</returns>
+        </member>
+        <member name="M:Nager.Date.DateSystem.FindLastDay(System.Int32,Nager.Date.Model.Month,System.DayOfWeek)">
+            <summary>
+            Find the latest weekday for example monday in a month
+            </summary>
+            <param name="year">The year</param>
+            <param name="month">The month</param>
+            <param name="day">The name of the day</param>
+            <returns>Date of day found</returns>
+        </member>
+        <member name="M:Nager.Date.DateSystem.FindLastDay(System.Int32,System.Int32,System.DayOfWeek)">
+            <summary>
+            Find the latest weekday for example monday in a month
+            </summary>
+            <param name="year">The year</param>
+            <param name="month">The month</param>
+            <param name="day">The name of the day</param>
+            <returns>Date of day found</returns>
+        </member>
+        <member name="M:Nager.Date.DateSystem.FindDay(System.Int32,Nager.Date.Model.Month,System.Int32,System.DayOfWeek)">
+            <summary>
+            Find the next weekday for example monday from a specific date
+            </summary>
+            <param name="year">The year</param>
+            <param name="month">The month</param>
+            <param name="day">The day</param>
+            <param name="dayOfWeek">The name of the day</param>
+            <returns>Date of day found</returns>
+        </member>
+        <member name="M:Nager.Date.DateSystem.FindDay(System.Int32,System.Int32,System.Int32,System.DayOfWeek)">
+            <summary>
+            Find the next weekday for example monday from a specific date
+            </summary>
+            <param name="year">The year</param>
+            <param name="month">The month</param>
+            <param name="day">The day</param>
+            <param name="dayOfWeek">The name of the day</param>
+            <returns>Date of day found</returns>
+        </member>
+        <member name="M:Nager.Date.DateSystem.FindDay(System.DateTime,System.DayOfWeek)">
+            <summary>
+            Find the next weekday for example monday from a specific date
+            </summary>
+            <param name="date">The search date</param>
+            <param name="dayOfWeek">The name of the day</param>
+            <returns>Date of day found</returns>
+        </member>
+        <member name="M:Nager.Date.DateSystem.FindDayBetween(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.DayOfWeek)">
+            <summary>
+            Find a day between two dates
+            </summary>
+            <param name="yearStart">The start year</param>
+            <param name="monthStart">The start month</param>
+            <param name="dayStart">The start day</param>
+            <param name="yearEnd">The end year</param>
+            <param name="monthEnd">The end month</param>
+            <param name="dayEnd">The end day</param>
+            <param name="dayOfWeek">The name of the day</param>
+            <returns>Date of day found</returns>
+        </member>
+        <member name="M:Nager.Date.DateSystem.FindDayBetween(System.DateTime,System.DateTime,System.DayOfWeek)">
+            <summary>
+            Find a day between two dates
+            </summary>
+            <param name="startDate">The start date</param>
+            <param name="endDate">The end date</param>
+            <param name="dayOfWeek">The name of the day</param>
+            <returns>Date of day found</returns>
+        </member>
+        <member name="M:Nager.Date.DateSystem.FindDayBefore(System.Int32,Nager.Date.Model.Month,System.Int32,System.DayOfWeek)">
+            <summary>
+            Find the next weekday for example monday before a specific date
+            </summary>
+            <param name="year">The year</param>
+            <param name="month">The month</param>
+            <param name="day">The day</param>
+            <param name="dayOfWeek">The name of the day</param>
+            <returns>Date of day found</returns>
+        </member>
+        <member name="M:Nager.Date.DateSystem.FindDayBefore(System.Int32,System.Int32,System.Int32,System.DayOfWeek)">
+            <summary>
+            Find the next weekday for example monday before a specific date
+            </summary>
+            <param name="year">The year</param>
+            <param name="month">The month</param>
+            <param name="day">The day</param>
+            <param name="dayOfWeek">The name of the day</param>
+            <returns>Date of day found</returns>
+        </member>
+        <member name="M:Nager.Date.DateSystem.FindDayBefore(System.DateTime,System.DayOfWeek)">
+            <summary>
+            Find the next weekday for example monday before a specific date
+            </summary>
+            <param name="date">The date where the search starts</param>
+            <param name="dayOfWeek">The name of the day</param>
+            <returns>Date of day found</returns>
+        </member>
+        <member name="M:Nager.Date.DateSystem.FindDay(System.Int32,System.Int32,System.DayOfWeek,System.Int32)">
+            <summary>
+            Find for example the 3rd monday in a month
+            </summary>
+            <param name="year">The year</param>
+            <param name="month">The month</param>
+            <param name="day">The day</param>
+            <param name="occurrence"></param>
+            <returns>Date of day found</returns>
+            <exception cref="T:System.ArgumentException">Thrown when given occurrence number is either too low or too high</exception>
+        </member>
+        <member name="M:Nager.Date.DateSystem.FindDay(System.Int32,Nager.Date.Model.Month,System.DayOfWeek,Nager.Date.Model.Occurrence)">
+            <summary>
+            Find for example the 3rd monday in a month
+            </summary>
+            <param name="year">The year</param>
+            <param name="month">The month</param>
+            <param name="day">The day</param>
+            <param name="occurrence">The occurrence e.g. First</param>
+            <returns>Date of day found</returns>
+        </member>
+        <member name="M:Nager.Date.DateSystem.GetLongWeekend(System.Int32,Nager.Date.CountryCode)">
+            <summary>
+            Get long weekends of a country and a given year
+            </summary>
+            <param name="year">The year</param>
+            <param name="countryCode">Country Code (ISO 3166-1 ALPHA-2)</param>
+            <returns>Set of long weekends for given country in a given year</returns>
+        </member>
+        <member name="T:Nager.Date.Extensions.DateTimeExtension">
+            <summary>
+            DateTimeExtension
+            </summary>
+        </member>
+        <member name="M:Nager.Date.Extensions.DateTimeExtension.IsWeekend(System.DateTime,Nager.Date.CountryCode)">
+            <summary>
+            Checks if the specified date is a weekend
+            </summary>
+            <param name="dateTime">The date</param>
+            <param name="countryCode">Country Code (ISO 3166-1 ALPHA-2)</param>
+            <returns>True if given date is in the weekend in given country, false otherwise</returns>
+        </member>
+        <member name="M:Nager.Date.Extensions.DateTimeExtension.Shift(System.DateTime,System.Func{System.DateTime,System.DateTime},System.Func{System.DateTime,System.DateTime},System.Func{System.DateTime,System.DateTime})">
+            <summary>
+            If the given date on this Weekday it can be shifted
+            </summary>
+            <param name="value">The date</param>
+            <param name="saturday">shift for Saturday</param>
+            <param name="sunday">shift for Sunday</param>
+            <param name="monday">shift for Monday</param>
+            <returns>Shifted date</returns>
+        </member>
+        <member name="M:Nager.Date.Extensions.DateTimeExtension.Shift(System.DateTime,System.DayOfWeek,System.Func{System.DateTime,System.DateTime})">
+            <summary>
+            If the given date on this Weekday it can be shifted
+            </summary>
+            <param name="value">The date</param>
+            <param name="dayOfWeek">Weekday</param>
+            <param name="shift"></param>
+            <returns>Shifted date</returns>
+        </member>
+        <member name="M:Nager.Date.Extensions.DateTimeExtension.ShiftWeekdays(System.DateTime,System.Func{System.DateTime,System.DateTime},System.Func{System.DateTime,System.DateTime},System.Func{System.DateTime,System.DateTime},System.Func{System.DateTime,System.DateTime},System.Func{System.DateTime,System.DateTime})">
+            <summary>
+            ShiftWeekdays
+            </summary>
+            <param name="value"></param>
+            <param name="monday"></param>
+            <param name="tuesday"></param>
+            <param name="wednesday"></param>
+            <param name="thursday"></param>
+            <param name="friday"></param>
+            <returns>Shifted date</returns>
+        </member>
+        <member name="M:Nager.Date.Extensions.DateTimeExtension.ShiftToClosest(System.DateTime,System.DayOfWeek)">
+            <summary>
+            Find the closest matching day of the week (before or after a given date)
+            </summary>
+            <param name="value">The starting date</param>
+            <param name="targetDayOfWeek">The day of the week the date is shifted to</param>
+            <returns>A Date which will be a maximum of 3 days before or after the starting date, having the specified day of the week</returns>
+        </member>
+        <member name="T:Nager.Date.Model.LongWeekend">
+            <summary>
+            LongWeekend
+            The best long weekends  
+            </summary>
+        </member>
+        <member name="P:Nager.Date.Model.LongWeekend.StartDate">
+            <summary>
+            Start date
+            </summary>
+        </member>
+        <member name="P:Nager.Date.Model.LongWeekend.EndDate">
+            <summary>
+            End date
+            </summary>
+        </member>
+        <member name="P:Nager.Date.Model.LongWeekend.DayCount">
+            <summary>
+            Count of days
+            </summary>
+        </member>
+        <member name="P:Nager.Date.Model.LongWeekend.Bridge">
+            <summary>
+            If an additional holiday needed
+            </summary>
+        </member>
+        <member name="M:Nager.Date.Model.LongWeekend.ToString">
+            <summary>
+            ToString - StartDate EndDate and DayCount
+            </summary>
+            <returns>Long weekend info formated</returns>
+        </member>
+        <member name="T:Nager.Date.Model.Month">
+            <summary>
+            Month
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.Month.January">
+            <summary>
+            January
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.Month.February">
+            <summary>
+            February
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.Month.March">
+            <summary>
+            March
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.Month.April">
+            <summary>
+            April
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.Month.May">
+            <summary>
+            May
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.Month.June">
+            <summary>
+            June
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.Month.July">
+            <summary>
+            July
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.Month.August">
+            <summary>
+            August
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.Month.September">
+            <summary>
+            September
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.Month.October">
+            <summary>
+            October
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.Month.November">
+            <summary>
+            November
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.Month.December">
+            <summary>
+            December
+            </summary>
+        </member>
+        <member name="T:Nager.Date.Model.Occurrence">
+            <summary>
+            Occurrence
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.Occurrence.First">
+            <summary>
+            First
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.Occurrence.Second">
+            <summary>
+            Second
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.Occurrence.Third">
+            <summary>
+            Third
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.Occurrence.Fourth">
+            <summary>
+            Fourth
+            </summary>
+        </member>
+        <member name="T:Nager.Date.Model.PublicHoliday">
+            <summary>
+            Public Holiday
+            </summary>
+        </member>
+        <member name="P:Nager.Date.Model.PublicHoliday.Date">
+            <summary>
+            The date
+            </summary>
+        </member>
+        <member name="P:Nager.Date.Model.PublicHoliday.LocalName">
+            <summary>
+            Local name
+            </summary>
+        </member>
+        <member name="P:Nager.Date.Model.PublicHoliday.Name">
+            <summary>
+            English name
+            </summary>
+        </member>
+        <member name="P:Nager.Date.Model.PublicHoliday.CountryCode">
+            <summary>
+            ISO 3166-1 alpha-2
+            </summary>
+        </member>
+        <member name="P:Nager.Date.Model.PublicHoliday.Fixed">
+            <summary>
+            Is this public holiday every year on the same date
+            </summary>
+        </member>
+        <member name="P:Nager.Date.Model.PublicHoliday.Global">
+            <summary>
+            Is this public holiday in every county (federal state)
+            </summary>
+        </member>
+        <member name="P:Nager.Date.Model.PublicHoliday.Counties">
+            <summary>
+            ISO-3166-2 - Federal states
+            </summary>
+        </member>
+        <member name="P:Nager.Date.Model.PublicHoliday.Type">
+            <summary>
+            A list of types the public holiday it is valid
+            </summary>
+        </member>
+        <member name="P:Nager.Date.Model.PublicHoliday.LaunchYear">
+            <summary>
+            The launch year of the public holiday
+            </summary>
+        </member>
+        <member name="M:Nager.Date.Model.PublicHoliday.#ctor(System.Int32,System.Int32,System.Int32,System.String,System.String,Nager.Date.CountryCode,System.Nullable{System.Int32},System.String[],Nager.Date.Model.PublicHolidayType)">
+            <summary>
+            Add Public Holiday (fixed is true)
+            </summary>
+            <param name="year"></param>
+            <param name="month"></param>
+            <param name="day"></param>
+            <param name="localName"></param>
+            <param name="englishName"></param>
+            <param name="countryCode">ISO 3166-1 ALPHA-2</param>
+            <param name="launchYear"></param>
+            <param name="counties">ISO-3166-2</param>
+            <param name="type">The type of the public holiday</param>
+        </member>
+        <member name="M:Nager.Date.Model.PublicHoliday.#ctor(System.DateTime,System.String,System.String,Nager.Date.CountryCode,System.Nullable{System.Int32},System.String[],Nager.Date.Model.PublicHolidayType)">
+            <summary>
+            Add Public Holiday (fixed is false)
+            </summary>
+            <param name="date"></param>
+            <param name="localName"></param>
+            <param name="englishName"></param>
+            <param name="countryCode">ISO 3166-1 ALPHA-2</param>
+            <param name="launchYear"></param>
+            <param name="counties">ISO-3166-2</param>
+            /// <param name="type">The type of the public holiday</param>
+        </member>
+        <member name="M:Nager.Date.Model.PublicHoliday.ToString">
+            <summary>
+            Date and Name of the PublicHoliday
+            </summary>
+            <returns>Public holiday info formated</returns>
+        </member>
+        <member name="T:Nager.Date.Model.PublicHolidayType">
+            <summary>
+            The type of a public holiday
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.PublicHolidayType.Public">
+            <summary>
+            Public holiday
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.PublicHolidayType.Bank">
+            <summary>
+            Bank holiday, banks and offices are closed
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.PublicHolidayType.School">
+            <summary>
+            School holiday, schools are closed
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.PublicHolidayType.Authorities">
+            <summary>
+            Authorities are closed
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.PublicHolidayType.Optional">
+            <summary>
+            Majority of people take a day off
+            </summary>
+        </member>
+        <member name="F:Nager.Date.Model.PublicHolidayType.Observance">
+            <summary>
+            Optional festivity, no paid day off
+            </summary>
+        </member>
+        <member name="T:Nager.Date.NoLicenseKeyException">
+            <summary>
+            No LicenseKey Exception
+            </summary>
+        </member>
+        <member name="M:Nager.Date.NoLicenseKeyException.#ctor">
+            <summary>
+            No LicenseKey Exception
+            </summary>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.AlandProvider">
+            <summary>
+            //Åland
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.AlandProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            AlandProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.AlandProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.AlandProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.AlbaniaProvider">
+            <summary>
+            Albania
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.AlbaniaProvider.#ctor(Nager.Date.Contract.ICatholicProvider,Nager.Date.Contract.IOrthodoxProvider)">
+            <summary>
+            AlbaniaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+            <param name="orthodoxProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.AlbaniaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.AlbaniaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.AndorraProvider">
+            <summary>
+            Andorra
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.AndorraProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            AndorraProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.AndorraProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.AndorraProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.ArgentinaProvider">
+            <summary>
+            Argentina
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ArgentinaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            ArgentinaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ArgentinaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ArgentinaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.AustraliaProvider">
+            <summary>
+            Australia
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.AustraliaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            AustraliaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.AustraliaProvider.GetCounties">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.AustraliaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.AustraliaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.AustriaProvider">
+            <summary>
+            Austria
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.AustriaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            AustriaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.AustriaProvider.GetCounties">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.AustriaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.AustriaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.BahamasProvider">
+            <summary>
+            Bahamas
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BahamasProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            BahamasProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BahamasProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BahamasProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.BarbadosProvider">
+            <summary>
+            Barbados
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BarbadosProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            BarbadosProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BarbadosProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BarbadosProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.BelarusProvider">
+            <summary>
+            Belarus
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BelarusProvider.#ctor(Nager.Date.Contract.IOrthodoxProvider)">
+            <summary>
+            BelarusProvider
+            </summary>
+            <param name="orthodoxProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BelarusProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BelarusProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.BelgiumProvider">
+            <summary>
+            Belgium
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BelgiumProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            BelgiumProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BelgiumProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BelgiumProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.BelizeProvider">
+            <summary>
+            Belize
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BelizeProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            BelizeProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BelizeProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BelizeProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.BeninProvider">
+            <summary>
+            Benin
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BeninProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            BeninProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BeninProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BeninProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.BoliviaProvider">
+            <summary>
+            Bolivia
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BoliviaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            BoliviaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BoliviaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BoliviaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.BosniaAndHerzegovinaProvider">
+            <summary>
+            Bosnia and Herzegovina
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BosniaAndHerzegovinaProvider.#ctor(Nager.Date.Contract.IOrthodoxProvider)">
+            <summary>
+            BosniaAndHerzegovinaProvider
+            </summary>
+            <param name="orthodoxProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BosniaAndHerzegovinaProvider.GetCounties">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BosniaAndHerzegovinaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BosniaAndHerzegovinaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.BotswanaProvider">
+            <summary>
+            Botswana
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BotswanaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            BotswanaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BotswanaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BotswanaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.BrazilProvider">
+            <summary>
+            Brazil
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BrazilProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            BrazilProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BrazilProvider.GetCounties">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BrazilProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BrazilProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.BulgariaProvider">
+            <summary>
+            Bulgaria
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BulgariaProvider.#ctor(Nager.Date.Contract.IOrthodoxProvider)">
+            <summary>
+            BulgariaProvider
+            </summary>
+            <param name="orthodoxProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BulgariaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.BulgariaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.CanadaProvider">
+            <summary>
+            Canada
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.CanadaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            CanadaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.CanadaProvider.GetCounties">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.CanadaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.CanadaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.ChileProvider">
+            <summary>
+            Chile
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ChileProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            ChileProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ChileProvider.GetCounties">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ChileProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ChileProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.ChinaProvider">
+            <summary>
+            China
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ChinaProvider.#ctor">
+            <summary>
+            ChinaProvider
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ChinaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ChinaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.ColombiaProvider">
+            <summary>
+            Colombia
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ColombiaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            ColombiaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ColombiaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ColombiaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.CostaRicaProvider">
+            <summary>
+            Costa Rica
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.CostaRicaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            CostaRicaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.CostaRicaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.CostaRicaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.CroatiaProvider">
+            <summary>
+            Croatia
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.CroatiaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            CroatiaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.CroatiaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.CroatiaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.CubaProvider">
+            <summary>
+            Cuba
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.CubaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            CubaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.CubaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.CubaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.CyprusProvider">
+            <summary>
+            Cyprus
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.CyprusProvider.#ctor(Nager.Date.Contract.IOrthodoxProvider)">
+            <summary>
+            CyprusProvider
+            </summary>
+            <param name="orthodoxProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.CyprusProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.CyprusProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.CzechRepublicProvider">
+            <summary>
+            Czech Republic
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.CzechRepublicProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            CzechRepublicProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.CzechRepublicProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.CzechRepublicProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.DenmarkProvider">
+            <summary>
+            Denmark
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.DenmarkProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            DenmarkProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.DenmarkProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.DenmarkProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.DominicanRepublicProvider">
+            <summary>
+            Dominican Republic
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.DominicanRepublicProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            DominicanRepublicProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.DominicanRepublicProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.DominicanRepublicProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.EcuadorProvider">
+            <summary>
+            Ecuador
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.EcuadorProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            EcuadorProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.EcuadorProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.EcuadorProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.EgyptProvider">
+            <summary>
+            Egypt
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.EgyptProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.EgyptProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.ElSalvadorProvider">
+            <summary>
+            El Salvador
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ElSalvadorProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            ElSalvadorProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ElSalvadorProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ElSalvadorProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.EstoniaProvider">
+            <summary>
+            Estonia
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.EstoniaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            EstoniaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.EstoniaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.EstoniaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.FaroeIslandsProvider">
+            <summary>
+            Faroe Islands, adaptation of DenmarkProvider
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.FaroeIslandsProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            FaroeIslandsProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.FaroeIslandsProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.FaroeIslandsProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.FinlandProvider">
+            <summary>
+            Finland
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.FinlandProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            FinlandProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.FinlandProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.FinlandProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.FranceProvider">
+            <summary>
+            France
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.FranceProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            FranceProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.FranceProvider.GetCounties">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.FranceProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.FranceProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.GabonProvider">
+            <summary>
+            Gabon
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GabonProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            GabonProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GabonProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GabonProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.GambiaProvider">
+            <summary>
+            Gambia
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GambiaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            GambiaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GambiaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GambiaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.GermanyProvider">
+            <summary>
+            Germany
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GermanyProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            GermanyProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GermanyProvider.GetCounties">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GermanyProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GermanyProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.GibraltarProvider">
+            <summary>
+            Gibraltar
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GibraltarProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            GibraltarProvider
+            </summary>
+            <param name="catholicProvider">CatholicProvider</param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GibraltarProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GibraltarProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.GreeceProvider">
+            <summary>
+            Greece
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GreeceProvider.#ctor(Nager.Date.Contract.IOrthodoxProvider)">
+            <summary>
+            GreeceProvider
+            </summary>
+            <param name="orthodoxProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GreeceProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GreeceProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.GreenlandProvider">
+            <summary>
+            Greenland
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GreenlandProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            GreenlandProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GreenlandProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GreenlandProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.GrenadaProvider">
+            <summary>
+            Grenada
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GrenadaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            GrenadaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GrenadaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GrenadaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.GuatemalaProvider">
+            <summary>
+            Guatemala
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GuatemalaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            GuatemalaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GuatemalaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GuatemalaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.GuernseyProvider">
+            <summary>
+            Guernsey
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GuernseyProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            GuernseyProvider
+            </summary>
+            <param name="catholicProvider">CatholicProvider</param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GuernseyProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GuernseyProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.GuyanaProvider">
+            <summary>
+            Guyana
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GuyanaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            GuyanaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GuyanaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.GuyanaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.HaitiProvider">
+            <summary>
+            Haiti
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.HaitiProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            HaitiProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.HaitiProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.HaitiProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.HondurasProvider">
+            <summary>
+            Honduras
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.HondurasProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            HondurasProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.HondurasProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.HondurasProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.HungaryProvider">
+            <summary>
+            Hungary
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.HungaryProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            HungaryProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.HungaryProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.HungaryProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.IcelandProvider">
+            <summary>
+            Iceland
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.IcelandProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            IcelandProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.IcelandProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.IcelandProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.IndonesiaProvider">
+            <summary>
+            Indonesia
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.IndonesiaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            IndonesiaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.IndonesiaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.IndonesiaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.IrelandProvider">
+            <summary>
+            Ireland
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.IrelandProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            IrelandProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.IrelandProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.IrelandProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.IsleOfManProvider">
+            <summary>
+            Isle of Man
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.IsleOfManProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            IsleOfManProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.IsleOfManProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.IsleOfManProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.ItalyProvider">
+            <summary>
+            Italy
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ItalyProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            ItalyProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ItalyProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ItalyProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.JamaicaProvider">
+            <summary>
+            Jamaica
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.JamaicaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            JamaicaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.JamaicaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.JamaicaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.JapanProvider">
+            <summary>
+            Japan
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.JapanProvider.#ctor">
+            <summary>
+            JapanProvider
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.JapanProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.JapanProvider.GetGoldenWeekStartDate(System.Int32)">
+            <summary>
+            Get the Golden Week for a given year
+            </summary>
+            <see href="https://en.wikipedia.org/wiki/Golden_Week_(Japan)" />
+            <param name="year"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.JapanProvider.EmperorsBirthday(System.Int32,Nager.Date.CountryCode)">
+            <summary>
+            Adds the emperor's birthday based on the era/emperor of the current year.
+            </summary>
+            <see href="https://en.wikipedia.org/wiki/The_Emperor%27s_Birthday#Emperor_birthday_list" />
+            <param name="year"></param>
+            <param name="countryCode"></param>
+            <returns>Emperors Birthday object or null</returns>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.JapanProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.JerseyProvider">
+            <summary>
+            Jersey
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.JerseyProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            JerseyProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.JerseyProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.JerseyProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.LatviaProvider">
+            <summary>
+            Latvia
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.LatviaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            LatviaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.LatviaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.LatviaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.LesothoProvider">
+            <summary>
+            Lesotho
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.LesothoProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            LesothoProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.LesothoProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.LesothoProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.LiechtensteinProvider">
+            <summary>
+            Liechtenstein
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.LiechtensteinProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            LiechtensteinProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.LiechtensteinProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.LiechtensteinProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.LithuaniaProvider">
+            <summary>
+            Lithuania
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.LithuaniaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            LithuaniaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.LithuaniaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.LithuaniaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.LuxembourgProvider">
+            <summary>
+            Luxembourg
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.LuxembourgProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            LuxembourgProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.LuxembourgProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.LuxembourgProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.MacedoniaProvider">
+            <summary>
+            Macedonia
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MacedoniaProvider.#ctor(Nager.Date.Contract.IOrthodoxProvider)">
+            <summary>
+            MacedoniaProvider
+            </summary>
+            <param name="orthodoxProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MacedoniaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MacedoniaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.MadagascarProvider">
+            <summary>
+            Madagascar
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MadagascarProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            MadagascarProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MadagascarProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MadagascarProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.MaltaProvider">
+            <summary>
+            Malta
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MaltaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            MaltaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MaltaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MaltaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.MexicoProvider">
+            <summary>
+            Mexico 
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MexicoProvider.#ctor">
+            <summary>
+            MexicoProvider
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MexicoProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MexicoProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.MoldovaProvider">
+            <summary>
+            Moldova
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MoldovaProvider.#ctor(Nager.Date.Contract.IOrthodoxProvider)">
+            <summary>
+            MoldovaProvider
+            </summary>
+            <param name="orthodoxProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MoldovaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MoldovaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.MonacoProvider">
+            <summary>
+            Monaco
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MonacoProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            MonacoProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MonacoProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MonacoProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.MongoliaProvider">
+            <summary>
+            Mongoli
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MongoliaProvider.#ctor">
+            <summary>
+            MongoliaProvider
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MongoliaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MongoliaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.MontenegroProvider">
+            <summary>
+            Montenegro
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MontenegroProvider.#ctor(Nager.Date.Contract.IOrthodoxProvider,Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            MontenegroProvider
+            </summary>
+            <param name="orthodoxProvider">OrthodoxProvider</param>
+            <param name="catholicProvider">CatholicProvider</param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MontenegroProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MontenegroProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.MontserratProvider">
+            <summary>
+            Montserrat
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MontserratProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            MontserratProvider
+            </summary>
+            <param name="catholicProvider">CatholicProvider</param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MontserratProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MontserratProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.MoroccoProvider">
+            <summary>
+            Morocco
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MoroccoProvider.#ctor">
+            <summary>
+            MoroccoProvider
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MoroccoProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MoroccoProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.MozambiqueProvider">
+            <summary>
+            Mozambique
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MozambiqueProvider.#ctor">
+            <summary>
+            MozambiqueProvider
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MozambiqueProvider.GetCounties">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MozambiqueProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.MozambiqueProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.NamibiaProvider">
+            <summary>
+            Namibia
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NamibiaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            NamibiaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NamibiaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NamibiaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.NetherlandsProvider">
+            <summary>
+            Netherlands
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NetherlandsProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            NetherlandsProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NetherlandsProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NetherlandsProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.NewZealandProvider">
+            <summary>
+            New Zealand
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NewZealandProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            NewZealandProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NewZealandProvider.GetCounties">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NewZealandProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NewZealandProvider.InitMatariki">
+            <summary>
+            Matariki (Maori New Year) is introduced as a national public holiday beginning in 2022.
+            The first 30 years of dates have been agreed upon by the Matariki Advisory Committee.
+            The dates have been chosen to account for adjustments between the Maori lunar calendar and
+            the Gregorian calendar, while ensuring the public holiday falls on a Friday.
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NewZealandProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.NicaraguaProvider">
+            <summary>
+            Nicaragua
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NicaraguaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            NicaraguaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NicaraguaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NicaraguaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.NigeriaProvider">
+            <summary>
+            Nigeria
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NigeriaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            NigerProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NigeriaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NigeriaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.NigerProvider">
+            <summary>
+            Niger
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NigerProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            NigerProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NigerProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NigerProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.NoHolidaysProvider">
+            <summary>
+            NoHolidaysProvider
+            </summary>
+        </member>
+        <member name="P:Nager.Date.PublicHolidays.NoHolidaysProvider.Instance">
+            <summary>
+            Gets the singleton instance of <see cref="T:Nager.Date.PublicHolidays.NoHolidaysProvider"/>.
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NoHolidaysProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NoHolidaysProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.NorwayProvider">
+            <summary>
+            Norway
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NorwayProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            NorwayProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NorwayProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.NorwayProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.PanamaProvider">
+            <summary>
+            Panama
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.PanamaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            PanamaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.PanamaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.PanamaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.PapuaNewGuineaProvider">
+            <summary>
+            Papua New Guinea
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.PapuaNewGuineaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            PapuaNewGuineaProvider
+            </summary>
+            <param name="catholicProvider">CatholicProvider</param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.PapuaNewGuineaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.PapuaNewGuineaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.ParaguayProvider">
+            <summary>
+            Paraguay
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ParaguayProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            ParaguayProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ParaguayProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ParaguayProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.PeruProvider">
+            <summary>
+            Peru
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.PeruProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            PeruProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.PeruProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.PeruProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.PolandProvider">
+            <summary>
+            Poland
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.PolandProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            PolandProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.PolandProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.PolandProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.PortugalProvider">
+            <summary>
+            Portugal
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.PortugalProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            PortugalProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.PortugalProvider.GetCounties">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.PortugalProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.PortugalProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.PuertoRicoProvider">
+            <summary>
+            Puerto Rico
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.PuertoRicoProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            PuertoRicoProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.PuertoRicoProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.PuertoRicoProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.RomaniaProvider">
+            <summary>
+            Romania
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.RomaniaProvider.#ctor(Nager.Date.Contract.IOrthodoxProvider)">
+            <summary>
+            RomaniaProvider
+            </summary>
+            <param name="orthodoxProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.RomaniaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.RomaniaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.RussiaProvider">
+            <summary>
+            Russia
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.RussiaProvider.#ctor">
+            <summary>
+            RussiaProvider
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.RussiaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.RussiaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.SanMarinoProvider">
+            <summary>
+            San Marino 
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SanMarinoProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            SanMarinoProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SanMarinoProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SanMarinoProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.SerbiaProvider">
+            <summary>
+            Serbia
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SerbiaProvider.#ctor(Nager.Date.Contract.IOrthodoxProvider)">
+            <summary>
+            SerbiaProvider
+            </summary>
+            <param name="orthodoxProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SerbiaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SerbiaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.SingaporeProvider">
+            <summary>
+            Singapore
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SingaporeProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            SingaporeProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SingaporeProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SingaporeProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.SlovakiaProvider">
+            <summary>
+            Slovakia
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SlovakiaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            SlovakiaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SlovakiaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SlovakiaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.SloveniaProvider">
+            <summary>
+            Slovenia
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SloveniaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            SloveniaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SloveniaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SloveniaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.SouthAfricaProvider">
+            <summary>
+            South Africa
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SouthAfricaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            SouthAfricaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SouthAfricaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SouthAfricaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.SouthKoreaProvider">
+            <summary>
+            South Korea
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SouthKoreaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SouthKoreaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.SpainProvider">
+            <summary>
+            Spain
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SpainProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            SpainProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SpainProvider.GetCounties">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SpainProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SpainProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.SurinameProvider">
+            <summary>
+            Suriname
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SurinameProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            SurinameProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SurinameProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SurinameProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.SvalbardAndJanMayenProvider">
+            <summary>
+            Svalbard and Jan Mayen
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SvalbardAndJanMayenProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            SvalbardAndJanMayenProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SvalbardAndJanMayenProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SvalbardAndJanMayenProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.SwedenProvider">
+            <summary>
+            Sweden
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SwedenProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            SwedenProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SwedenProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SwedenProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.SwitzerlandProvider">
+            <summary>
+            Switzerland
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SwitzerlandProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            SwitzerlandProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SwitzerlandProvider.GetCounties">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SwitzerlandProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.SwitzerlandProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.TunisiaProvider">
+            <summary>
+            Tunisia
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.TunisiaProvider.#ctor">
+            <summary>
+            TunisiaProvider
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.TunisiaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.TunisiaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.TurkeyProvider">
+            <summary>
+            Turkey
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.TurkeyProvider.#ctor">
+            <summary>
+            TurkeyProvider
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.TurkeyProvider.ConvertHijriToGregorian(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Convert Hijri Date To Geregorian Date
+            </summary>
+            <param name="year"></param>
+            <param name="month"></param>
+            <param name="day"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.TurkeyProvider.GetHolidays(System.Int32)">
+            <summary>
+            Get Public Holidays for Turkey
+            </summary>
+            <param name="year"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.TurkeyProvider.GetEidAlFitr(System.Int32,Nager.Date.CountryCode)">
+            <summary>
+            Eid al-Fitr (Feast Of Ramadan) Holidays
+            </summary>
+            <param name="year"></param>
+            <param name="countryCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.TurkeyProvider.GetEidAlAdha(System.Int32,Nager.Date.CountryCode)">
+            <summary>
+            Eid al-Adha (Feast Of Sacrifice) Holidays
+            </summary>
+            <param name="year"></param>
+            <param name="countryCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.TurkeyProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.UkraineProvider">
+            <summary>
+            Ukraine
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.UkraineProvider.#ctor(Nager.Date.Contract.IOrthodoxProvider)">
+            <summary>
+            UkraineProvider
+            </summary>
+            <param name="orthodoxProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.UkraineProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.UkraineProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.UnitedKingdomProvider">
+            <summary>
+            United Kingdom
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.UnitedKingdomProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            UnitedKingdomProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.UnitedKingdomProvider.GetCounties">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.UnitedKingdomProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.UnitedKingdomProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.UnitedStatesProvider">
+            <summary>
+            United States of America
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.UnitedStatesProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            UnitedStatesProvider
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.UnitedStatesProvider.GetCounties">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.UnitedStatesProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.UnitedStatesProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.UruguayProvider">
+            <summary>
+            Uruguay
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.UruguayProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            UruguayProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.UruguayProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.UruguayProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.VaticanCityProvider">
+            <summary>
+            Vatican City
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.VaticanCityProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            VaticanCityProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.VaticanCityProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.VaticanCityProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.VenezuelaProvider">
+            <summary>
+            Venezuela
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.VenezuelaProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            VenezuelaProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.VenezuelaProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.VenezuelaProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.VietnamProvider">
+            <summary>
+            Vietnam
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.VietnamProvider.#ctor">
+            <summary>
+            VietnamProvider
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.VietnamProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.VietnamProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.PublicHolidays.ZimbabweProvider">
+            <summary>
+            Zimbabwe
+            </summary>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ZimbabweProvider.#ctor(Nager.Date.Contract.ICatholicProvider)">
+            <summary>
+            ZimbabweProvider
+            </summary>
+            <param name="catholicProvider"></param>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ZimbabweProvider.GetHolidays(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.PublicHolidays.ZimbabweProvider.GetSources">
+            <inheritdoc/>
+        </member>
+        <member name="T:Nager.Date.Weekends.WeekendProvider">
+            <summary>
+            WeekendProvider
+            </summary>
+        </member>
+        <member name="M:Nager.Date.Weekends.WeekendProvider.#ctor(System.DayOfWeek[])">
+            <summary>
+            WeekendProvider
+            </summary>
+            <param name="weekendDays"></param>
+        </member>
+        <member name="P:Nager.Date.Weekends.WeekendProvider.WeekendDays">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.Weekends.WeekendProvider.IsWeekend(System.DateTime)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.Weekends.WeekendProvider.IsWeekend(Nager.Date.Model.PublicHoliday)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Nager.Date.Weekends.WeekendProvider.IsWeekend(System.DayOfWeek)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Nager.Date.Weekends.WeekendProvider.FirstWeekendDay">
+            <inheritdoc/>
+        </member>
+        <member name="P:Nager.Date.Weekends.WeekendProvider.LastWeekendDay">
+            <inheritdoc/>
+        </member>
+        <member name="P:Nager.Date.Weekends.WeekendProvider.FridayOnly">
+            <summary>
+            Returns a WeekendProvider for only Friday
+            </summary>
+        </member>
+        <member name="P:Nager.Date.Weekends.WeekendProvider.SaturdayOnly">
+            <summary>
+            Returns a WeekendProvider for only Saturday
+            </summary>
+        </member>
+        <member name="P:Nager.Date.Weekends.WeekendProvider.SundayOnly">
+            <summary>
+            Returns a WeekendProvider for only Sunday
+            </summary>
+        </member>
+        <member name="P:Nager.Date.Weekends.WeekendProvider.FridaySunday">
+            <summary>
+            Returns a WeekendProvider for Friday and Sunday
+            </summary>
+        </member>
+        <member name="P:Nager.Date.Weekends.WeekendProvider.SemiUniversal">
+            <summary>
+            Returns a WeekendProvider for Friday and Saturday
+            </summary>
+        </member>
+        <member name="P:Nager.Date.Weekends.WeekendProvider.Universal">
+            <summary>
+            Returns a WeekendProvider for Saturday and Sunday
+            </summary>
+        </member>
+    </members>
+</doc>

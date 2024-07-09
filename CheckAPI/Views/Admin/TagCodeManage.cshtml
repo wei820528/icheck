@@ -1,0 +1,296 @@
+﻿
+@{
+    ViewBag.Title = "巡檢系統 TagCode管理";
+    Layout = "~/Views/Shared/Bootstrap_Layout.cshtml";
+}
+@section CustomScript {
+    <script>
+        $(document).ready(function () {
+            $("#submenu-tablemanage").addClass('active');
+            CloseDlg();
+            //畫面
+            ChangeTableSize();
+            $(window).resize(function () {
+                ChangeTableSize();
+            });
+            //表單
+            GetFAB();
+            var p = $("#SearchResult").datagrid('getPager');
+            $(p).pagination({
+                onSelectPage: function (pageNumber, pageSize) {
+                    var FAB = $('#selectFAB').combobox('getValue');
+                    $("#SearchResult").datagrid({ url: "@Url.Action("TagCodeList", "Admin")?FAB=" + FAB, method: 'post' });
+                }
+            });
+            $("#SearchResult").datagrid({ url: "@Url.Action("TagCodeList", "Admin")?FAB=ALL", method: 'post' });
+            $('#SearchResult').datagrid({
+                onClickRow: function (index, row) {
+                    $("#Tag_Code_e").val(row["Tag_Code"]);
+                    $("#FAB_e").val(row["FAB"]);
+                    $("#Comment_e").val(row["Comment"]);
+                    ChangeFAB_e(row["TableID"]);
+                    OpenDlgEdit();
+                }
+            });
+            $('#selectFAB').combobox({
+                onChange: function (newValue, oldValue) {
+                    var FAB = $('#selectFAB').combobox('getValue');
+                    $("#SearchResult").datagrid({ url: "@Url.Action("TagCodeList", "Admin")?FAB=" + FAB, method: 'post' });
+                }
+            })
+        });
+        function GetFAB() {
+            $('#selectFAB').combobox({
+                url: "@Url.Action("GetSqlFAB_All", "Admin")",
+                valueField: 'FAB',
+                textField: 'FAB'
+            });
+            //console.log($('#selectFAB').val());
+            $.post("@Url.Action("GetSqlFABbs", "Admin")?a=0", function (xx) {
+                $('#FAB').html(xx);
+                $('#FAB_e').html(xx);
+            }, "text").done(function () {
+                ChangeFAB();
+                ChangeFAB_e();
+            }).fail(function () {
+                GetFAB();
+            });
+        }
+        function ChangeFAB() {
+            var FAB = $('#FAB').val();
+            var pp = $.param({ "FAB": FAB });
+            $.post("@Url.Action("GetTableIDbs", "Admin")", pp, function (xx) {
+                $('#TableID').html(xx);
+            }, "text").done(function () {
+                //
+            }).fail(function () {
+                //
+            });
+        }
+        function ChangeFAB_e(TableID) {
+            if (TableID == null) TableID = "";
+            var FAB = $('#FAB_e').val();
+            var pp = $.param({ "FAB": FAB });
+            $.post("@Url.Action("GetTableIDbs", "Admin")", pp, function (xx) {
+                $('#TableID_e').html(xx);
+            }, "text").done(function () {
+                if (TableID == "")
+                    $('#TableID_e option:eq(0)').prop('selected', true);
+                else
+                    $("#TableID_e").val(TableID);
+            }).fail(function () {
+                //
+            });
+        }
+        //新增TagCode
+        function submitForm() {
+            var msgtxt = "";
+            if ($("#Tag_Code").val() == "") {
+                msgtxt += "請輸入Tag_Code！ ";
+            }
+            if ($("#FAB").val() == "") {
+                msgtxt += "請選擇廠別！ ";
+            }
+            if ($("#TableID").val() == "") {
+                msgtxt += "請選擇表單！ ";
+            }
+            if (msgtxt == "") {
+                var pp = $.param({
+                    "Tag_Code": $("#Tag_Code").val(),
+                    "FAB": $("#FAB").val(),
+                    "TableID": $("#TableID").val(),
+                    "Comment": $("#Comment").val()
+                });
+                $.post("@Url.Action("NewTagCodeProcess", "Admin")", pp, function (xx) {
+                    $("#Tag_Code").val('');
+                    CloseDlg();
+                    msg(xx);
+                }, "text").done(function () {
+                    $("#SearchResult").datagrid('reload');
+                });;
+            }
+            else {
+                alert(msgtxt);
+                $('#Tag_Code').focus();
+            }
+        }
+        //Edit
+        function UpdateEditData() {
+            if ($("#Tag_Code_e").val() == "") {
+                alert("請輸入Tag_Code！");
+                return;
+            }
+            if ($("#FAB_e").val() == "") {
+                alert("請選擇廠別！");
+                return;
+            }
+            if ($("#TableID_e").val() == "") {
+                alert("請選擇表單！");
+                return;
+            }
+            var pp = $.param({
+                "Tag_Code": $("#Tag_Code_e").val(),
+                "FAB": $("#FAB_e").val(),
+                "TableID": $("#TableID_e").val(),
+                "Comment": $("#Comment_e").val()
+            });
+            $.post("@Url.Action("UpdateTagCode", "Admin")", pp, function (xx) {
+                msg(xx);
+            }, "text").done(function () {
+                CloseDlg();
+                $("#SearchResult").datagrid('reload');
+            }).fail(function () {
+                msg('網路沒有回應');
+            });
+        }
+        function DeleteEditData() {
+            $.messager.confirm('確認', "確定是否要刪除TagCode:" + $("#Tag_Code_e").val() + "嗎？", function (r) {
+                if (r) {
+                    var pp = $.param({ "Tag_Code": $("#Tag_Code_e").val() });
+                    $.post("@Url.Action("DeleteTagCode", "Admin")", pp, function (xx) {
+                        msg(xx);
+                        console.log(xx);
+                    }, "text").done(function () {
+                        CloseDlg();
+                        $("#SearchResult").datagrid('reload');
+                    }).fail(function () {
+                        msg('網路沒有回應');
+                    });
+                }
+            });
+        }
+        //Dlg
+        function OpenDlgNew() {
+            $("#dlg_new").dialog('open');
+            $("#dlg_edit").dialog('close');
+        }
+        function OpenDlgEdit() {
+            $("#dlg_new").dialog('close');
+            $("#dlg_edit").dialog('open');
+        }
+        function CloseDlg() {
+            $("#dlg_new").dialog('close');
+            $("#dlg_edit").dialog('close');
+        }
+    </script>
+}
+<div id="TableDiv" style="width:100%;height:100%;">
+    <div id="tb" style="text-align:right;">
+        <span>廠別</span>
+        <select id="selectFAB" class="easyui-combobox" panelHeight="auto" editable="false" style="width:130px;height:30px;">
+            <option value="ALL" selected>ALL</option>
+        </select>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" style="width:130px;height:30px;" onclick="OpenDlgNew()">新增TagCode</a>
+    </div>
+    <table id="SearchResult" class="easyui-datagrid" title="TagCode管理" style="width:100%;height:100%;margin-left:auto;margin-right:auto;"
+           data-options="singleSelect:true,collapsible:false,fitColumns:true,remoteSort:false
+                            ,toolbar:'#tb',pagination:true,pageSize:20,pageList:[10,15,20,25,30]" multiSort="true">
+        <thead>
+            <tr>
+                <th data-options="field:'Tag_Code'" width="200" sortable="true">TagCode</th>
+                <th data-options="field:'Comment'" width="150" sortable="true">Tag說明</th>
+                <th data-options="field:'FAB'" width="80" sortable="true">廠別</th>
+                <th data-options="field:'TableID'" width="120" sortable="true">表單ID</th>
+                <th data-options="field:'TableName'" width="150" sortable="true">表單名稱</th>
+                <th data-options="field:'DateMonth'" width="150" sortable="true">週期</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<!--新增TagCode-->
+<div id="dlg_new" class="easyui-dialog" title="新增TagCode" style="width:100%;max-width:600px;height:auto;"
+     data-options="iconCls:'icon-add',resizable:true,modal:true">
+    <div class="container-fluid">
+        <form id="NewAccount" action="@Url.Action("NewTagCodeProcess", "Admin")" class="easyui-form" method="post" data-options="novalidate:true">
+            <div class="form-inline">
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="Tag_Code" style="width:150px;">TagCode</label>
+                    </div>
+                    <input type="text" class="form-control" id="Tag_Code" />
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="Comment" style="width:150px;">Tag說明</label>
+                    </div>
+                    <input type="text" class="form-control" id="Comment" />
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="FAB" style="width:150px;">廠別</label>
+                    </div>
+                    <select class="custom-select" id="FAB" onchange="ChangeFAB()">
+                        <option value="FAB8A" selected>FAB8A</option>
+                        <option value="FAB8C">FAB8C</option>
+                        <option value="FAB8D">FAB8D</option>
+                        <option value="FAB8S">FAB8S</option>
+                    </select>
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="TableID" style="width:150px;">表單名稱</label>
+                    </div>
+                    <select class="custom-select" id="TableID">
+                        <option value="" selected>無資料</option>
+                    </select>
+                </div>
+                <div class="form-row col-12 col-sm-12 col-md-12 col-lg-12 text-center" style="margin-top:20px;margin-bottom:10px;">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-info col-5 col-sm-5 col-md-5 col-lg-5" onclick="submitForm()">送出</button>
+                        <button type="button" class="btn btn-danger col-5 col-sm-5 col-md-5 col-lg-5" onclick="CloseDlg()">取消</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div id="APmsg"></div>
+    </div>
+</div>
+<!--修改TagCode-->
+<div id="dlg_edit" class="easyui-dialog" title="修改TagCode" style="width:100%;max-width:600px;height:auto;"
+     data-options="iconCls:'icon-edit',resizable:true,modal:true">
+    <div class="container-fluid">
+        <div class="form-inline">
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="Tag_Code_e" style="width:150px;">TagCode</label>
+                </div>
+                <input type="text" class="form-control" id="Tag_Code_e" disabled />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="Comment_e" style="width:150px;">Tag說明</label>
+                </div>
+                <input type="text" class="form-control" id="Comment_e" />
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="FAB_e" style="width:150px;">廠別</label>
+                </div>
+                <select class="custom-select" id="FAB_e" onchange="ChangeFAB_e()">
+                    <option value="FAB8A" selected>FAB8A</option>
+                    <option value="FAB8C">FAB8C</option>
+                    <option value="FAB8D">FAB8D</option>
+                    <option value="FAB8S">FAB8S</option>
+                </select>
+            </div>
+            <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="TableID_e" style="width:150px;">表單名稱</label>
+                </div>
+                <select class="custom-select" id="TableID_e">
+                    <option value="" selected>無資料</option>
+                </select>
+            </div>
+            <div class="form-row col-12 col-sm-12 col-md-12 col-lg-12 text-center" style="margin-top:20px;margin-bottom:10px;">
+                <div class="col-12">
+                    <button type="button" class="btn btn-info col-3 col-sm-3 col-md-3 col-lg-3" onclick="UpdateEditData()">修改</button>
+                    <button type="button" class="btn btn-success col-3 col-sm-3 col-md-3 col-lg-3" onclick="DeleteEditData()">刪除</button>
+                    <button type="button" class="btn btn-danger col-3 col-sm-3 col-md-3 col-lg-3" onclick="CloseDlg()">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

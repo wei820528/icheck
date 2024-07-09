@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "巡檢系統 登入首頁";
+    Layout = "~/Views/Shared/Bootstrap_Layout.cshtml";
+}
+@section CustomScript {
+    <script>
+        $(document).ready(function () {
+            ChangeImageSize();
+            $(window).resize(function () {
+                ChangeImageSize();
+            });
+        });
+        function ChangeImageSize() {
+            var ww = innerWidth;
+            var hh = innerHeight;
+            if (ww > 900) {
+                $("#BackImage").css("background-size", "cover");
+            } else {
+                $("#BackImage").css("background-size", "auto " + hh + "px");
+            }
+        }
+    </script>
+}
+@section CustomStyle {
+    <style>
+        #BackImage {
+            background-image: url(../Pic/UMC_bg.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
+}
+    <div id="BaceImage">
+        <div style="text-align:right;color:white;">
+            @ViewData["RenewDate"]
+        </div>
+    </div>
+

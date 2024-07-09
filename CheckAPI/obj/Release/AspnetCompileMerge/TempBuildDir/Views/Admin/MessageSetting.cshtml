@@ -1,0 +1,308 @@
+﻿
+@{
+    ViewBag.Title = "巡檢系統 留言設定";
+    Layout = "~/Views/Shared/Bootstrap_Layout.cshtml";
+}
+@section CustomScript {
+    <script>
+        $(document).ready(function () {
+            $("#submenu-etc").addClass('active');
+            CloseDlg();
+            ChangeTableSize();
+            $(window).resize(function () {
+                ChangeTableSize();
+            });
+            GetFAB();
+            var p = $("#SearchResult").datagrid('getPager');
+            $(p).pagination({
+                onSelectPage: function (pageNumber, pageSize) {
+                    var FAB = $('#selectFAB').combobox('getValue');
+                    $("#SearchResult").datagrid({ url: "@Url.Action("MessageList", "Admin")?FAB=" + FAB, method: 'post' });
+                }
+            });
+            $("#SearchResult").datagrid({ url: "@Url.Action("MessageList", "Admin")?FAB=ALL", method: 'post' });
+            $('#SearchResult').datagrid({
+                onClickRow: function (index, row) {
+
+                    $("#SN_e").val(row["SN"]);
+                    $("#FAB_e").val(row["FAB"]);
+                    $("#Comment_e").val(row["Comment"]);
+                    $("#StartTime_e").datebox('setValue', row["StartTime"]);
+                    $("#EndTime_e").datebox("setValue", row["EndTime"]);
+                    OpenDlgEdit();
+                }
+            });
+             $('#selectFAB').combobox({
+                onChange: function (newValue, oldValue) {
+                    var FAB = $('#selectFAB').combobox('getValue');
+                    $("#SearchResult").datagrid({ url: "@Url.Action("MessageList", "Admin")?FAB=" + FAB, method: 'post' });
+                }
+            })
+        });
+        //Select
+        function GetFAB() {
+            $('#selectFAB').combobox({
+                url: "@Url.Action("GetSqlFAB_All", "Admin")",
+                valueField: 'FAB',
+                textField: 'FAB'
+            });
+            $.post("@Url.Action("GetSqlFABbs", "Admin")?a=1", function (xx) {
+                $('#FAB').html(xx);
+                $('#FAB_e').html(xx);
+            }, "text").done(function () {
+                //
+            }).fail(function () {
+                GetFAB();
+            });
+        }
+        //新增留言
+        function submitForm() {
+            var msgtxt = "";
+            if ($("#Comment").val() == "") {
+                msgtxt += "請輸入留言！ ";
+            }
+            if ($("#FAB").val() == "") {
+                msgtxt += "請選擇廠別！ ";
+            }
+            if ($("#StartTime").datebox('getValue') == "") {
+                msgtxt += "請選擇開始時間！ ";
+            }
+            if ($("#EndTime").datebox('getValue') == "") {
+                msgtxt += "請選擇結束時間！ ";
+            }
+            if ((Date.parse($("#StartTime").datebox('getValue'))).valueOf() > (Date.parse($("#EndTime").datebox('getValue'))).valueOf()) {
+                msgtxt += "開始時間不能大於時間！ ";
+            }
+            if (msgtxt == "") {
+                var pp = $.param({
+                    "Comment": $("#Comment").val(),
+                    "FAB": $("#FAB").val(),
+                    "Comment": $("#Comment").val(),
+                    "StartTime": $("#StartTime").datebox('getValue'),
+                    "EndTime": $("#EndTime").datebox('getValue')
+                });
+                $.post("@Url.Action("NewMessageProcess", "Admin")", pp, function (xx) {
+                    ClearForm();
+                    CloseDlg();
+                    msg(xx);
+                }, "text").done(function () {
+                    $("#SearchResult").datagrid('reload');
+                });
+            }
+            else {
+                alert(msgtxt);
+                $('#Comment').focus();
+            }
+        }
+        //Edit
+        function UpdateEditData() {
+            var msgtxt = "";
+            if ($("#SN_e").val() == "") {
+                msgtxt += "請輸入序號！ ";
+            }
+            if ($("#FAB_e").val() == "") {
+                msgtxt += "請選擇廠別！ ";
+            }
+            if ($("#Comment_e").val() == "") {
+                msgtxt += "請輸入留言！ ";
+            }
+            if ($("#StartTime_e").datebox('getValue') == "") {
+                msgtxt += "請選擇開始時間！ ";
+            }
+            if ($("#EndTime_e").datebox('getValue') == "") {
+                msgtxt += "請選擇結束時間！ ";
+            }
+            if ((Date.parse($("#StartTime_e").datebox('getValue'))).valueOf() > (Date.parse($("#EndTime_e").datebox('getValue'))).valueOf()) {
+                msgtxt += "開始時間不能大於時間！ ";
+            }
+            if (msgtxt == "") {
+                var pp = $.param({
+                    "SN": $("#SN_e").val(),
+                    "Comment": $("#Comment_e").val(),
+                    "FAB": $("#FAB_e").val(),
+                    "StartTime": $("#StartTime_e").datebox('getValue'),
+                    "EndTime": $("#EndTime_e").datebox('getValue')
+                });
+                $.post("@Url.Action("UpdateMessage", "Admin")", pp, function (xx) {
+                    msg(xx);
+                }, "text").done(function () {
+                    CloseDlg();
+                    $("#SearchResult").datagrid('reload');
+                }).fail(function () {
+                    msg('網路沒有回應');
+                });
+            } else {
+                alert(msgtxt);
+                $('#Account').focus();
+            }
+
+        }
+        //Delete
+        function DeleteEditData() {
+            $.messager.confirm('確認', "確定是否要刪除留言：" + $("#Comment_e").val() + "嗎？", function (r) {
+                if (r) {
+                    var pp = $.param({ "SN": $("#SN_e").val() });
+                    $.post("@Url.Action("DeleteMessage", "Admin")", pp, function (xx) {
+                        msg(xx);
+                    }, "text").done(function () {
+                        CloseDlg();
+                        $("#SearchResult").datagrid('reload');
+                    }).fail(function () {
+                        msg('網路沒有回應');
+                    });
+                }
+            });
+        }
+        function ClearForm() {
+            var date = new Date();
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            var mm = "" + m;
+            if (m < 10) mm = "0" + m;
+            var d = date.getDate();
+            var dd = "" + d;
+            if (d < 10) dd = "0" + d;
+            var today = y + "-" + mm + "-" + dd;
+            $("#FAB option:eq(0)").prop('selected', true);
+            $("#Comment").val('');
+            $("#StartTime").datebox('setValue', today);
+            $("#EndTime").datebox('setValue', today);
+        }
+        //Dlg
+        function OpenDlgNew() {
+            ClearForm();
+            $("#dlg_new").dialog('open');
+            $("#dlg_edit").dialog('close');
+        }
+        function OpenDlgEdit() {
+            $("#dlg_new").dialog('close');
+            $("#dlg_edit").dialog('open');
+        }
+        function CloseDlg() {
+            $("#dlg_new").dialog('close');
+            $("#dlg_edit").dialog('close');
+        }
+    </script>
+}
+<div id="TableDiv" style="width:100%;height:100%;">
+    <div id="tb" style="text-align:right;">
+        <span>廠別</span>
+        <select id="selectFAB" class="easyui-combobox" panelHeight="auto" editable="false" style="width:130px;height:30px;">
+            <option value="ALL" selected>ALL</option>
+        </select>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" style="width:130px;height:30px;" onclick="OpenDlgNew()">新增留言</a>
+    </div>
+    <table id="SearchResult" class="easyui-datagrid" title="留言設定" style="width:100%;height:100%;margin-left:auto;margin-right:auto;"
+           data-options="singleSelect:true,collapsible:false,fitColumns:true,remoteSort:false
+                            ,toolbar:'#tb',pagination:true,pageSize:20,pageList:[10,15,20,25,30]" multiSort="true">
+        <thead>
+            <tr>
+                <th data-options="field:'SN'" width="80">自動序號</th>
+                <th data-options="field:'FAB'" width="120">廠別</th>
+                <th data-options="field:'Comment'" width="150">留言內容</th>
+                <th data-options="field:'StartTime'" width="150">開始時間</th>
+                <th data-options="field:'EndTime'" width="150">結束時間</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<!--新增留言-->
+<div id="dlg_new" class="easyui-dialog" title="新增留言" style="width:100%;max-width:600px;height:auto;"
+     data-options="iconCls:'icon-add',resizable:true,modal:true">
+    <div class="container-fluid">
+        <form id="NewAccount" action="@Url.Action("NewMessageProcess", "Admin")" class="easyui-form" method="post" data-options="novalidate:true">
+            <div class="form-inline">
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="FAB" style="width:150px;">廠別</label>
+                    </div>
+                    <select class="custom-select" id="FAB">
+                        <option value="FAB8A" selected>FAB8A</option>
+                        <option value="FAB8C">FAB8C</option>
+                        <option value="FAB8D">FAB8D</option>
+                        <option value="FAB8S">FAB8S</option>
+                    </select>
+                </div>             
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="Comment" style="width:150px;">留言內容</label>
+                    </div>
+                    <input type="text" class="form-control" id="Comment" style="width:350px;" />
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="StartTime" style="width:150px;">開始時間</label>
+                    </div>
+                    <input id="StartTime" type="text" class="easyui-datebox" editable='false' required="required" style="width:355px;">
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="EndTime" style="width:150px;">結束時間</label>
+                    </div>
+                    <input id="EndTime" type="text" class="easyui-datebox" editable='false' required="required" style="width:355px;">
+                </div>
+                <div class="form-row col-12 col-sm-12 col-md-12 col-lg-12 text-center" style="margin-top:20px;margin-bottom:10px;">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-info col-5 col-sm-5 col-md-5 col-lg-5" onclick="submitForm()">新增留言</button>
+                        <button type="button" class="btn btn-danger col-5 col-sm-5 col-md-5 col-lg-5" onclick="CloseDlg()">取消</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div id="APmsg"></div>
+    </div>
+</div>
+<!--修改假日-->
+<div id="dlg_edit" class="easyui-dialog" title="修改假日" style="width:100%;max-width:600px;height:auto;"
+     data-options="iconCls:'icon-add',resizable:true,modal:true">
+    <div class="container-fluid">
+        <form id="NewAccount" action="@Url.Action("NewAccountProcess", "Admin")" class="easyui-form" method="post" data-options="novalidate:true">
+            <div class="form-inline">
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="SN_e" style="width:150px;">自動序號</label>
+                    </div>
+                    <input type="text" class="form-control" id="SN_e" disabled />
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="FAB_e" style="width:150px;">廠別</label>
+                    </div>
+                    <select class="custom-select" id="FAB_e">
+                        <option value="FAB8A" selected>FAB8A</option>
+                        <option value="FAB8C">FAB8C</option>
+                        <option value="FAB8D">FAB8D</option>
+                        <option value="FAB8S">FAB8S</option>
+                    </select>
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="Comment_e" style="width:150px;">留言內容</label>
+                    </div>
+                    <input type="text" class="form-control" id="Comment_e" style="width:350px;" />
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="StartTime_e" style="width:150px;">開始時間</label>
+                    </div>
+                    <input id="StartTime_e" type="text" class="easyui-datebox" editable='false' required="required" style="width:355px;">
+                </div>
+                <div class="input-group col-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="EndTime_e" style="width:150px;">結束時間</label>
+                    </div>
+                    <input id="EndTime_e" type="text" class="easyui-datebox" editable='false' required="required" style="width:355px;">
+                </div>
+                <div class="form-row col-12 col-sm-12 col-md-12 col-lg-12 text-center" style="margin-top:20px;margin-bottom:10px;">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-info col-3 col-sm-3 col-md-3 col-lg-3" onclick="UpdateEditData()">修改</button>
+                        <button type="button" class="btn btn-success col-3 col-sm-3 col-md-3 col-lg-3" onclick="DeleteEditData()">刪除</button>
+                        <button type="button" class="btn btn-danger col-3 col-sm-3 col-md-3 col-lg-3" onclick="CloseDlg()">取消</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div id="APmsg"></div>
+    </div>
+</div>
+
